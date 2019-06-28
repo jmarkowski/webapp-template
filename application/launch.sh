@@ -11,4 +11,6 @@ source pyenv/bin/activate
 exec gunicorn \
     --bind :${FLASK_PORT} \
     --workers=${WORKERS} \
+    --access-logfile - \
+    --error-logfile - \
     ${MODULE_NAME}:${VARIABLE_NAME}
