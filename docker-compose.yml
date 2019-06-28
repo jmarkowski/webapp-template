@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  proxy:
+    build: ./reverse-proxy
+    container_name: webapp_proxy
+    restart: always
+    ports:
+      - 8000:80
+
+  application:
+    build: ./application
+    container_name: webapp_application
+    restart: always
+    expose:
+      - 5000
