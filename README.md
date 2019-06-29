@@ -39,3 +39,31 @@ If you make any changes to the application, you'll need to rebuild the images
 when launching.
 
     $ docker-compose up --build
+
+
+# Developing for the Application
+
+Follow these instructions to launch the application in Flask (not gunicorn).
+
+This is for development only, and is not a viable solution for a production
+environment!
+
+1.  Initialize the environment
+
+        $ cd application
+        $ python -m venv pyenv
+        $ ./pyenv/bin/pip install -r requirements.txt
+
+2.  Start the environment
+
+        $ source pyenv/bin/activate
+        $ export FLASK_APP=main.py
+        $ export FLASK_DEBUG=1
+
+3.  Start the application with flask
+
+        $ flask run
+
+4.  Access the application from the browser
+
+        http://localhost:5000
