@@ -13,5 +13,3 @@ services:
     build: ./application
     container_name: webapp_application
     restart: always
-    expose:
-      - 5000
