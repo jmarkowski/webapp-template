@@ -29,5 +29,5 @@ RUN chown -R webapp:webapp /home/webapp
 # Set the user of the running image
 USER webapp
 
-# Finally, run the container as an executable by running the launch script
-ENTRYPOINT ["./launch.sh"]
+# Finally, pass the execution to the entrypoint script
+ENTRYPOINT ["./docker-entrypoint.sh"]
