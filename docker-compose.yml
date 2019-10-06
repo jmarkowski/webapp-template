@@ -13,3 +13,6 @@ services:
     build: ./application
     container_name: webapp_application
     restart: always
+    environment:
+        # Unbuffer gunicorn log output so that it's real-time
+        PYTHONUNBUFFERED: 'true'
