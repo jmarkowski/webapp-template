@@ -11,4 +11,5 @@ exec gunicorn \
     --workers=${WORKERS} \
     --access-logfile - \
     --error-logfile - \
+    ${RELOAD_ARG} \
     ${MODULE_NAME}:${VARIABLE_NAME}
