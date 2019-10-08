@@ -13,9 +13,7 @@ WORKDIR /home/webapp
 # Install the various packages per the frozen pip
 COPY requirements.txt ./
 
-# Create the virtual environment and install the required libraries
-RUN python -m venv pyenv
-RUN pyenv/bin/pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current host contents into the working directory
 COPY . .

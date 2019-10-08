@@ -6,8 +6,6 @@ WORKERS=2
 MODULE_NAME=webapp
 VARIABLE_NAME=app
 
-source pyenv/bin/activate
-
 exec gunicorn \
     --bind :${FLASK_PORT} \
     --workers=${WORKERS} \
