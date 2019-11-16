@@ -14,7 +14,7 @@ As such, this repository contains two docker images: one for the application and
 one for the load balancer.
 
 
-# Launching the Services
+# Development With Docker
 
 Run the following command as `docker-compose.yml` to build the services:
 
@@ -34,20 +34,22 @@ At this point, you may access the base application from the browser
 
 To stop the service, hit `Ctrl-c` from the docker container.
 
+When the docker container runs, it mounts the `application` directory on your
+host machine as a volume within the docker container.
 
-# Updating Your Application
+The gunicorn server is configured to automatically reload the application if it
+detects any changes allowing your modifications to the application to take
+effect immediately.
 
-If you make any changes to the application, you'll need to rebuild the images
-when launching.
-
-    $ docker-compose up --build
+This is made possible from `RELOAD_ARG` in the `docker-compose.yaml` file.
 
 
-# Developing for the Application
+# Development Without Docker
 
-Follow these instructions to launch the application in Flask (not gunicorn).
+These are the instructions for developing the python application in the
+recommended old-school Flask fashion without the docker services.
 
-This is for development only, and is not a viable solution for a production
+This approach is for development only, and is not a viable solution for a production
 environment!
 
 1.  Initialize the environment
