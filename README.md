@@ -28,9 +28,11 @@ You may optionally run the following to achieve the same result as above:
 
     $ docker-compose up --build
 
-At this point, you may launch your browser and goto http://localhost:8000
+At this point, you may access the base application from the browser
 
-To stop the service, hit `Ctrl-c`.
+    http://localhost:8000
+
+To stop the service, hit `Ctrl-c` from the docker container.
 
 
 # Updating Your Application
