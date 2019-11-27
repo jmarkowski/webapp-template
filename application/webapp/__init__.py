@@ -1,4 +1,5 @@
 from flask import Flask
+from webapp.blueprints.example import page
 
 
 def create_app():
@@ -9,9 +10,6 @@ def create_app():
 
     app.config.from_object('config.settings')
 
-    @app.route('/')
-    def index():
-        debug_state = 'enabled' if app.config['DEBUG'] else 'disabled'
-        return 'Hello World! (debug_state = {})'.format(debug_state)
+    app.register_blueprint(page)
 
     return app
