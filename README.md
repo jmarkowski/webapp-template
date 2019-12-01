@@ -44,6 +44,17 @@ effect immediately.
 This is made possible from `RELOAD_ARG` in the `docker-compose.yaml` file.
 
 
+## Changing the Container Name
+
+To change the container names so that they are not simply `webapp_applicaton`
+and `webapp_proxy`, you will need to make changes to two files:
+
+*  `./docker-compose.yaml`
+*  `./reverse-proxy/nginx.conf`
+
+Only within these files are the container names referenced.
+
+
 # Development Without Docker
 
 These are the instructions for developing the python application in the
