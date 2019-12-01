@@ -82,3 +82,9 @@ environment!
 4.  Access the application from the browser
 
         http://localhost:5000
+
+
+# Wish List
+
+* Makefile based, with settings that can be used to fetch and install various
+  frameworks (for example, bootstrap, and fontawesome)
