@@ -16,7 +16,7 @@ one for the load balancer.
 
 # Development With Docker
 
-Run the following command as `docker-compose.yml` to build the services:
+Run the following command as `docker-compose.yaml` to build the services:
 
     $ docker-compose build
 
