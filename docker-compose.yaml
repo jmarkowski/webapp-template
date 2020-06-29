@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
 
-  proxy:
+  reverse_proxy:
     image: nginx:1.19.0
-    container_name: ${WEBAPP}_proxy
+    container_name: ${WEBAPP}_reverse_proxy
     restart: always
     volumes:
       - './reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro'
