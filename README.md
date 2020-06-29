@@ -44,6 +44,19 @@ effect immediately.
 This is made possible from `RELOAD_ARG` in the `docker-compose.yaml` file.
 
 
+## Changing the Application Name
+
+By default, `docker-compose.yaml` uses an environment file named `.env` in the
+same directory as it.
+
+That file should specify the `WEBAPP` environment variable with the name of the
+application.
+
+Note that this will change the application container (default:
+`webapp_container`), which means you will need to update
+`reverse-proxy/nginx.conf` to specify the new container name.
+
+
 ## Changing the Container Name
 
 To change the container names so that they are not simply `webapp_applicaton`

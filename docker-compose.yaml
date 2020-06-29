@@ -3,11 +3,11 @@ version: '3.7'
 services:
 
   proxy:
-    build: ./reverse-proxy
+    image: nginx:1.19.0
     container_name: ${WEBAPP}_proxy
     restart: always
-    environment:
-      - WEBAPP=${WEBAPP}
+    volumes:
+      - './reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro'
     ports:
       - ${HOST_HTTP_PORT}:80
 
