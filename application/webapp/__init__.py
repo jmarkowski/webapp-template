@@ -1,5 +1,5 @@
 from flask import Flask
-from webapp.blueprints.example import page
+from webapp.example import page
 
 
 def create_app():
