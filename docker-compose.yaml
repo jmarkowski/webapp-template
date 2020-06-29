@@ -4,14 +4,16 @@ services:
 
   proxy:
     build: ./reverse-proxy
-    container_name: webapp_proxy
+    container_name: ${WEBAPP}_proxy
     restart: always
+    environment:
+      - WEBAPP=${WEBAPP}
     ports:
       - ${HOST_HTTP_PORT}:80
 
   application:
     build: ./application
-    container_name: webapp_application
+    container_name: ${WEBAPP}_application
     restart: always
     volumes:
         - './application:/home/webapp'
