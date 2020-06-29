@@ -10,6 +10,8 @@ services:
       - './reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro'
     ports:
       - ${HOST_HTTP_PORT}:80
+    networks:
+      - webapp_network
 
   application:
     build: ./application
@@ -24,6 +26,8 @@ services:
         # Do not set this variable if you do not want real-time changes to take
         # effect. Note: This expects the volume to be used as well!
         RELOAD_ARG: '--reload'
+    networks:
+      - webapp_network
 
   sql_database:
     image: postgres:12.3
@@ -38,6 +42,8 @@ services:
     secrets:
       - postgres_user
       - postgres_password
+    networks:
+      - webapp_network
 
   sql_adminstration:
     image: adminer:4.7.7
@@ -48,9 +54,16 @@ services:
     environment:
       # Avaialble designs: https://github.com/vrana/adminer/tree/master/designs
       ADMINER_DESIGN: 'nette'
+    networks:
+      - webapp_network
 
 secrets:
   postgres_user:
     file: ./secrets/postgres_user.txt
   postgres_password:
     file: ./secrets/postgres_password.txt
+
+networks:
+  webapp_network:
+    name: ${WEBAPP}_network
+    driver: bridge
