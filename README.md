@@ -68,6 +68,25 @@ and `webapp_proxy`, you will need to make changes to two files:
 Only within these files are the container names referenced.
 
 
+## Administering the SQL Database
+
+You can administer the SQL database by accessing the following address in your
+browser:
+
+    http://localhost:8080
+
+The web-based administration server is being hosted by the `sql_administration`
+docker container.
+
+Use the following information to log in:
+
+    System: PostgreSQL
+    Server: webapp_sql_database
+    Username: <./secrets/postgres_user.txt>
+    Password: <./secrets/postgres_password.txt>
+    Database: webapp_db
+
+
 # Development Without Docker
 
 These are the instructions for developing the python application in the

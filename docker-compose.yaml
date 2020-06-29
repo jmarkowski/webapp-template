@@ -39,6 +39,16 @@ services:
       - postgres_user
       - postgres_password
 
+  sql_adminstration:
+    image: adminer:4.7.7
+    container_name: ${WEBAPP}_sql_administration
+    restart: always
+    ports:
+      - ${HOST_SQL_ADMIN_PORT}:8080
+    environment:
+      # Avaialble designs: https://github.com/vrana/adminer/tree/master/designs
+      ADMINER_DESIGN: 'nette'
+
 secrets:
   postgres_user:
     file: ./secrets/postgres_user.txt
