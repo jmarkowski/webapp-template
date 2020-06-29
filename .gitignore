@@ -12,3 +12,7 @@ instance/
 env/
 venv/
 pyenv/
+
+# Private data
+data/
+secrets/
