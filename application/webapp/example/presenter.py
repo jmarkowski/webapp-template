@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import current_app
 
 
-page = Blueprint('page', __name__, template_folder='templates')
+page = Blueprint('page', __name__, template_folder='views')
 
 
 @page.route('/')
