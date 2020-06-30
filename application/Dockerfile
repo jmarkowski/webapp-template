@@ -21,6 +21,9 @@ COPY . .
 # These are the environment variables required for the app
 ENV FLASK_APP main.py
 
+# Disable python output buffering. This allows gunicorn output to be real-time.
+ENV PYTHONUNBUFFERED true
+
 # Ownership of all the copied files must belong to the webapp user
 RUN chown -R webapp:webapp /home/webapp
 

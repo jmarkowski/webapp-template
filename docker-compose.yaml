@@ -20,9 +20,6 @@ services:
     volumes:
         - './application:/home/webapp'
     environment:
-        # Unbuffer gunicorn log output so that it's real-time
-        PYTHONUNBUFFERED: 'true'
-
         # Do not set this variable if you do not want real-time changes to take
         # effect. Note: This expects the volume to be used as well!
         RELOAD_ARG: '--reload'
