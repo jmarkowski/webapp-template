@@ -30,5 +30,5 @@ RUN chown -R webapp:webapp /home/webapp
 # Set the user of the running image
 USER webapp
 
-# Finally, pass the execution to the entrypoint script
-ENTRYPOINT ["./docker-entrypoint.sh"]
+# Finally, pass the execution to the command script
+CMD ["./docker-cmd-gunicorn.sh"]
