@@ -87,6 +87,17 @@ Use the following information to log in:
     Database: webapp_db
 
 
+# Unit Testing the Application
+
+With the containers running, connect to the application environment:
+
+    $ docker-compose exec application bash
+
+Finally, execute the test scripts:
+
+    $ python3 tests/*.py
+
+
 # Development Without Docker
 
 These are the instructions for developing the python application in the
