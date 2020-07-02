@@ -97,6 +97,11 @@ Finally, execute the test scripts:
 
     $ python3 tests/*.py
 
+Note: Alternatively, you may want to opt for running the tests according to the
+module name. For example,
+
+    $ python3 -m tests.example
+
 
 # Development Without Docker
 
