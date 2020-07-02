@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 import unittest
 
-from main import app
+from webapp import create_app
 
 
 class TestCase(unittest.TestCase):
     def setUp(self):
-        app.config['TESTING'] = True
-        app.config['DEBUG'] = False
+        test_settings = {
+            'TESTING': True,
+            'DEBUG': False,
+        }
+
+        app = create_app(override_settings=test_settings)
 
         # Create the test client
         self.client = app.test_client()
