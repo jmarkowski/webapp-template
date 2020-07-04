@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import unittest
 
+from flask import current_app
 from webapp import create_app
 
 
@@ -11,16 +12,23 @@ class TestCase(unittest.TestCase):
             'DEBUG': False,
         }
 
-        app = create_app(override_settings=test_settings)
+        self.app = create_app(override_settings=test_settings)
 
         # Create the test client
-        self.client = app.test_client()
+        self.client = self.app.test_client()
 
         # Propogate exceptions to the test client
         self.client.testing = True
 
+        # Bind the application context to the current context.
+        self.app_context = self.app.app_context()
+        self.app_context.push()
+
     def tearDown(self):
-        pass
+        self.app_context.pop()
+
+    def test_app_exists(self):
+        self.assertFalse(current_app is None)
 
     def test_route_to_index(self):
         response = self.client.get('/', follow_redirects=True)
