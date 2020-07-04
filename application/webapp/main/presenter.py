@@ -3,15 +3,15 @@ from flask import current_app
 from flask import jsonify
 
 
-page = Blueprint('page', __name__, template_folder='views')
+main_bp = Blueprint('main_bp', __name__, template_folder='views')
 
 
-@page.route('/')
+@main_bp.route('/')
 def index():
     return 'Hello World!'
 
 
-@page.route('/config/<config_var>', methods=['GET'])
+@main_bp.route('/config/<config_var>', methods=['GET'])
 def config(config_var='TESTING'):
     config_var = config_var.upper()
 

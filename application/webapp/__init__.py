@@ -1,5 +1,5 @@
 from flask import Flask
-from webapp.example import page
+from webapp.main import main_bp
 from config import config_map
 
 
@@ -14,6 +14,6 @@ def create_app(app_config, override_settings=None):
     if override_settings:
         app.config.update(override_settings)
 
-    app.register_blueprint(page)
+    app.register_blueprint(main_bp)
 
     return app
