@@ -26,9 +26,6 @@ class TestCase(unittest.TestCase):
     def tearDown(self):
         self.app_context.pop()
 
-    def test_app_exists(self):
-        self.assertFalse(current_app is None)
-
     def test_route_to_index(self):
         response = self.client.get('/', follow_redirects=True)
         self.assertEqual(200, response.status_code)
