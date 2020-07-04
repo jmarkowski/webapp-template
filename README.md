@@ -44,6 +44,32 @@ effect immediately.
 This is made possible from `RELOAD_ARG` in the `docker-compose.yaml` file.
 
 
+## Environment Configuration
+
+The `docker-compose.yaml` file reads environment variables that are defined in
+a `.env` file at the same location.
+
+The `.env` file expects the following data to be configured:
+
+    ```
+    WEBAPP=webapp
+    HOST_HTTP_PORT=8000
+    HOST_SQL_ADMIN_PORT=8080
+
+    # Configure the application environment context.
+    # Options:
+    #   development
+    #   production
+    #   testing
+    APP_CONFIG=development
+
+    # Add the following prefix to all images built with docker-compose
+    COMPOSE_PROJECT_NAME=${WEBAPP}
+    ```
+
+See https://docs.docker.com/compose/env-file/
+
+
 ## Changing the Application Name
 
 By default, `docker-compose.yaml` uses an environment file named `.env` in the

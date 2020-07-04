@@ -8,11 +8,10 @@ from webapp import create_app
 class TestCase(unittest.TestCase):
     def setUp(self):
         test_settings = {
-            'TESTING': True,
-            'DEBUG': False,
+            'CUSTOM_CONFIG': 99
         }
 
-        self.app = create_app(override_settings=test_settings)
+        self.app = create_app('testing', override_settings=test_settings)
 
         # Create the test client
         self.client = self.app.test_client()
@@ -34,19 +33,19 @@ class TestCase(unittest.TestCase):
         response = self.client.get('/', follow_redirects=True)
         self.assertEqual(200, response.status_code)
 
-    def test_json_api_debug_config(self):
-        var = 'debug'
-        response = self.client.get('/config/{}'.format(var))
-        self.assertEqual(200, response.status_code)
-        self.assertTrue(response.is_json)
-        self.assertDictEqual({'debug': False}, response.get_json())
+    def test_json_api_testing_var(self):
+        response = self.client.get('/config/testing')
 
-    def test_json_api_testing_config(self):
-        var = 'testing'
-        response = self.client.get('/config/{}'.format(var))
         self.assertEqual(200, response.status_code)
         self.assertTrue(response.is_json)
         self.assertDictEqual({'testing': True}, response.get_json())
+
+    def test_json_api_custom_config_var(self):
+        response = self.client.get('/config/custom_config')
+
+        self.assertEqual(200, response.status_code)
+        self.assertTrue(response.is_json)
+        self.assertDictEqual({'custom_config': 99}, response.get_json())
 
 
 if __name__ == '__main__':
