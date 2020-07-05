@@ -113,9 +113,26 @@ Use the following information to log in:
     Database: webapp_db
 
 
+## Working in a Flask Shell
+
+With the containers running, connect to the application:
+
+    $ docker-compose exec application bash
+
+From here, you can launch the Flask shell as follows:
+
+    $ flask shell
+
+This interactive shell will expose variables that may define within the
+`application/main.py` file.
+
+See the [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/cli/#open-a-shell)
+for more details.
+
+
 # Unit Testing the Application
 
-With the containers running, connect to the application environment:
+With the containers running, connect to the application:
 
     $ docker-compose exec application bash
 
