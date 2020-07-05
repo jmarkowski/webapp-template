@@ -12,7 +12,8 @@ def create_app(app_config, override_settings=None):
     secrets_path = os.path.abspath('./secrets')
     app = Flask(__name__,
                 instance_path=secrets_path,
-                instance_relative_config=True)
+                instance_relative_config=True,
+                template_folder='views')
 
     app.config.from_object(config_map[app_config])
 
