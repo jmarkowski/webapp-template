@@ -13,6 +13,5 @@ env/
 venv/
 pyenv/
 
-# Private data
+# Ignore private data
 data/
-secrets/
