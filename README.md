@@ -14,6 +14,17 @@ As such, this repository contains two docker images: one for the application and
 one for the load balancer.
 
 
+# Project Initialization
+
+Included in this repository is an `init` script that removes files that should
+not be committed as part of your project.
+
+It's expected that if you're initializing the project for the first time, you'll
+run the script.
+
+    $ ./init
+
+
 # Development With Docker
 
 Run the following command as `docker-compose.yaml` to build the services:
