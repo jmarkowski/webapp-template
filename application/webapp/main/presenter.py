@@ -10,8 +10,8 @@ main_bp = Blueprint('main_bp', __name__, template_folder='views')
 @main_bp.route('/')
 def index():
     title = 'Web Application Template'
-    heading = 'Heading'
-    text = 'Text'
+    heading = 'Web Application Template'
+    leading_text = 'This barebones HTML document is served from a dynamic python backend.'
 
     # Templates are searched globally, first at the application level, and then
     # at the blueprint level. For this reason, we "namespace" our
@@ -19,7 +19,7 @@ def index():
     return render_template('main_index.html',
                            title=title,
                            heading=heading,
-                           text=text)
+                           leading_text=leading_text)
 
 
 @main_bp.route('/config/<config_var>', methods=['GET'])
