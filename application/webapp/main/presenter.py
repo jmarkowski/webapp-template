@@ -4,7 +4,7 @@ from flask import jsonify
 from flask import render_template
 
 
-main_bp = Blueprint('main_bp', __name__, template_folder='views')
+main_bp = Blueprint('main_bp', __name__)
 
 
 @main_bp.route('/')
@@ -16,7 +16,7 @@ def index():
     # Templates are searched globally, first at the application level, and then
     # at the blueprint level. For this reason, we "namespace" our
     # blueprint-specific templates by prefixing them with the blueprint name.
-    return render_template('main_index.html',
+    return render_template('main/index.html',
                            title=title,
                            heading=heading,
                            leading_text=leading_text)
