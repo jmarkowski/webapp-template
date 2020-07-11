@@ -13,11 +13,11 @@ class TestCase(unittest.TestCase):
 
         self.app = create_app('testing', override_settings=test_settings)
 
+        # Propogate exceptions to the test client
+        self.app.testing = True
+
         # Create the test client
         self.client = self.app.test_client()
-
-        # Propogate exceptions to the test client
-        self.client.testing = True
 
         # Bind the application context to the current context.
         self.app_context = self.app.app_context()
