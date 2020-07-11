@@ -5,13 +5,15 @@ from webapp.main import main_bp
 from config import config_map
 
 
+secret_config = './secrets/settings.py'
+
+
 def create_app(app_config, override_settings=None):
     """
     Create a Flask application using the factory pattern.
     """
-    secrets_path = os.path.abspath('./secrets')
     app = Flask(__name__,
-                instance_path=secrets_path,
+                instance_path=os.path.abspath(os.path.dirname(secret_config)),
                 instance_relative_config=True,
                 template_folder='views')
 
@@ -22,7 +24,7 @@ def create_app(app_config, override_settings=None):
     #
     # With `silent=True`, Flask will not crash if the `settings.py` file
     # does not exist.
-    app.config.from_pyfile('settings.py', silent=True)
+    app.config.from_pyfile(os.path.basename(secret_config), silent=True)
 
     if override_settings:
         app.config.update(override_settings)
