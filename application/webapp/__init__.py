@@ -1,11 +1,17 @@
 import os
 
 from flask import Flask
-from webapp.main import main_bp
 from config import config_map
 
 
 secret_config = './secrets/settings.py'
+
+
+def init_blueprints(app):
+    # Import the blueprints only as they are needed (this prevents circular
+    # dependencies).
+    from webapp.main import main_bp
+    app.register_blueprint(main_bp)
 
 
 def create_app(app_config, override_settings=None):
@@ -29,6 +35,6 @@ def create_app(app_config, override_settings=None):
     if override_settings:
         app.config.update(override_settings)
 
-    app.register_blueprint(main_bp)
+    init_blueprints(app)
 
     return app
