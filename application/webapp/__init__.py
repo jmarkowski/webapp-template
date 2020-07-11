@@ -14,6 +14,11 @@ def init_blueprints(app):
     app.register_blueprint(main_bp)
 
 
+def init_extensions(app):
+    # Any plug-in Flask extensions that require initialization may be done here.
+    pass
+
+
 def create_app(app_config, override_settings=None):
     """
     Create a Flask application using the factory pattern.
@@ -36,5 +41,6 @@ def create_app(app_config, override_settings=None):
         app.config.update(override_settings)
 
     init_blueprints(app)
+    init_extensions(app)
 
     return app
