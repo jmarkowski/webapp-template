@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import unittest
+from http import HTTPStatus
 
 from flask import current_app
 from webapp import create_app
@@ -28,19 +29,19 @@ class TestCase(unittest.TestCase):
 
     def test_route_to_index(self):
         response = self.client.get('/', follow_redirects=True)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
 
     def test_json_api_testing_var(self):
         response = self.client.get('/config/testing')
 
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertTrue(response.is_json)
         self.assertDictEqual({'testing': True}, response.get_json())
 
     def test_json_api_custom_config_var(self):
         response = self.client.get('/config/custom_config')
 
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertTrue(response.is_json)
         self.assertDictEqual({'custom_config': 99}, response.get_json())
 
