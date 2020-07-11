@@ -7,6 +7,13 @@ from config import config_map
 secret_config = './secrets/settings.py'
 
 
+def check_config_conditions(app):
+    # Check the configuration for any possible show-stopping settings, and
+    # provide helpful assertion messages if needed.
+    assert app.config.get('SECRET_KEY'), \
+        'Define SECRET_KEY in {}'.format(secret_config)
+
+
 def init_blueprints(app):
     # Import the blueprints only as they are needed (this prevents circular
     # dependencies).
@@ -39,6 +46,8 @@ def create_app(app_config, override_settings=None):
 
     if override_settings:
         app.config.update(override_settings)
+
+    check_config_conditions(app)
 
     init_blueprints(app)
     init_extensions(app)
