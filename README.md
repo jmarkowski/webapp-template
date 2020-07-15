@@ -27,6 +27,48 @@ run the script.
 
 # Development With Docker
 
+## Setup
+
+By default, `docker compose` reads environment variables from a file named
+`.env` in the same path as the `docker-compose.yaml` file, which orchestrates
+and configures the execution of the various docker containers.
+
+Currently, the `.env` file expects the following data to be configured:
+
+    ```
+    WEBAPP=webapp
+    HOST_HTTP_PORT=8000
+    HOST_SQL_ADMIN_PORT=8080
+
+    # Configure the application environment context.
+    # Options:
+    #   development
+    #   production
+    #   testing
+    APP_CONFIG=development
+
+    # Add the following prefix to all images built with docker-compose
+    COMPOSE_PROJECT_NAME=${WEBAPP}
+    ```
+
+For more information on defining environment variables, see
+[https://docs.docker.com/compose/env-file/](https://docs.docker.com/compose/env-file/)
+
+### Changing the Container Prefixes
+
+To change the container prefixes (by default they are `webapp_*`), you will need
+to modify two files prior to running the docker-compose command:
+
+*  `./.env`
+    * Set the `WEBAPP` variable, which will be the container prefix.
+*  `./reverse-proxy/nginx.conf`
+    * Change references to `webapp_*` to match the new container prefix.
+    * Unfortunately, nginx does not have a simple and elegant way to pass
+      environment variables into their configuration file.
+
+
+## First Run
+
 Run the following command as `docker-compose.yaml` to build the services:
 
     $ docker-compose build
@@ -53,56 +95,6 @@ detects any changes allowing your modifications to the application to take
 effect immediately.
 
 This is made possible from `RELOAD_ARG` in the `docker-compose.yaml` file.
-
-
-## Environment Configuration
-
-The `docker-compose.yaml` file reads environment variables that are defined in
-a `.env` file at the same location.
-
-The `.env` file expects the following data to be configured:
-
-    ```
-    WEBAPP=webapp
-    HOST_HTTP_PORT=8000
-    HOST_SQL_ADMIN_PORT=8080
-
-    # Configure the application environment context.
-    # Options:
-    #   development
-    #   production
-    #   testing
-    APP_CONFIG=development
-
-    # Add the following prefix to all images built with docker-compose
-    COMPOSE_PROJECT_NAME=${WEBAPP}
-    ```
-
-See https://docs.docker.com/compose/env-file/
-
-
-## Changing the Application Name
-
-By default, `docker-compose.yaml` uses an environment file named `.env` in the
-same directory as it.
-
-That file should specify the `WEBAPP` environment variable with the name of the
-application.
-
-Note that this will change the application container (default:
-`webapp_container`), which means you will need to update
-`reverse-proxy/nginx.conf` to specify the new container name.
-
-
-## Changing the Container Name
-
-To change the container names so that they are not simply `webapp_applicaton`
-and `webapp_proxy`, you will need to make changes to two files:
-
-*  `./docker-compose.yaml`
-*  `./reverse-proxy/nginx.conf`
-
-Only within these files are the container names referenced.
 
 
 ## Administering the SQL Database
