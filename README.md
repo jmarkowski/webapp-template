@@ -1,17 +1,15 @@
 # Overview
 
 This repository contains a boilerplate setup for a scalable python-based web
-application using the Flask framework and an nginx reverse-proxy as the load
-balancer.
+application using the Flask framework, an nginx reverse-proxy as the load
+balancer, and PostgreSQL as the database option along with a web-based database
+administration portal.
 
 The setup uses the production-grade [gunicorn](https://gunicorn.org/) WSGI HTTP
 server to serve the Flask application, running in a python virtual environment.
 
 It also uses [nginx](https://www.nginx.com/) to serve as a reverse-proxy
 to achieve [layer 7 load balancing](https://www.nginx.com/resources/glossary/layer-7-load-balancing/).
-
-As such, this repository contains two docker images: one for the application and
-one for the load balancer.
 
 
 # Project Initialization
