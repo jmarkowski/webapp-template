@@ -1,5 +1,7 @@
 class Config(object):
-    pass
+    SITE = {
+        'brand': 'Web Application Template'
+    }
 
 
 class ProductionConfig(Config):

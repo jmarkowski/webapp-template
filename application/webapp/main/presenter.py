@@ -42,6 +42,9 @@ def util_processor():
     """Inject the following dictionary into all templates and render them
     automatically.
     """
+    site = current_app.config['SITE']
+
     return {
+        'site': site,
         'now': util.now
     }
