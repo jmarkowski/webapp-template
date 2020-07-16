@@ -5,7 +5,7 @@ from flask import render_template
 import util
 
 
-main_bp = Blueprint('main_bp', __name__)
+main_bp = Blueprint('main', __name__)
 
 
 @main_bp.route('/')
