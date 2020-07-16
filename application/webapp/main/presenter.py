@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask import current_app
 from flask import jsonify
 from flask import render_template
+import util
 
 
 main_bp = Blueprint('main_bp', __name__)
@@ -32,3 +33,15 @@ def config(config_var='TESTING'):
         config_dct = {config_var.lower(): None}
 
     return jsonify(config_dct)
+
+
+# Note: We are using the `app_context_processor` to have these functions
+# available globally.
+@main_bp.app_context_processor
+def util_processor():
+    """Inject the following dictionary into all templates and render them
+    automatically.
+    """
+    return {
+        'now': util.now
+    }
