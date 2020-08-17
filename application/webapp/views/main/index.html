@@ -7,7 +7,13 @@
 
   <div class="container">
   {% if email %}
-    We've added <strong>{{ email }}</strong> to our list.<br>Thank you for your interest!
+    {% if already_invited %}
+      We've already added <strong>{{ email }}</strong> to our invite list.<br>
+      Thank you again for interest!
+    {% else %}
+      We've added <strong>{{ email }}</strong> to our invite list.<br>
+      Thank you for your interest!
+    {% endif %}
   {% else %}
     <form action="{{ url_for('main.index') }}" method="post">
       <div class="form-group row">

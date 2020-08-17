@@ -1,7 +1,11 @@
 import os
 
 from flask import Flask
+from flask import _app_ctx_stack
+
 from config import config_map
+from util.sqlalchemy import create_tables
+from util.sqlalchemy import get_db_interface
 
 
 secret_config = './secrets/settings.py'
@@ -24,6 +28,11 @@ def init_blueprints(app):
 def init_extensions(app):
     # Any plug-in Flask extensions that require initialization may be done here.
     pass
+
+
+def init_db(app):
+    app.session, engine = get_db_interface(scopefunc=_app_ctx_stack.__ident_func__)
+    create_tables(engine)
 
 
 def create_app(app_config, override_settings=None):
@@ -51,5 +60,6 @@ def create_app(app_config, override_settings=None):
 
     init_blueprints(app)
     init_extensions(app)
+    init_db(app)
 
     return app

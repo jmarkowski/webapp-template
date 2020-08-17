@@ -4,6 +4,8 @@ from flask import jsonify
 from flask import render_template
 from flask import request
 
+from core.invitation import InvitationInteractor
+from webapp.invitation_model import InvitationGateway
 import util.time
 
 
@@ -16,6 +18,15 @@ def index():
     leading_text = 'This barebones HTML document is served from a dynamic python backend.'
 
     email = request.form.get('email')
+    already_invited = False
+
+    if email:
+        invitation_interactor = InvitationInteractor(InvitationGateway)
+
+        if invitation_interactor.is_email_already_invited(email):
+            already_invited = True
+        else:
+            invitation_interactor.add_email_to_invite_list(email)
 
     # Templates are searched globally, first at the application level, and then
     # at the blueprint level. For this reason, we "namespace" our
@@ -23,7 +34,8 @@ def index():
     return render_template('main/index.html',
                            heading=heading,
                            leading_text=leading_text,
-                           email=email)
+                           email=email,
+                           already_invited=already_invited)
 
 
 @main_bp.route('/config/<config_var>', methods=['GET'])
