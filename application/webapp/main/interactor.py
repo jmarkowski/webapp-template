@@ -11,7 +11,6 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
-    title = 'Web Application Template'
     heading = 'Web Application Template'
     leading_text = 'This barebones HTML document is served from a dynamic python backend.'
 
@@ -19,7 +18,6 @@ def index():
     # at the blueprint level. For this reason, we "namespace" our
     # blueprint-specific templates by prefixing them with the blueprint name.
     return render_template('main/index.html',
-                           title=title,
                            heading=heading,
                            leading_text=leading_text)
 
