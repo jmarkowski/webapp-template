@@ -4,4 +4,21 @@
 {% block content %}
   <h1>{{ heading }}</h1>
   <p class="lead">{{ leading_text }}</p>
+
+  <div class="container">
+  {% if email %}
+    We've added <strong>{{ email }}</strong> to our list.<br>Thank you for your interest!
+  {% else %}
+    <form action="{{ url_for('main.index') }}" method="post">
+      <div class="form-group row">
+        <div class="col-sm-3 offset-sm-3 my-3">
+          <input type="email" name="email" class="form-control" placeholder="you@example.com">
+        </div>
+        <div class="col-sm-3 my-3">
+          <button type="submit" class="btn btn-primary">Request Invitation</button>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+  </div>
 {% endblock %}
