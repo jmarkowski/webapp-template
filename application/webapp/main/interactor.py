@@ -2,7 +2,8 @@ from flask import Blueprint
 from flask import current_app
 from flask import jsonify
 from flask import render_template
-import util
+
+import util.time
 
 
 main_bp = Blueprint('main', __name__)
@@ -46,5 +47,5 @@ def util_processor():
 
     return {
         'site': site,
-        'now': util.now
+        'time_now': util.time.now
     }
