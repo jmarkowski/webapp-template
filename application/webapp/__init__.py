@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 from flask import Flask
 from flask import _app_ctx_stack
@@ -33,10 +34,20 @@ def init_extensions(app):
 def init_db(app):
     db_uri = app.config.get('DB_URI')
 
-    app.session, engine = get_db_interface(db_uri, \
-        scopefunc=_app_ctx_stack.__ident_func__)
+    db_ready = False
+    retry_interval_s = 5
 
-    create_tables(engine)
+    # The database connection MUST be available for the service to run.
+    while not db_ready:
+        try:
+            app.session, engine = get_db_interface(db_uri, \
+                scopefunc=_app_ctx_stack.__ident_func__)
+
+            create_tables(engine)
+            db_ready = True
+        except Exception as e:
+            print('Database not available: {}'.format(e))
+            sleep(retry_interval_s)
 
 
 def create_app(app_config, override_settings=None):
