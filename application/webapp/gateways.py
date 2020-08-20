@@ -21,4 +21,6 @@ class InvitationGateway(Base):
         return current_app.session.query(InvitationGateway).filter_by(email=email).first()
 
     def get_email_list(self):
-        raise NotImplementedError
+        rows = current_app.session.query(InvitationGateway).all()
+
+        return [r.email for r in rows]

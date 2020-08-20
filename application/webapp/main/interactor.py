@@ -50,6 +50,16 @@ def config(config_var='TESTING'):
     return jsonify(config_dct)
 
 
+@main_bp.route('/invites', methods=['GET'])
+def invites():
+    invitation_interactor = InvitationInteractor(InvitationGateway)
+    email_lst = invitation_interactor.get_invite_list()
+
+    invite_dct = {'emails': email_lst}
+
+    return jsonify(invite_dct)
+
+
 # Note: We are using the `app_context_processor` to have these functions
 # available globally.
 @main_bp.app_context_processor
