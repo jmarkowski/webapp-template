@@ -2,7 +2,8 @@ from flask import Blueprint
 from flask import current_app
 from flask import jsonify
 from flask import render_template
-import util
+
+import util.time
 
 
 main_bp = Blueprint('main', __name__)
@@ -10,7 +11,6 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
-    title = 'Web Application Template'
     heading = 'Web Application Template'
     leading_text = 'This barebones HTML document is served from a dynamic python backend.'
 
@@ -18,7 +18,6 @@ def index():
     # at the blueprint level. For this reason, we "namespace" our
     # blueprint-specific templates by prefixing them with the blueprint name.
     return render_template('main/index.html',
-                           title=title,
                            heading=heading,
                            leading_text=leading_text)
 
@@ -46,5 +45,5 @@ def util_processor():
 
     return {
         'site': site,
-        'now': util.now
+        'time_now': util.time.now
     }

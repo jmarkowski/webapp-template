@@ -1,6 +1,6 @@
 class Config(object):
     SITE = {
-        'brand': 'Web Application Template'
+        'brand': 'Web Application Brand'
     }
 
 
