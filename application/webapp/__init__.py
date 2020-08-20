@@ -41,7 +41,8 @@ def init_db(app):
     while not db_ready:
         try:
             app.db, engine = get_db_interface(db_uri, \
-                scopefunc=_app_ctx_stack.__ident_func__)
+                scopefunc=_app_ctx_stack.__ident_func__,
+                echo_raw_sql=app.config.get('DEBUG'))
 
             create_tables(engine)
             db_ready = True
