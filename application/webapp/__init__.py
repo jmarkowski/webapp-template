@@ -32,7 +32,7 @@ def init_extensions(app):
 
 
 def init_db(app):
-    db_uri = app.config.get('DB_URI')
+    db_uri = app.config.get('DB_URI', 'sqlite:///:memory:')
 
     db_ready = False
     retry_interval_s = 5
