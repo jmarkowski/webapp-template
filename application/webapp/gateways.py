@@ -14,13 +14,13 @@ class InvitationGateway(Base):
     def add_email(self, email):
         self.email = email
 
-        current_app.session.add(self)
-        current_app.session.commit()
+        current_app.db.add(self)
+        current_app.db.commit()
 
     def get_email(self, email):
-        return current_app.session.query(InvitationGateway).filter_by(email=email).first()
+        return current_app.db.query(InvitationGateway).filter_by(email=email).first()
 
     def get_email_list(self):
-        rows = current_app.session.query(InvitationGateway).all()
+        rows = current_app.db.query(InvitationGateway).all()
 
         return [r.email for r in rows]

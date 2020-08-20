@@ -40,7 +40,7 @@ def init_db(app):
     # The database connection MUST be available for the service to run.
     while not db_ready:
         try:
-            app.session, engine = get_db_interface(db_uri, \
+            app.db, engine = get_db_interface(db_uri, \
                 scopefunc=_app_ctx_stack.__ident_func__)
 
             create_tables(engine)
