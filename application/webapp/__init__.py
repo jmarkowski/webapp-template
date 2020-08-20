@@ -1,7 +1,12 @@
 import os
+from time import sleep
 
 from flask import Flask
+from flask import _app_ctx_stack
+
 from config import config_map
+from util.sqlalchemy import create_tables
+from util.sqlalchemy import get_db_interface
 
 
 secret_config = './secrets/settings.py'
@@ -24,6 +29,25 @@ def init_blueprints(app):
 def init_extensions(app):
     # Any plug-in Flask extensions that require initialization may be done here.
     pass
+
+
+def init_db(app):
+    db_uri = app.config.get('DB_URI')
+
+    db_ready = False
+    retry_interval_s = 5
+
+    # The database connection MUST be available for the service to run.
+    while not db_ready:
+        try:
+            app.session, engine = get_db_interface(db_uri, \
+                scopefunc=_app_ctx_stack.__ident_func__)
+
+            create_tables(engine)
+            db_ready = True
+        except Exception as e:
+            print('Database not available: {}'.format(e))
+            sleep(retry_interval_s)
 
 
 def create_app(app_config, override_settings=None):
@@ -51,5 +75,6 @@ def create_app(app_config, override_settings=None):
 
     init_blueprints(app)
     init_extensions(app)
+    init_db(app)
 
     return app

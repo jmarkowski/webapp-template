@@ -8,3 +8,5 @@
 #
 # It should go without saying: NEVER REVEAL THE SECRET KEY.
 SECRET_KEY = 'my-super-secret-key'
+
+DB_URI = 'postgresql://postgres:mypassword@sql_database:5432/webapp_db'

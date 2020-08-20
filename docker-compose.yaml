@@ -12,6 +12,8 @@ services:
       - ${HOST_HTTP_PORT}:80
     networks:
       - webapp_network
+    depends_on:
+      - application
 
   application:
     build: ./application
@@ -26,6 +28,8 @@ services:
         APP_CONFIG: ${APP_CONFIG}
     networks:
       - webapp_network
+    depends_on:
+      - sql_database
 
   sql_database:
     image: postgres:12.3
@@ -54,6 +58,8 @@ services:
       ADMINER_DESIGN: 'nette'
     networks:
       - webapp_network
+    depends_on:
+      - sql_database
 
 secrets:
   postgres_user:

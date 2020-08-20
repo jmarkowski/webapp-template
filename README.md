@@ -2,7 +2,7 @@
 
 This repository contains a boilerplate setup for a scalable python-based web
 application using the Flask framework, an nginx reverse-proxy as the load
-balancer, and PostgreSQL as the database option along with a web-based database
+balancer, and PostgreSQL as the database along with a web-based database
 administration portal.
 
 The setup uses the production-grade [gunicorn](https://gunicorn.org/) WSGI HTTP
@@ -10,6 +10,13 @@ server to serve the Flask application, running in a python virtual environment.
 
 It also uses [nginx](https://www.nginx.com/) to serve as a reverse-proxy
 to achieve [layer 7 load balancing](https://www.nginx.com/resources/glossary/layer-7-load-balancing/).
+
+Database interface support using an ORM is added using [SQLAlchemy](https://www.sqlalchemy.org).
+The use of the [Flask-SQLAlchemy](https://github.com/pallets/flask-sqlalchemy)
+plugin is intentionally avoided to support Flask-decoupled testing of database.
+In addition, it promotes a separation of concerns.
+See [Use Flask and SQLAlchemy, not Flask-SQLAlchemy!](https://towardsdatascience.com/use-flask-and-sqlalchemy-not-flask-sqlalchemy-5a64fafe22a4)
+for more details.
 
 
 # Project Initialization
