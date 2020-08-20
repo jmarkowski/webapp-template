@@ -31,7 +31,11 @@ def init_extensions(app):
 
 
 def init_db(app):
-    app.session, engine = get_db_interface(scopefunc=_app_ctx_stack.__ident_func__)
+    db_uri = app.config.get('DB_URI')
+
+    app.session, engine = get_db_interface(db_uri, \
+        scopefunc=_app_ctx_stack.__ident_func__)
+
     create_tables(engine)
 
 

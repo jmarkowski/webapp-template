@@ -19,7 +19,10 @@ def get_db_interface(db_uri='sqlite:///sqlite3.db', scopefunc=None):
         postgresql://[user[:password]@][netloc][:port][/dbname]
         sqlite:///path/to/data.sqlite
     """
-    engine = create_engine(db_uri, connect_args={'check_same_thread': False})
+    if db_uri.startswith('sqlite'):
+        engine = create_engine(db_uri, connect_args={'check_same_thread': False})
+    else:
+        engine = create_engine(db_uri)
 
     session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

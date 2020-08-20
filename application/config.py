@@ -9,6 +9,7 @@ class ProductionConfig(Config):
 
 
 class TestingConfig(Config):
+    DB_URI = 'sqlite:///test.db'
     TESTING = True
 
 
