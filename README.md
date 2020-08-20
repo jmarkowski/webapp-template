@@ -115,7 +115,7 @@ docker container.
 Use the following information to log in:
 
     System: PostgreSQL
-    Server: webapp_sql_database
+    Server: sql_database
     Username: <./secrets/postgres_user.txt>
     Password: <./secrets/postgres_password.txt>
     Database: webapp_db

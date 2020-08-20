@@ -32,7 +32,7 @@ def init_extensions(app):
 
 
 def init_db(app):
-    db_uri = app.config.get('DB_URI')
+    db_uri = app.config.get('DB_URI', 'sqlite:///:memory:')
 
     db_ready = False
     retry_interval_s = 5
@@ -40,8 +40,9 @@ def init_db(app):
     # The database connection MUST be available for the service to run.
     while not db_ready:
         try:
-            app.session, engine = get_db_interface(db_uri, \
-                scopefunc=_app_ctx_stack.__ident_func__)
+            app.db, engine = get_db_interface(db_uri, \
+                scopefunc=_app_ctx_stack.__ident_func__,
+                echo_raw_sql=app.config.get('DEBUG'))
 
             create_tables(engine)
             db_ready = True

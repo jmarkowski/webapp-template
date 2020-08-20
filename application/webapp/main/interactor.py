@@ -5,7 +5,7 @@ from flask import render_template
 from flask import request
 
 from core.invitation import InvitationInteractor
-from webapp.invitation_model import InvitationGateway
+from webapp.gateways import InvitationGateway
 import util.time
 
 
@@ -48,6 +48,16 @@ def config(config_var='TESTING'):
         config_dct = {config_var.lower(): None}
 
     return jsonify(config_dct)
+
+
+@main_bp.route('/invites', methods=['GET'])
+def invites():
+    invitation_interactor = InvitationInteractor(InvitationGateway)
+    email_lst = invitation_interactor.get_invite_list()
+
+    invite_dct = {'emails': email_lst}
+
+    return jsonify(invite_dct)
 
 
 # Note: We are using the `app_context_processor` to have these functions
