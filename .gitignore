@@ -15,3 +15,6 @@ pyenv/
 
 # Ignore private data
 data/
+
+# Ignore intermediate project setup files
+/Makefile

@@ -1,0 +1,86 @@
+#!/bin/sh
+
+#
+# Constants
+#
+HELP=$(cat <<_HELP
+Usage: ./configure [OPTION] ...
+
+Options:
+  --verbose                 Enable verbose output
+
+_HELP
+)
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+BLUE='\033[1;34m'
+GREY='\033[0;37m'
+NONE='\033[0m'
+
+#
+# Supporting functions
+#
+function die() {
+  echo -e ${RED}ERROR:${NONE} ${@}
+  exit 1
+}
+
+#
+# Parse options
+#
+for arg in "$@"; do
+    case "$arg" in
+
+    --verbose)
+        verbose=true
+        ;;
+
+    -h|--help)
+        echo "$HELP"
+        exit 0
+        ;;
+    *)
+        echo "Invalid argument: $arg"
+        exit 1
+        ;;
+    esac
+done
+
+#
+# Set default options
+#
+if [ -z ${verbose+x} ]; then
+    verbose=false
+fi
+
+#
+# Check conditions
+#
+git -C . rev-parse &> /dev/null
+git_cmd_retcode=$?
+if [ $git_cmd_retcode -ne 0 ]; then
+  die "This project directory is not a git repository."
+fi
+
+#
+# Generate the Makefile
+#
+output_file="Makefile"
+
+if [ -f $output_file ]; then
+  rm -f $output_file
+fi
+
+if $verbose; then
+    echo 'VERBOSE=y' >> $output_file
+else
+    echo 'VERBOSE=n' >> $output_file
+fi
+
+echo "" >> $output_file
+
+cat Makefile.in >> $output_file
+
+echo 'Configuration complete.'
+echo 'Type "make" to initialize the project repository.'
