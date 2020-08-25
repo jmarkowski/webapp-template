@@ -1,0 +1,19 @@
+ifeq ($(VERBOSE),n)
+SILENT = @
+endif
+
+all:
+	$(SILENT)echo "Unstaging tracked secrets from repository cache...";
+	$(SILENT)git rm --cached secrets/postgres_user.txt &> /dev/null;
+	$(SILENT)git rm --cached secrets/postgres_password.txt &> /dev/null;
+	$(SILENT)git rm --cached application/secrets/settings.py &> /dev/null;
+	$(SILENT)echo "Removing unnecessary tracked files...";
+	$(SILENT)git rm LICENSE &> /dev/null;
+	$(SILENT)git rm Makefile.in &> /dev/null;
+	$(SILENT)git rm configure &> /dev/null;
+	$(SILENT)echo "Removing intermediate files...";
+	$(SILENT)rm -f Makefile;
+	$(SILENT)echo "";
+	$(SILENT)echo "You may now safely commit the staged changes :)";
+	$(SILENT)echo "For example:";
+	$(SILENT)echo "    git commit -a -m\"Initialize project\"";

@@ -21,13 +21,12 @@ for more details.
 
 # Project Initialization
 
-Included in this repository is an `init` script that removes files that should
-not be committed as part of your project.
+The following commands will configure the template project.
 
-It's expected that if you're initializing the project for the first time, you'll
-run the script.
+    $ ./configure
+    $ make
 
-    $ ./init
+For a set of configuration options, use the help flag: `./configure -h`.
 
 
 # Development With Docker
@@ -190,9 +189,3 @@ environment!
     - `application/secrets/settings.py`
 4. Commit your changes to your project repository, push, merge.
 5. The rest is all up to you.
-
-
-# Wish List
-
-* Makefile based, with settings that can be used to fetch and install various
-  frameworks (for example, bootstrap, and fontawesome)
