@@ -122,15 +122,19 @@ Use the following information to log in:
 
 ## Working in a Flask Shell
 
-With the containers running, connect to the application:
+With the containers running, there are a couple of ways you can start working
+within the flask shell:
 
-    $ docker-compose exec application bash
+1. Using the top-level `command` script.
 
-From here, you can launch the Flask shell as follows:
+        $ ./command app shell
 
-    $ flask shell
+2. As a command executed in the application container.
 
-This interactive shell will expose variables that may define within the
+        $ docker-compose exec application bash
+        # flask shell
+
+The interactive shell will expose variables that may define within the
 `application/main.py` file.
 
 See the [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/cli/#open-a-shell)
@@ -139,15 +143,20 @@ for more details.
 
 # Unit Testing the Application
 
-With the containers running, you may execute all of the tests as follows:
+With the containers running, there are three ways you can run the unit tests:
 
-    $ docker-compose exec application bash -c "ls -1 tests/*.py | xargs -I{} python3 {}"
+1. Using the top-level `command` script.
 
-Note: Alternatively, you may want to opt for running the tests according to the
-module name. However, you would only be able to do this indivually. For example,
+        $ ./command app test
 
-    $ docker-compose exec application bash
-    # python3 -m tests.example
+2. As a one-liner bash command executed in the application container.
+
+        $ docker-compose exec application bash -c "ls -1 tests/*.py | xargs -I{} python3 {}"
+
+3. One at a time through an interactive bash shell in the application container.
+
+        $ docker-compose exec application bash
+        # python3 -m tests.example
 
 
 # Development Without Docker
@@ -177,15 +186,3 @@ environment!
 4.  Access the application from the browser
 
         http://localhost:5000
-
-
-# Starting Your Own Project
-
-1. Copy this project, or add it as an upstream source.
-2. Create your feature branch from this repository's master.
-3. Delete the files and folders (and add your own but *do not version control it*)
-    - `.env`
-    - `secrets/*`
-    - `application/secrets/settings.py`
-4. Commit your changes to your project repository, push, merge.
-5. The rest is all up to you.
