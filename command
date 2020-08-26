@@ -18,8 +18,12 @@ function cmd_app() {
       exec_cmd docker-compose exec application ./command test
       ;;
 
+    "shell")
+      exec_cmd docker-compose exec application flask shell
+      ;;
+
     *)
-      echo "$script app test"
+      echo "$script app [test|shell]"
       ;;
   esac
 }

@@ -122,15 +122,19 @@ Use the following information to log in:
 
 ## Working in a Flask Shell
 
-With the containers running, connect to the application:
+With the containers running, there are a couple of ways you can start working
+within the flask shell:
 
-    $ docker-compose exec application bash
+1. Using the top-level `command` script.
 
-From here, you can launch the Flask shell as follows:
+        $ ./command app shell
 
-    $ flask shell
+2. As a command executed in the application container.
 
-This interactive shell will expose variables that may define within the
+        $ docker-compose exec application bash
+        # flask shell
+
+The interactive shell will expose variables that may define within the
 `application/main.py` file.
 
 See the [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/cli/#open-a-shell)
