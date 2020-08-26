@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+function cmd_test() {
+  cd /home/webapp
+  tests=$(ls -1 tests/*.py)
+  for test in $tests
+  do
+    # Remove the extension and replace directory separator with a period
+    no_extension=${test%%.*}
+    module=${no_extension/\//.}
+
+    echo "Running $module"
+    python3 -m $module
+  done
+}
+
+case "$1" in
+  "test")
+    cmd_test
+    ;;
+
+  *)
+    echo "$script test"
+    ;;
+esac

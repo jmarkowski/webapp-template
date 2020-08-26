@@ -139,15 +139,20 @@ for more details.
 
 # Unit Testing the Application
 
-With the containers running, you may execute all of the tests as follows:
+With the containers running, there are three ways you can run the unit tests:
 
-    $ docker-compose exec application bash -c "ls -1 tests/*.py | xargs -I{} python3 {}"
+1. Using the top-level `command` script.
 
-Note: Alternatively, you may want to opt for running the tests according to the
-module name. However, you would only be able to do this indivually. For example,
+        $ ./command app test
 
-    $ docker-compose exec application bash
-    # python3 -m tests.example
+2. As a one-liner bash command executed in the application container.
+
+        $ docker-compose exec application bash -c "ls -1 tests/*.py | xargs -I{} python3 {}"
+
+3. One at a time through an interactive bash shell in the application container.
+
+        $ docker-compose exec application bash
+        # python3 -m tests.example
 
 
 # Development Without Docker
