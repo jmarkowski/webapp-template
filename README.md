@@ -177,15 +177,3 @@ environment!
 4.  Access the application from the browser
 
         http://localhost:5000
-
-
-# Starting Your Own Project
-
-1. Copy this project, or add it as an upstream source.
-2. Create your feature branch from this repository's master.
-3. Delete the files and folders (and add your own but *do not version control it*)
-    - `.env`
-    - `secrets/*`
-    - `application/secrets/settings.py`
-4. Commit your changes to your project repository, push, merge.
-5. The rest is all up to you.
