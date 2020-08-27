@@ -37,23 +37,9 @@ By default, `docker compose` reads environment variables from a file named
 `.env` in the same path as the `docker-compose.yaml` file, which orchestrates
 and configures the execution of the various docker containers.
 
-Currently, the `.env` file expects the following data to be configured:
-
-    ```
-    WEBAPP=webapp
-    HOST_HTTP_PORT=8000
-    HOST_SQL_ADMIN_PORT=8080
-
-    # Configure the application environment context.
-    # Options:
-    #   development
-    #   production
-    #   testing
-    APP_CONFIG=development
-
-    # Add the following prefix to all images built with docker-compose
-    COMPOSE_PROJECT_NAME=${WEBAPP}
-    ```
+Included is a `.env` file with default values set. When the project is
+initialized, the `.env` will be removed from the repository cache as it contains
+sensitive settings.
 
 For more information on defining environment variables, see
 [https://docs.docker.com/compose/env-file/](https://docs.docker.com/compose/env-file/)
@@ -61,14 +47,11 @@ For more information on defining environment variables, see
 ### Changing the Container Prefixes
 
 To change the container prefixes (by default they are `webapp_*`), you will need
-to modify two files prior to running the docker-compose command:
+to change the `webapp_*` references in the following two files prior to running
+th containeres:
 
-*  `./.env`
-    * Set the `WEBAPP` variable, which will be the container prefix.
-*  `./reverse-proxy/nginx.conf`
-    * Change references to `webapp_*` to match the new container prefix.
-    * Unfortunately, nginx does not have a simple and elegant way to pass
-      environment variables into their configuration file.
+* `./.env`
+* `./reverse-proxy/nginx.conf`
 
 
 ## First Run
