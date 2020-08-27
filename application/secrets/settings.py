@@ -1,4 +1,6 @@
 # Do NOT add this file to version control
+from os import getenv
+
 
 # A secret key is used for securely signing the session in a cookie and can be
 # used for other security related needs. It should be a long random string of
@@ -9,4 +11,8 @@
 # It should go without saying: NEVER REVEAL THE SECRET KEY.
 SECRET_KEY = 'my-super-secret-key'
 
-DB_URI = 'postgresql://postgres:mypassword@sql_database:5432/webapp_db'
+DB_URI = 'postgresql://{user}:{password}@{server}:5432/{database}' \
+         .format(user=getenv('POSTGRES_USER'),
+                 password=getenv('POSTGRES_PASSWORD'),
+                 database=getenv('POSTGRES_DB'),
+                 server=getenv('SQL_DATABASE_SERVER_NAME'))
