@@ -37,13 +37,6 @@ services:
     restart: always
     volumes:
       - './data/postgresql:/var/lib/postgresql/data'
-    environment:
-      - POSTGRES_USER_FILE=/run/secrets/postgres_user
-      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
-      - POSTGRES_DB=${WEBAPP}_db
-    secrets:
-      - postgres_user
-      - postgres_password
     networks:
       - webapp_network
 
@@ -60,12 +53,6 @@ services:
       - webapp_network
     depends_on:
       - sql_database
-
-secrets:
-  postgres_user:
-    file: ./secrets/postgres_user.txt
-  postgres_password:
-    file: ./secrets/postgres_password.txt
 
 networks:
   webapp_network:
