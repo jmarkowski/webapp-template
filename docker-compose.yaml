@@ -10,8 +10,6 @@ services:
       - './reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro'
     ports:
       - ${HOST_HTTP_PORT}:80
-    networks:
-      - service_network
     depends_on:
       - application
 
@@ -28,8 +26,6 @@ services:
         # effect. Note: This expects the volume to be used as well!
       - RELOAD_ARG=--reload
       - APP_CONFIG=${APP_CONFIG}
-    networks:
-      - service_network
     depends_on:
       - sql_database
 
@@ -39,8 +35,6 @@ services:
     restart: always
     volumes:
       - './data/postgresql:/var/lib/postgresql/data'
-    networks:
-      - service_network
 
   sql_adminstration:
     image: adminer:4.7.7
@@ -51,12 +45,10 @@ services:
     environment:
       # Avaialble designs: https://github.com/vrana/adminer/tree/master/designs
       - ADMINER_DESIGN=nette
-    networks:
-      - service_network
     depends_on:
       - sql_database
 
 networks:
-  service_network:
+  default:
     name: ${NETWORK_NAME}
     driver: bridge
