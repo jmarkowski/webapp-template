@@ -11,7 +11,7 @@ services:
     ports:
       - ${HOST_HTTP_PORT}:80
     networks:
-      - ${NETWORK_NAME}
+      - service_network
     depends_on:
       - application
 
@@ -29,7 +29,7 @@ services:
       - RELOAD_ARG=--reload
       - APP_CONFIG=${APP_CONFIG}
     networks:
-      - ${NETWORK_NAME}
+      - service_network
     depends_on:
       - sql_database
 
@@ -40,7 +40,7 @@ services:
     volumes:
       - './data/postgresql:/var/lib/postgresql/data'
     networks:
-      - ${NETWORK_NAME}
+      - service_network
 
   sql_adminstration:
     image: adminer:4.7.7
@@ -52,11 +52,11 @@ services:
       # Avaialble designs: https://github.com/vrana/adminer/tree/master/designs
       - ADMINER_DESIGN=nette
     networks:
-      - ${NETWORK_NAME}
+      - service_network
     depends_on:
       - sql_database
 
 networks:
-  webapp_network:
+  service_network:
     name: ${NETWORK_NAME}
     driver: bridge
