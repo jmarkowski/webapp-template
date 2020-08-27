@@ -45,9 +45,25 @@ function cmd_app() {
   esac
 }
 
+function cmd_db() {
+  case "$1" in
+    "connect")
+      docker-compose exec -u postgres sql_database psql
+      ;;
+
+    *)
+      echo "$script db connect"
+      ;;
+  esac
+}
+
 case "$1" in
   "app")
     cmd_app $2
+    ;;
+
+  "db")
+    cmd_db $2
     ;;
 
   *)
