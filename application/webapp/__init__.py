@@ -32,7 +32,7 @@ def init_extensions(app):
 
 
 def init_db(app):
-    db_uri = app.config.get('DB_URI', 'sqlite:///:memory:')
+    db_uri = app.config.get('DB_URI')
 
     db_ready = False
     retry_interval_s = 5
@@ -47,7 +47,7 @@ def init_db(app):
             create_tables(engine)
             db_ready = True
         except Exception as e:
-            print('Database not available: {}'.format(e))
+            print('Failed to connect to DB_URI \'{}\': {}'.format(db_uri, e))
             sleep(retry_interval_s)
 
 
@@ -62,12 +62,13 @@ def create_app(app_config, override_settings=None):
 
     app.config.from_object(config_map[app_config])
 
-    # Load instance-specific overrides to the default configuration settings
-    # that have been loaded above from an object.
-    #
-    # With `silent=True`, Flask will not crash if the `settings.py` file
-    # does not exist.
-    app.config.from_pyfile(os.path.basename(secret_config), silent=True)
+    if app.config.get('APP_CONFIG') == 'production':
+        # Load instance-specific overrides to the default configuration settings
+        # that have been loaded above from an object.
+        #
+        # With `silent=True`, Flask will not crash if the `settings.py` file
+        # does not exist.
+        app.config.from_pyfile(os.path.basename(secret_config), silent=True)
 
     if override_settings:
         app.config.update(override_settings)
