@@ -7,6 +7,15 @@ script=$0
 GREY='\033[0;37m'
 NONE='\033[0m'
 
+APP_IS_NOT_RUNNING=$(cat <<_EOF
+The 'application' service is required and is not running.
+You can start it with 'docker-compose up -d application'
+or simply 'docker-compose up' to run all the services.
+_EOF
+)
+
+APP_PID=$(docker-compose ps -q application)
+
 function exec_cmd() {
   echo -e command: ${GREY}${@}${NONE}'\n'
   $@
@@ -15,11 +24,19 @@ function exec_cmd() {
 function cmd_app() {
   case "$1" in
     "test")
-      exec_cmd docker-compose exec application ./command test
+      if [[ -z $APP_PID ]]; then
+        echo "$APP_IS_NOT_RUNNING";
+      else
+        exec_cmd docker-compose exec application ./command test
+      fi
       ;;
 
     "shell")
-      exec_cmd docker-compose exec application flask shell
+      if [[ -z $APP_PID ]]; then
+        echo "$APP_IS_NOT_RUNNING";
+      else
+        exec_cmd docker-compose exec application flask shell
+      fi
       ;;
 
     *)
