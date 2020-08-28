@@ -14,8 +14,6 @@ or simply 'docker-compose up' to run all the services.
 _EOF
 )
 
-APP_PID=$(docker-compose ps -q application)
-
 function exec_cmd() {
   echo -e command: ${GREY}${@}${NONE}'\n'
   $@
@@ -24,6 +22,7 @@ function exec_cmd() {
 function cmd_app() {
   case "$1" in
     "test")
+      APP_PID=$(docker-compose ps -q application)
       if [[ -z $APP_PID ]]; then
         echo "$APP_IS_NOT_RUNNING";
       else
@@ -32,6 +31,7 @@ function cmd_app() {
       ;;
 
     "shell")
+      APP_PID=$(docker-compose ps -q application)
       if [[ -z $APP_PID ]]; then
         echo "$APP_IS_NOT_RUNNING";
       else
@@ -45,9 +45,25 @@ function cmd_app() {
   esac
 }
 
+function cmd_db() {
+  case "$1" in
+    "connect")
+      docker-compose exec -u postgres sql_database psql
+      ;;
+
+    *)
+      echo "$script db connect"
+      ;;
+  esac
+}
+
 case "$1" in
   "app")
     cmd_app $2
+    ;;
+
+  "db")
+    cmd_db $2
     ;;
 
   *)
