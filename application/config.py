@@ -22,7 +22,7 @@ class ProductionConfig(Config):
 
 
 class TestingConfig(Config):
-    DB_URI = 'sqlite:///test.db'
+    DB_URI = 'sqlite:///:memory:'
     TESTING = True
 
 
