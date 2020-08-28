@@ -19,16 +19,24 @@ class InvitationGateway(Base, AbstractInvitationGateway,
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(80), unique=True, index=True)
 
-    def add_email(self, email):
-        self.email = email
+    @classmethod
+    def add_email(cls, email):
+        assert(isinstance(email, str))
 
-        current_app.db.add(self)
+        new_invitation = cls()
+        new_invitation.email = email.lower()
+
+        current_app.db.add(new_invitation)
         current_app.db.commit()
 
-    def get_email(self, email):
-        return current_app.db.query(InvitationGateway).filter_by(email=email).first()
+    @classmethod
+    def get_email(cls, email):
+        assert(isinstance(email, str))
 
-    def get_email_list(self):
-        rows = current_app.db.query(InvitationGateway).all()
+        return current_app.db.query(cls).filter_by(email=email.lower()).first()
+
+    @classmethod
+    def get_email_list(cls):
+        rows = current_app.db.query(cls).all()
 
         return [r.email for r in rows]
