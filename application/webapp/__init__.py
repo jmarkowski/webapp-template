@@ -5,6 +5,7 @@ from flask import Flask
 from flask import _app_ctx_stack
 
 from config import config_map
+from config import get_env_config
 from util.sqlalchemy import create_tables
 from util.sqlalchemy import get_db_interface
 
@@ -62,7 +63,9 @@ def create_app(app_config, override_settings=None):
 
     app.config.from_object(config_map[app_config])
 
-    if app.config.get('APP_CONFIG') == 'production':
+    is_env_production = app.config.get('APP_CONFIG') == 'production'
+
+    if is_env_production:
         # Load instance-specific overrides to the default configuration settings
         # that have been loaded above from an object.
         #
@@ -72,6 +75,9 @@ def create_app(app_config, override_settings=None):
 
     if override_settings:
         app.config.update(override_settings)
+
+    if not is_env_production:
+        app.config.update(get_env_config())
 
     check_config_conditions(app)
 
