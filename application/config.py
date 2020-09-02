@@ -40,3 +40,15 @@ config_map = {
     'testing' : TestingConfig,
     'development' : DevelopmentConfig,
 }
+
+
+def get_env_config():
+    """Return a dictionary of select environment settings."""
+    DB_URI = getenv('DB_URI')
+
+    env_dct = {}
+
+    if DB_URI:
+        env_dct['DB_URI'] = DB_URI
+
+    return env_dct
