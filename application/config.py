@@ -1,7 +1,9 @@
 from os import getenv
 
+from core.config import Config
 
-class Config(object):
+
+class DefaultConfig(Config):
     SITE = {
         'brand': 'Web Application Brand'
     }
@@ -15,18 +17,26 @@ class Config(object):
     # 'secrets/settings.py'
     SECRET_KEY = 'overwrite-this-key-for-production'
 
-class ProductionConfig(Config):
+    @classmethod
+    def check_config_conditions(cls):
+        # Check the configuration for any possible show-stopping settings, and
+        # provide helpful assertion messages if needed.
+        assert getattr(cls, 'SECRET_KEY', None), \
+            'SECRET_KEY is not defined'
+
+
+class ProductionConfig(DefaultConfig):
     # This is an instance-specific parameter and should be defined in
     # 'secrets/settings.py'
-    DB_URI = None
+    SECRET_SETTINGS = './secrets/settings.py'
 
 
-class TestingConfig(Config):
+class TestingConfig(DefaultConfig):
     DB_URI = 'sqlite:///:memory:'
     TESTING = True
 
 
-class DevelopmentConfig(Config):
+class DevelopmentConfig(DefaultConfig):
     DB_URI = 'postgresql://{user}:{password}@{server}:5432/{database}' \
              .format(user=getenv('POSTGRES_USER'),
                      password=getenv('POSTGRES_PASSWORD'),
@@ -40,15 +50,3 @@ config_map = {
     'testing' : TestingConfig,
     'development' : DevelopmentConfig,
 }
-
-
-def get_env_config():
-    """Return a dictionary of select environment settings."""
-    DB_URI = getenv('DB_URI')
-
-    env_dct = {}
-
-    if DB_URI:
-        env_dct['DB_URI'] = DB_URI
-
-    return env_dct
