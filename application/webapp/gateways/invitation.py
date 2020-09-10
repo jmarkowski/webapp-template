@@ -1,18 +1,18 @@
 from flask import current_app
 from sqlalchemy import Column, Integer, String
 
-from util.sqlalchemy import Base
+from util.sqlalchemy import Model
 from core.invitation import AbstractInvitationGateway
 
 
-class MetaInvitationGateway(type(Base), type(AbstractInvitationGateway)):
+class MetaInvitationGateway(type(Model), type(AbstractInvitationGateway)):
     """This metaclass inherits from the two metaclasses that InvitationGateway
     is based on to prevent a metaclass conflict.
     """
     pass
 
 
-class InvitationGateway(Base, AbstractInvitationGateway,
+class InvitationGateway(Model, AbstractInvitationGateway,
         metaclass=MetaInvitationGateway):
     __tablename__ = "invite_list"
 
