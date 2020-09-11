@@ -20,23 +20,19 @@ function exec_cmd() {
 }
 
 function cmd_app() {
+  APP_PID=$(docker-compose ps -q application)
+  if [[ -z $APP_PID ]]; then
+    echo "$APP_IS_NOT_RUNNING";
+    return
+  fi
+
   case "$1" in
     "test")
-      APP_PID=$(docker-compose ps -q application)
-      if [[ -z $APP_PID ]]; then
-        echo "$APP_IS_NOT_RUNNING";
-      else
-        exec_cmd docker-compose exec application ./command test
-      fi
+      exec_cmd docker-compose exec application ./command test
       ;;
 
     "shell")
-      APP_PID=$(docker-compose ps -q application)
-      if [[ -z $APP_PID ]]; then
-        echo "$APP_IS_NOT_RUNNING";
-      else
-        exec_cmd docker-compose exec application flask shell
-      fi
+      exec_cmd docker-compose exec application flask shell
       ;;
 
     *)
