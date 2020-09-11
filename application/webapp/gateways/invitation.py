@@ -8,7 +8,7 @@ class InvitationGateway(AbstractInvitationGateway):
 
     @classmethod
     def add_email(cls, email):
-        assert(isinstance(email, str))
+        assert isinstance(email, str)
 
         new_invitation = InvitationData()
         new_invitation.email = email.lower()
@@ -18,7 +18,7 @@ class InvitationGateway(AbstractInvitationGateway):
 
     @classmethod
     def get_email(cls, email):
-        assert(isinstance(email, str))
+        assert isinstance(email, str)
 
         q = current_app.db.query(InvitationData)
 
