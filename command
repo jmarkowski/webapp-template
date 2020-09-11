@@ -27,16 +27,24 @@ function cmd_app() {
   fi
 
   case "$1" in
+    "flask")
+      case "$2" in
+        "shell")
+          exec_cmd docker-compose exec application flask shell
+          ;;
+
+        *)
+          echo "$script app flask shell"
+          ;;
+      esac
+      ;;
+
     "test")
       exec_cmd docker-compose exec application ./command test
       ;;
 
-    "shell")
-      exec_cmd docker-compose exec application flask shell
-      ;;
-
     *)
-      echo "$script app [test|shell]"
+      echo "$script app [flask|test]"
       ;;
   esac
 }
@@ -55,11 +63,11 @@ function cmd_db() {
 
 case "$1" in
   "app")
-    cmd_app $2
+    cmd_app ${@:2}
     ;;
 
   "db")
-    cmd_db $2
+    cmd_db ${@:2}
     ;;
 
   *)
