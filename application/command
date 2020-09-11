@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+function cmd_lint() {
+  cd /home/webapp
+  python3 -m pylint webapp
+}
+
 function cmd_test() {
   cd /home/webapp
   tests=$(ls -1 tests/*.py)
@@ -15,11 +20,15 @@ function cmd_test() {
 }
 
 case "$1" in
+  "lint")
+    cmd_lint
+    ;;
+
   "test")
     cmd_test
     ;;
 
   *)
-    echo "$script test"
+    echo "$script [lint|test]"
     ;;
 esac

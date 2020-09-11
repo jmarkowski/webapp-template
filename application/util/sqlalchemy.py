@@ -4,11 +4,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
 
 
-Base = declarative_base()
+Model = declarative_base()
 
 
 def create_tables(engine):
-    Base.metadata.create_all(bind=engine)
+    Model.metadata.create_all(bind=engine)
 
 
 def get_db_interface(db_uri='sqlite:///sqlite3.db',

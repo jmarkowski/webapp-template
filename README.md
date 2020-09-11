@@ -110,7 +110,7 @@ within the flask shell:
 
 1. Using the top-level `command` script.
 
-        $ ./command app shell
+        $ ./command app flask shell
 
 2. As a command executed in the application container.
 

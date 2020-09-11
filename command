@@ -20,53 +20,69 @@ function exec_cmd() {
 }
 
 function cmd_app() {
+  APP_PID=$(docker-compose ps -q application)
+  if [[ -z $APP_PID ]]; then
+    echo "$APP_IS_NOT_RUNNING";
+    return
+  fi
+
   case "$1" in
-    "test")
-      APP_PID=$(docker-compose ps -q application)
-      if [[ -z $APP_PID ]]; then
-        echo "$APP_IS_NOT_RUNNING";
-      else
-        exec_cmd docker-compose exec application ./command test
-      fi
+    "bash")
+      exec_cmd docker-compose exec application bash
       ;;
 
-    "shell")
-      APP_PID=$(docker-compose ps -q application)
-      if [[ -z $APP_PID ]]; then
-        echo "$APP_IS_NOT_RUNNING";
-      else
-        exec_cmd docker-compose exec application flask shell
-      fi
+    "flask")
+      case "$2" in
+        "shell")
+          exec_cmd docker-compose exec application flask shell
+          ;;
+
+        *)
+          echo "$script app flask shell"
+          ;;
+      esac
+      ;;
+
+    "lint")
+      exec_cmd docker-compose exec application ./command lint
+      ;;
+
+    "test")
+      exec_cmd docker-compose exec application ./command test
       ;;
 
     *)
-      echo "$script app [test|shell]"
+      echo "$script app [bash|flask|lint|test]"
       ;;
   esac
 }
 
 function cmd_db() {
   case "$1" in
+    "bash")
+      exec_cmd docker-compose exec -u postgres sql_database bash
+      ;;
+
     "connect")
       docker-compose exec -u postgres sql_database psql
       ;;
 
     *)
-      echo "$script db connect"
+      echo "$script db [bash|connect]"
       ;;
   esac
 }
 
 case "$1" in
   "app")
-    cmd_app $2
+    cmd_app ${@:2}
     ;;
 
   "db")
-    cmd_db $2
+    cmd_db ${@:2}
     ;;
 
   *)
-    echo "$script app"
+    echo "$script [app|db]"
     ;;
 esac
