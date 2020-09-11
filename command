@@ -39,12 +39,16 @@ function cmd_app() {
       esac
       ;;
 
+    "lint")
+      exec_cmd docker-compose exec application ./command lint
+      ;;
+
     "test")
       exec_cmd docker-compose exec application ./command test
       ;;
 
     *)
-      echo "$script app [flask|test]"
+      echo "$script app [flask|lint|test]"
       ;;
   esac
 }
