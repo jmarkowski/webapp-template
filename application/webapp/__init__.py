@@ -5,8 +5,7 @@ from flask import Flask
 from flask import _app_ctx_stack
 
 from config import config_map
-from util.sqlalchemy import create_tables
-from util.sqlalchemy import get_db_interface
+from core.database import init_db_session
 
 
 def init_blueprints(app):
@@ -30,11 +29,10 @@ def init_db(app):
     # The database connection MUST be available for the service to run.
     while not db_ready:
         try:
-            app.db, engine = get_db_interface(db_uri, \
+            app.db = init_db_session(db_uri, \
                 scopefunc=_app_ctx_stack.__ident_func__,
                 echo_raw_sql=app.config.get('DEBUG'))
 
-            create_tables(engine)
             db_ready = True
         except Exception as e:
             print('Failed to connect to DB_URI \'{}\': {}'.format(db_uri, e))
