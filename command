@@ -27,6 +27,10 @@ function cmd_app() {
   fi
 
   case "$1" in
+    "bash")
+      exec_cmd docker-compose exec application bash
+      ;;
+
     "flask")
       case "$2" in
         "shell")
@@ -48,19 +52,23 @@ function cmd_app() {
       ;;
 
     *)
-      echo "$script app [flask|lint|test]"
+      echo "$script app [bash|flask|lint|test]"
       ;;
   esac
 }
 
 function cmd_db() {
   case "$1" in
+    "bash")
+      exec_cmd docker-compose exec -u postgres sql_database bash
+      ;;
+
     "connect")
       docker-compose exec -u postgres sql_database psql
       ;;
 
     *)
-      echo "$script db connect"
+      echo "$script db [bash|connect]"
       ;;
   esac
 }
@@ -75,6 +83,6 @@ case "$1" in
     ;;
 
   *)
-    echo "$script app"
+    echo "$script [app|db]"
     ;;
 esac
