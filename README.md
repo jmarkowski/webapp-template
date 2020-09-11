@@ -18,6 +18,9 @@ In addition, it promotes a separation of concerns.
 See [Use Flask and SQLAlchemy, not Flask-SQLAlchemy!](https://towardsdatascience.com/use-flask-and-sqlalchemy-not-flask-sqlalchemy-5a64fafe22a4)
 for more details.
 
+Database migration support was added using the [Alembic](https://alembic.sqlalchemy.org),
+which is specifically intended for use in combination with SQLAlchemy.
+
 
 # Project Initialization
 
@@ -122,6 +125,18 @@ The interactive shell will expose variables that may define within the
 
 See the [Flask Documentation](https://flask.palletsprojects.com/en/1.1.x/cli/#open-a-shell)
 for more details.
+
+
+## Working with Alembic
+
+To work with alembic, you will need to initialize the application shell so that
+you are working in the python environment.
+
+    $ ./command app bash
+    # alembic
+
+See the `application/README.md` for a quick summary of how to work with database
+migrations using Alembic.
 
 
 # Unit Testing the Application
