@@ -138,7 +138,11 @@ disable=print-statement,
         xreadlines-attribute,
         deprecated-sys-function,
         exception-escape,
-        comprehension-escape
+        comprehension-escape,
+        import-outside-toplevel,
+        missing-class-docstring,
+        missing-function-docstring,
+        missing-module-docstring
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -276,7 +280,7 @@ good-names=i,
 
 # Good variable names regexes, separated by a comma. If names match any regex,
 # they will always be accepted
-good-names-rgxs=
+good-names-rgxs=[a-z]
 
 # Include a hint for the correct naming format with invalid-name.
 include-naming-hint=no
