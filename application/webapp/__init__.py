@@ -6,6 +6,7 @@ from flask import _app_ctx_stack
 
 from config import config_map
 from core.database import init_db_session
+from webapp.error import error_not_found
 
 
 def init_blueprints(app):
@@ -18,6 +19,9 @@ def init_blueprints(app):
 def init_extensions(app):
     # Any plug-in Flask extensions that require initialization may be done here.
     pass
+
+def init_error_handlers(app):
+    app.register_error_handler(404, error_not_found)
 
 
 def init_db(app):
@@ -50,6 +54,7 @@ def create_app(app_config, override_settings=None):
 
     init_blueprints(app)
     init_extensions(app)
+    init_error_handlers(app)
     init_db(app)
 
     return app
