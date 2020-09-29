@@ -27,7 +27,7 @@ def init_db_session(db_uri='sqlite:///sqlite3.db',
         engine = create_engine(db_uri, echo=echo_raw_sql)
 
     session_factory = sessionmaker(autocommit=False,
-                                   autoflush=False,
+                                   autoflush=True,
                                    bind=engine)
 
     # Create all the necessary tables
