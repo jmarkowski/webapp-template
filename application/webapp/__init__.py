@@ -6,6 +6,7 @@ from flask import _app_ctx_stack
 
 from config import config_map
 from core.database import init_db_session
+from core.database import deinit_db_session
 from webapp.error import error_not_found
 
 
@@ -36,6 +37,13 @@ def init_db(app):
             app.db = init_db_session(db_uri, \
                 scopefunc=_app_ctx_stack.__ident_func__,
                 echo_raw_sql=app.config.get('DEBUG'))
+
+            # Register a function to close the database session when the
+            # application context is popped.
+            @app.teardown_appcontext
+            def close_db_session(app):
+                from flask import current_app
+                deinit_db_session(current_app.db)
 
             db_ready = True
         except Exception as e:

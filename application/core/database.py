@@ -36,6 +36,10 @@ def init_db_session(db_uri='sqlite:///sqlite3.db',
     return scoped_session(session_factory, scopefunc=scopefunc)
 
 
+def deinit_db_session(session):
+    session.close()
+
+
 class InvitationData(Model):
     __tablename__ = "invitations"
 
