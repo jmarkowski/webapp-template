@@ -17,6 +17,13 @@ class DefaultConfig(Config):
     # 'secrets/settings.py'
     SECRET_KEY = 'overwrite-this-key-for-production'
 
+    # Flask settings
+
+    # Browsers will not allow JavaScript access to cookies marked as “HTTP only”
+    # for security.
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE='Lax'
+
     @classmethod
     def check_config_conditions(cls):
         # Check the configuration for any possible show-stopping settings, and
