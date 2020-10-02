@@ -1,10 +1,10 @@
 from flask import current_app
 
 from core.database import InvitationData
-from core.invitation import AbstractInvitationGateway
+from core.invitation import AbstractInvitationDataGateway
 
 
-class InvitationGateway(AbstractInvitationGateway):
+class InvitationDataGateway(AbstractInvitationDataGateway):
 
     @classmethod
     def add_email(cls, email):

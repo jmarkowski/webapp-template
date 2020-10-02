@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class AbstractInvitationGateway(ABC):
+class AbstractInvitationDataGateway(ABC):
     """This class specifies the data interface methods required by the
     interactor to accomplish its tasks.
     """
