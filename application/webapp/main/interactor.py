@@ -15,7 +15,8 @@ main_bp = Blueprint('main', __name__)
 @main_bp.route('/', methods=['GET', 'POST'])
 def index():
     heading = 'Web Application Template'
-    leading_text = 'This barebones HTML document is served from a dynamic python backend.'
+    leading_text = 'This barebones HTML document is served from a dynamic ' \
+                   'python backend.'
 
     email = request.form.get('email')
     already_invited = False
