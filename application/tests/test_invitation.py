@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import unittest
 
-from core.invitation import AbstractInvitationGateway
+from core.invitation import AbstractInvitationDataGateway
 from core.invitation import InvitationInteractor
 
 
-class InvitationGateway(AbstractInvitationGateway):
+class InvitationDataGateway(AbstractInvitationDataGateway):
 
     invite_list = []
 
@@ -35,10 +35,10 @@ class InvitationGateway(AbstractInvitationGateway):
 class InvitationInteractorTests(unittest.TestCase):
 
     def setUp(self):
-        self.interactor = InvitationInteractor(InvitationGateway)
+        self.interactor = InvitationInteractor(InvitationDataGateway)
 
     def tearDown(self):
-        InvitationGateway.reset()
+        InvitationDataGateway.reset()
 
     def test_adding_email(self):
         email = 'foo@bar.com'
