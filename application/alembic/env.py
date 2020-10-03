@@ -1,7 +1,6 @@
 from logging.config import fileConfig
 from os import getenv
 
-from flask import current_app
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
