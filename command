@@ -38,7 +38,10 @@ function cmd_app() {
           ;;
 
         *)
-          echo "$script app flask shell"
+          echo -e "\nUsage:";
+          echo "  $script app flask [COMMAND]";
+          echo -e "\nCommands:";
+          echo "  shell     Start an interactive flask shell";
           ;;
       esac
       ;;
@@ -52,7 +55,13 @@ function cmd_app() {
       ;;
 
     *)
-      echo "$script app [bash|flask|lint|test]"
+      echo -e "\nUsage:";
+      echo "  $script app [COMMAND]";
+      echo -e "\nCommands:";
+      echo "  bash      Start a bash session";
+      echo "  flask     Execute subcommands for a running flask instance";
+      echo "  lint      Run the static code analysis (linter) against the code";
+      echo "  test      Run the unit tests";
       ;;
   esac
 }
@@ -68,7 +77,11 @@ function cmd_db() {
       ;;
 
     *)
-      echo "$script db [bash|connect]"
+      echo -e "\nUsage:";
+      echo "  $script db [COMMAND]";
+      echo -e "\nCommands:";
+      echo "  bash      Start a bash session within the database server";
+      echo "  connect   Start an interactive database terminal (psql)";
       ;;
   esac
 }
@@ -83,6 +96,10 @@ case "$1" in
     ;;
 
   *)
-    echo "$script [app|db]"
+    echo -e "\nUsage:";
+    echo "  $script [COMMAND]";
+    echo -e "\nCommands:";
+    echo "  app       Execute subcommands for a running application server";
+    echo "  db        Execute subcommands for a running database server";
     ;;
 esac
