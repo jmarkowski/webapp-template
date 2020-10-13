@@ -4,8 +4,8 @@ from flask import jsonify
 from flask import render_template
 from flask import request
 
+from core.gateway import InvitationDataGateway
 from core.invitation import InvitationInteractor
-from webapp.gateways.invitation import InvitationDataGateway
 import util.time
 
 

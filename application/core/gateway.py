@@ -1,5 +1,5 @@
-from core.database import InvitationData
-from core.invitation import AbstractInvitationDataGateway
+from .database import InvitationData
+from .invitation import AbstractInvitationDataGateway
 
 
 class InvitationDataGateway(AbstractInvitationDataGateway):
