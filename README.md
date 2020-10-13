@@ -129,14 +129,27 @@ for more details.
 
 ## Working with Alembic
 
-To work with alembic, you will need to initialize the application shell so that
-you are working in the python environment.
+When working with alembic, you will need to initialize all of the services in
+maintenance mode. In this mode, all of the services will run except for the main
+application.
 
-    $ ./command app bash
+    $ ./command start maint
+
+This will automatically start the bash terminal in the root of the application.
+From here, you can run alembic commands.
+
     # alembic
 
 See the `application/README.md` for a quick summary of how to work with database
 migrations using Alembic.
+
+Conventiently, at the same time you may access `http://localhost:8080` to
+administer the SQL database.
+
+When you are finished working in this environment, type `exit` or hit `CTRL+D`
+to stop the running containers:
+
+    $ ./command stop
 
 
 # Unit Testing the Application
