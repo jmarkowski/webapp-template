@@ -62,10 +62,3 @@ class InvitationInteractorTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-    def test_getting_invitation_list(self):
-        pass
-
-
-if __name__ == '__main__':
-    unittest.main()
