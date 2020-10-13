@@ -28,8 +28,7 @@ class InvitationInteractor(object):
     """
 
     def __init__(self, gateway):
-        self.gateway = gateway()
-        self.email = None
+        self.gateway = gateway
 
     def add_email_to_invite_list(self, email):
         self.gateway.add_email(email)

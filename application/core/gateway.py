@@ -1,10 +1,14 @@
-from flask import current_app
-
-from core.database import InvitationData
-from core.invitation import AbstractInvitationDataGateway
+from .database import InvitationData
+from .invitation import AbstractInvitationDataGateway
 
 
 class InvitationDataGateway(AbstractInvitationDataGateway):
+
+    db = None
+
+    def __init__(self, db_session):
+        assert db_session
+        InvitationDataGateway.db = db_session
 
     @classmethod
     def add_email(cls, email):
@@ -13,19 +17,19 @@ class InvitationDataGateway(AbstractInvitationDataGateway):
         new_invitation = InvitationData()
         new_invitation.email = email.lower()
 
-        current_app.db.add(new_invitation)
-        current_app.db.commit()
+        cls.db.add(new_invitation)
+        cls.db.commit()
 
     @classmethod
     def get_email(cls, email):
         assert isinstance(email, str)
 
-        q = current_app.db.query(InvitationData)
+        q = cls.db.query(InvitationData)
 
         return q.filter_by(email=email.lower()).first()
 
     @classmethod
     def get_email_list(cls):
-        q = current_app.db.query(InvitationData)
+        q = cls.db.query(InvitationData)
 
         return [record.email for record in q.all()]

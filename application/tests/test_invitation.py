@@ -1,44 +1,22 @@
 #!/usr/bin/env python3
 import unittest
 
-from core.invitation import AbstractInvitationDataGateway
+from config import config_map
+from core.database import init_db_session
+from core.database import deinit_db_session
+from core.gateway import InvitationDataGateway
 from core.invitation import InvitationInteractor
-
-
-class InvitationDataGateway(AbstractInvitationDataGateway):
-
-    invite_list = []
-
-    @classmethod
-    def add_email(cls, email):
-        assert(isinstance(email, str))
-        cls.invite_list.append(email)
-
-    @classmethod
-    def get_email(cls, email):
-        assert(isinstance(email, str))
-
-        if email in cls.invite_list:
-            return email
-        else:
-            return None
-
-    @classmethod
-    def get_email_list(cls):
-        return cls.invite_list
-
-    @classmethod
-    def reset(cls):
-        cls.invite_list = []
 
 
 class InvitationInteractorTests(unittest.TestCase):
 
     def setUp(self):
-        self.interactor = InvitationInteractor(InvitationDataGateway)
+        config = config_map['testing']
+        self.db = init_db_session(config.DB_URI, echo_raw_sql=False)
+        self.interactor = InvitationInteractor(InvitationDataGateway(self.db))
 
     def tearDown(self):
-        InvitationDataGateway.reset()
+        deinit_db_session(self.db)
 
     def test_adding_email(self):
         email = 'foo@bar.com'
@@ -58,13 +36,6 @@ class InvitationInteractorTests(unittest.TestCase):
         self.assertEqual(2, len(email_list))
         self.assertEqual('foo@bar.com', email_list[0])
         self.assertEqual('bar@foo.com', email_list[1])
-
-
-if __name__ == '__main__':
-    unittest.main()
-
-    def test_getting_invitation_list(self):
-        pass
 
 
 if __name__ == '__main__':

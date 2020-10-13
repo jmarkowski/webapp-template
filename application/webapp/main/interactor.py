@@ -4,8 +4,8 @@ from flask import jsonify
 from flask import render_template
 from flask import request
 
+from core.gateway import InvitationDataGateway
 from core.invitation import InvitationInteractor
-from webapp.gateways.invitation import InvitationDataGateway
 import util.time
 
 
@@ -22,12 +22,12 @@ def index():
     already_invited = False
 
     if email:
-        invitation_interactor = InvitationInteractor(InvitationDataGateway)
+        interactor = InvitationInteractor(InvitationDataGateway(current_app.db))
 
-        if invitation_interactor.is_email_already_invited(email):
+        if interactor.is_email_already_invited(email):
             already_invited = True
         else:
-            invitation_interactor.add_email_to_invite_list(email)
+            interactor.add_email_to_invite_list(email)
 
     # Templates are searched globally, first at the application level, and then
     # at the blueprint level. For this reason, we "namespace" our
@@ -53,8 +53,8 @@ def config(config_var='TESTING'):
 
 @main_bp.route('/invites', methods=['GET'])
 def invites():
-    invitation_interactor = InvitationInteractor(InvitationDataGateway)
-    email_lst = invitation_interactor.get_invite_list()
+    interactor = InvitationInteractor(InvitationDataGateway(current_app.db))
+    email_lst = interactor.get_invite_list()
 
     invite_dct = {'emails': email_lst}
 
