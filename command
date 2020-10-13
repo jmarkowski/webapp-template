@@ -86,6 +86,42 @@ function cmd_db() {
   esac
 }
 
+curdir=$(dirname $(realpath $script))
+function cmd_start() {
+  case "$1" in
+    "maint")
+      app_path=$curdir/application
+      source .env
+      docker-compose up -d sql_database
+      docker-compose up -d sql_administration
+      docker container run --rm -ti --env-file .env --network $NETWORK_NAME \
+        --volume $app_path:/home/webapp $APPLICATION_SERVER_NAME bash
+      ;;
+
+    *)
+      echo -e "\nUsage:";
+      echo "  $script start [COMMAND]";
+      echo -e "\nCommands:";
+      echo "  maint     Launch all the services, except the application";
+      ;;
+  esac
+}
+
+function cmd_stop() {
+  case "$1" in
+    "")
+      exec_cmd docker-compose down
+      ;;
+
+    *)
+      echo -e "\nUsage:";
+      echo "  $script launch [COMMAND]";
+      echo -e "\nCommands:";
+      echo "  (default) Stop all services";
+      ;;
+  esac
+}
+
 case "$1" in
   "app")
     cmd_app ${@:2}
@@ -95,11 +131,21 @@ case "$1" in
     cmd_db ${@:2}
     ;;
 
+  "start")
+    cmd_start ${@:2}
+    ;;
+
+  "stop")
+    cmd_stop ${@:2}
+    ;;
+
   *)
     echo -e "\nUsage:";
     echo "  $script [COMMAND]";
     echo -e "\nCommands:";
     echo "  app       Execute subcommands for a running application server";
     echo "  db        Execute subcommands for a running database server";
+    echo "  start     Execute subcommands for starting the service";
+    echo "  stop      Execute subcommands for stopping the service";
     ;;
 esac
