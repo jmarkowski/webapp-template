@@ -6,7 +6,7 @@ from flask import request
 
 from core.gateway import InvitationDataGateway
 from core.invitation import InvitationInteractor
-import util.time
+from util.datetime import now_str
 
 
 main_bp = Blueprint('main', __name__)
@@ -72,5 +72,5 @@ def util_processor():
 
     return {
         'site': site,
-        'time_now': util.time.now
+        'time_now': now_str
     }

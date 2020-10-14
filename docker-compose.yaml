@@ -35,6 +35,10 @@ services:
     restart: always
     volumes:
       - './data/postgresql:/var/lib/postgresql/data'
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
 
   sql_administration:
     image: adminer:4.7.7

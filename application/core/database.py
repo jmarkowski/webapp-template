@@ -1,9 +1,13 @@
-from sqlalchemy import Column, Integer, String
+import datetime
+
+from sqlalchemy import Column, DateTime, Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.types import TypeDecorator
 
+from util.datetime import now_tz_utc
 
 
 Model = declarative_base()
@@ -40,14 +44,66 @@ def deinit_db_session(session):
     session.close()
 
 
-class InvitationData(Model):
-    __tablename__ = "invitations"
+class AwareDateTime(TypeDecorator):
+    """
+    A DateTime type which can only store timezone aware DateTimes.
+
+    There are two kinds of datetime objects: "naive" and "aware"
+
+    An aware object has sufficient knowledge of applicable algorithmic and political time adjustments, such as time zone and daylight saving time information, to locate itself relative to other aware objects.
+
+    A naive object does not contain enough information to unambiguously locate itself relative to other date/time objects.
+
+    Original source:
+      https://gist.github.com/inklesspen/90b554c864b99340747e
+    """
+    impl = DateTime(timezone=True)
+
+    def process_bind_param(self, value, dialect):
+        if isinstance(value, datetime.datetime) and value.tzinfo is None:
+            raise ValueError('{!r} must be timezone aware'.format(value))
+        return value
+
+    def __repr__(self):
+        return 'AwareDateTime()'
+
+
+class BaseDataMixin(object):
+    """Base mixin for common columns and methods for all data models."""
 
     id = Column(
         Integer,
         primary_key=True,
         index=True,
     )
+
+    created_on = Column(
+        AwareDateTime,
+        default=now_tz_utc
+    )
+
+    updated_on = Column(
+        AwareDateTime,
+        default=now_tz_utc,
+        onupdate=now_tz_utc
+    )
+
+    def __str__(self):
+        fields = self.__table__.c.keys()
+        obj_addr = hex(id(self))
+
+        value_lst = []
+
+        for f in fields:
+            value_lst.append(f'{f}={getattr(self, f)}')
+
+        value_str = ','.join(value_lst)
+
+        return f'<{obj_addr} {self.__class__.__name__}({value_str})>'
+
+
+class InvitationData(BaseDataMixin, Model):
+    __tablename__ = "invitations"
 
     email = Column(
         String(80),
