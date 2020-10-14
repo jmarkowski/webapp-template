@@ -88,6 +88,19 @@ class BaseDataMixin(object):
         onupdate=now_tz_utc
     )
 
+    def __str__(self):
+        fields = self.__table__.c.keys()
+        obj_addr = hex(id(self))
+
+        value_lst = []
+
+        for f in fields:
+            value_lst.append(f'{f}={getattr(self, f)}')
+
+        value_str = ','.join(value_lst)
+
+        return f'<{obj_addr} {self.__class__.__name__}({value_str})>'
+
 
 class InvitationData(BaseDataMixin, Model):
     __tablename__ = "invitations"
