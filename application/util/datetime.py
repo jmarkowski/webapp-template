@@ -1,5 +1,5 @@
 from datetime import datetime
 
 
-def now(format='%Y-%m-%d, %H:%M:%S'):
+def now_str(format='%Y-%m-%d, %H:%M:%S'):
     return datetime.now().strftime(format)
