@@ -5,7 +5,7 @@ from flask import render_template
 from flask import request
 
 from core.gateway import InvitationDataGateway
-from core.invitation import InvitationInteractor
+from core.interactor import InvitationInteractor
 from util.datetime import now_str
 
 

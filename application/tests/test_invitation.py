@@ -2,10 +2,10 @@
 import unittest
 
 from config import config_map
-from core.database import init_db_session
 from core.database import deinit_db_session
+from core.database import init_db_session
 from core.gateway import InvitationDataGateway
-from core.invitation import InvitationInteractor
+from core.interactor import InvitationInteractor
 
 
 class InvitationInteractorTests(unittest.TestCase):
