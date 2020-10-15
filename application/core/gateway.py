@@ -1,5 +1,5 @@
 from .database import InvitationData
-from .invitation import AbstractInvitationDataGateway
+from .interactor import AbstractInvitationDataGateway
 
 
 class InvitationDataGateway(AbstractInvitationDataGateway):
