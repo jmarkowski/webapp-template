@@ -28,6 +28,7 @@ class InvitationInteractor(object):
     """
 
     def __init__(self, gateway):
+        assert isinstance(gateway, AbstractInvitationDataGateway)
         self.gateway = gateway
 
     def add_email_to_invite_list(self, email):
