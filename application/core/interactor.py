@@ -6,19 +6,16 @@ class AbstractInvitationDataGateway(ABC):
     interactor to accomplish its tasks.
     """
 
-    @classmethod
     @abstractmethod
-    def add_email(cls, email):
+    def add_email(self, email):
         raise NotImplementedError
 
-    @classmethod
     @abstractmethod
-    def get_email(cls, email):
+    def get_email(self, email):
         raise NotImplementedError
 
-    @classmethod
     @abstractmethod
-    def get_email_list(cls):
+    def get_email_list(self):
         raise NotImplementedError
 
 
