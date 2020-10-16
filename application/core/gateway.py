@@ -4,32 +4,27 @@ from .interactor import AbstractInvitationDataGateway
 
 class InvitationDataGateway(AbstractInvitationDataGateway):
 
-    db = None
-
     def __init__(self, db_session):
         assert db_session
-        InvitationDataGateway.db = db_session
+        self.db = db_session
 
-    @classmethod
-    def add_email(cls, email):
+    def add_email(self, email):
         assert isinstance(email, str)
 
         new_invitation = InvitationData()
         new_invitation.email = email.lower()
 
-        cls.db.add(new_invitation)
-        cls.db.commit()
+        self.db.add(new_invitation)
+        self.db.commit()
 
-    @classmethod
-    def get_email(cls, email):
+    def get_email(self, email):
         assert isinstance(email, str)
 
-        q = cls.db.query(InvitationData)
+        q = self.db.query(InvitationData)
 
         return q.filter_by(email=email.lower()).first()
 
-    @classmethod
-    def get_email_list(cls):
-        q = cls.db.query(InvitationData)
+    def get_email_list(self):
+        q = self.db.query(InvitationData)
 
         return [record.email for record in q.all()]
