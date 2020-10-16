@@ -7,16 +7,22 @@ function cmd_lint() {
 
 function cmd_test() {
   cd /home/webapp
-  tests=$(ls -1 tests/*.py)
-  for test in $tests
-  do
-    # Remove the extension and replace directory separator with a period
-    no_extension=${test%%.*}
-    module=${no_extension/\//.}
 
-    echo "Running $module"
-    python3 -m $module
-  done
+  if [ -z ${1+x} ]; then
+    tests=$(ls -1 tests/*.py)
+    for test in $tests
+    do
+      # Remove the extension and replace directory separator with a period
+      no_extension=${test%%.*}
+      module=${no_extension/\//.}
+
+      echo "Running $module"
+      python3 -m $module
+    done
+  else
+    echo "Running $1"
+    python3 -m $1
+  fi
 }
 
 case "$1" in
@@ -25,7 +31,7 @@ case "$1" in
     ;;
 
   "test")
-    cmd_test
+    cmd_test ${@:2}
     ;;
 
   *)
@@ -33,6 +39,6 @@ case "$1" in
     echo "  $script [COMMAND]";
     echo -e "\nCommands:";
     echo "  lint      Run the static code analysis (linter) against the code";
-    echo "  test      Run the unit tests";
+    echo "  test [m]  Run all the unit tests or just module 'm'";
     ;;
 esac

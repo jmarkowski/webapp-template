@@ -51,7 +51,7 @@ function cmd_app() {
       ;;
 
     "test")
-      exec_cmd docker-compose exec application ./command test
+      exec_cmd docker-compose exec application ./command test ${@:2}
       ;;
 
     *)
@@ -61,7 +61,7 @@ function cmd_app() {
       echo "  bash      Start a bash session";
       echo "  flask     Execute subcommands for a running flask instance";
       echo "  lint      Run the static code analysis (linter) against the code";
-      echo "  test      Run the unit tests";
+      echo "  test [m]  Run all the unit tests or just module 'm'";
       ;;
   esac
 }
