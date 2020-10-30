@@ -57,7 +57,8 @@ def create_app(app_config, override_settings=None):
     """
     app = Flask(__name__, template_folder='views')
 
-    cfg = create_config(app_config, override_settings=override_settings)
+    cfg = create_config(app_config=app_config,
+                        override_settings=override_settings)
     app.config.from_object(cfg)
 
     init_blueprints(app)
