@@ -1,5 +1,3 @@
-from flask import abort
-from flask import current_app
 from flask import render_template
 
 def error_not_found(e):
