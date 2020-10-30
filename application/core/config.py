@@ -16,6 +16,7 @@ class Config(object):
             self.__update_from_pyfile(pyfile_settings_path)
 
         if override_settings:
+            assert isinstance(override_settings, dict)
             self.__update_from_dict(override_settings)
 
         self.__update_from_env()

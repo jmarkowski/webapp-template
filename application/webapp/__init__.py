@@ -4,7 +4,7 @@ from time import sleep
 from flask import Flask
 from flask import _app_ctx_stack
 
-from config import config_map
+from config import create_config
 from core.database import init_db_session
 from core.database import deinit_db_session
 from webapp.error import error_not_found
@@ -57,7 +57,7 @@ def create_app(app_config, override_settings=None):
     """
     app = Flask(__name__, template_folder='views')
 
-    cfg = config_map[app_config](override_settings=override_settings)
+    cfg = create_config(app_config, override_settings=override_settings)
     app.config.from_object(cfg)
 
     init_blueprints(app)
