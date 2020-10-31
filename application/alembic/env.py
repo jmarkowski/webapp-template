@@ -15,8 +15,8 @@ config = context.config
 fileConfig(config.config_file_name)
 
 # Set the DB_URI according to what's been configured.
-from config import config_map
-db_uri = getattr(config_map[getenv('APP_CONFIG')](), 'DB_URI')
+from config import create_config
+db_uri = getattr(create_config(), 'DB_URI')
 config.set_main_option('sqlalchemy.url', db_uri)
 
 # add your model's MetaData object here
