@@ -11,4 +11,4 @@ exec gunicorn \
     --access-logfile - \
     --error-logfile - \
     ${RELOAD_ARG} \
-    "${MODULE_NAME}:create_app(\"${APP_CONFIG}\")"
+    "${MODULE_NAME}:create_app(\"${CONFIG_STRATEGY}\")"

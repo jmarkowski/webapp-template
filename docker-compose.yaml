@@ -25,7 +25,7 @@ services:
         # Do not set this variable if you do not want real-time changes to take
         # effect. Note: This expects the volume to be used as well!
       - RELOAD_ARG=--reload
-      - APP_CONFIG=${APP_CONFIG}
+      - CONFIG_STRATEGY
     depends_on:
       - sql_database
 

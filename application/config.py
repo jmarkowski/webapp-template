@@ -22,7 +22,7 @@ class DefaultConfig(Config):
     # Browsers will not allow JavaScript access to cookies marked as “HTTP only”
     # for security.
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE='Lax'
+    SESSION_COOKIE_SAMESITE = 'Lax'
 
     @classmethod
     def check_config_conditions(cls):
@@ -59,6 +59,10 @@ config_map = {
 }
 
 
-def create_config(app_config=getenv('APP_CONFIG'), override_settings=None):
+def create_config(config_strategy=getenv('CONFIG_STRATEGY'), override_settings=None):
     """Return an instance of the Config object."""
-    return config_map[app_config](override_settings=override_settings)
+
+    cfg = config_map[config_strategy](override_settings=override_settings)
+    setattr(cfg, 'CONFIG_STRATEGY', config_strategy)
+
+    return cfg
