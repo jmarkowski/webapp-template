@@ -61,4 +61,8 @@ config_map = {
 
 def create_config(config_strategy=getenv('CONFIG_STRATEGY'), override_settings=None):
     """Return an instance of the Config object."""
-    return config_map[config_strategy](override_settings=override_settings)
+
+    cfg = config_map[config_strategy](override_settings=override_settings)
+    setattr(cfg, 'CONFIG_STRATEGY', config_strategy)
+
+    return cfg
