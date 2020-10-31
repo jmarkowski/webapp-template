@@ -5,7 +5,7 @@ from flask import current_app
 from webapp import create_app
 
 
-app = create_app(os.getenv('APP_CONFIG'))
+app = create_app(os.getenv('CONFIG_STRATEGY'))
 
 
 @app.shell_context_processor

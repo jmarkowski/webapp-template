@@ -51,13 +51,13 @@ def init_db(app):
             sleep(retry_interval_s)
 
 
-def create_app(app_config, override_settings=None):
+def create_app(config_strategy, override_settings=None):
     """
     Create a Flask application using the factory pattern.
     """
     app = Flask(__name__, template_folder='views')
 
-    cfg = create_config(app_config=app_config,
+    cfg = create_config(config_strategy=config_strategy,
                         override_settings=override_settings)
     app.config.from_object(cfg)
 
