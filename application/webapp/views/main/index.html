@@ -7,7 +7,10 @@
   <p class="lead">{{ leading_text }}</p>
 
   <div class="container">
-  {% if email %}
+
+  {% set bad_email_submitted = email and not is_email_valid %}
+
+  {% if email and is_email_valid %}
     {% if already_invited %}
       We've already added <strong>{{ email }}</strong> to our invite list.<br>
       Thank you again for your continued interest!
@@ -16,22 +19,31 @@
       Thank you for your interest!
     {% endif %}
   {% else %}
+
+    {% if bad_email_submitted %}
+      Oops, <strong>{{ email }}</strong> appears to be an invalid email.<br>
+    {% endif %}
+
     <form action="{{ url_for('main.index') }}" method="post">
       <div class="form-group row">
         <div class="col-sm-3 offset-sm-3 my-3">
-          <input type="email" name="email" class="form-control" placeholder="you@example.com">
+          <input type="email" name="email" class="form-control" placeholder="you@example.com"{% if bad_email_submitted %} value="{{ email }}"{% endif %}>
         </div>
         <div class="col-sm-3 my-3">
           <button type="submit" class="btn btn-primary">Request Invitation</button>
         </div>
       </div>
     </form>
+
   {% endif %}
+
     <div class="row my-3">
       <div class="col text-center">
       Visit <a href="{{ url_for('main.invites') }}">{{ url_for('main.invites') }}</a> to see the current invite list.
       </div>
     </div>
+
   </div>
+
 </div>
 {% endblock %}
