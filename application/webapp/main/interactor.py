@@ -7,6 +7,8 @@ from flask import request
 from core.gateway import InvitationDataGateway
 from core.interactor import InvitationInteractor
 from util.datetime import now_str
+from util.email import InvalidEmail
+from util.email import parse_email
 
 
 main_bp = Blueprint('main', __name__)
@@ -20,14 +22,19 @@ def index():
 
     email = request.form.get('email')
     already_invited = False
+    is_email_valid = False
 
-    if email:
+    try:
+        is_email_valid = True if parse_email(email) else False
+
         interactor = InvitationInteractor(InvitationDataGateway(current_app.db))
 
         if interactor.is_email_already_invited(email):
             already_invited = True
         else:
             interactor.add_email_to_invite_list(email)
+    except InvalidEmail:
+        pass
 
     # Templates are searched globally, first at the application level, and then
     # at the blueprint level. For this reason, we "namespace" our
@@ -36,6 +43,7 @@ def index():
                            heading=heading,
                            leading_text=leading_text,
                            email=email,
+                           is_email_valid=is_email_valid,
                            already_invited=already_invited)
 
 

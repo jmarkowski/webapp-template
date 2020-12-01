@@ -9,7 +9,7 @@ function cmd_test() {
   cd /home/webapp
 
   if [ -z ${1+x} ]; then
-    tests=$(ls -1 tests/*.py)
+    tests=$(ls -1 tests/test_*.py)
     for test in $tests
     do
       # Remove the extension and replace directory separator with a period
