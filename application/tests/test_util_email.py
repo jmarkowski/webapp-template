@@ -20,7 +20,7 @@ class UtilTimeTests(unittest.TestCase):
         self.assertTrue(parse_email(email))
 
     def test_maximum_allowed_email_length(self):
-        email = 'a' * 64 + '@' + 'b' * 253 + '.c'
+        email = 'a' * 64 + '@' + 'b' * 185 + '.com'
 
         self.assertTrue(parse_email(email))
 
