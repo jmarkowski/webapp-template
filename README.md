@@ -24,12 +24,25 @@ which is specifically intended for use in combination with SQLAlchemy.
 
 # Project Initialization
 
+## Configuration
+
 The following commands will configure the template project.
 
     $ ./configure
     $ make
 
 For a set of configuration options, use the help flag: `./configure -h`.
+
+
+## Install Tools
+
+All tools are included in docker containers. These tools are executed from
+within the docker container to compile sources.
+
+To install the tools, move into the `tools` directory and run the script.
+
+    $ cd tools/
+    $ ./install-tools
 
 
 # Development With Docker
