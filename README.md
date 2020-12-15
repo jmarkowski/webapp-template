@@ -24,6 +24,15 @@ which is specifically intended for use in combination with SQLAlchemy.
 
 # Project Initialization
 
+## Initialize Submodules
+
+This project incorporates and compiles changes that are dependent on other
+subprojects. Once you've cloned this repository, the subprojects may be
+initailized as follows:
+
+    $ git submodule init
+
+
 ## Configuration
 
 The following commands will configure the template project.
