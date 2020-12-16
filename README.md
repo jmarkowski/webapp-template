@@ -54,6 +54,16 @@ To install the tools, move into the `tools` directory and run the script.
     $ ./install-tools
 
 
+## Compile Custom Theme
+
+Under the `application/` directory is a `Makefile` that compiles a custom
+bootstrap CSS from its source files and custom inputs. This file must be
+compiled so that the page formatting from CSS is working.
+
+    $ cd application/
+    $ make
+
+
 # Development With Docker
 
 ## Setup
