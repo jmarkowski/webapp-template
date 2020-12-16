@@ -24,12 +24,44 @@ which is specifically intended for use in combination with SQLAlchemy.
 
 # Project Initialization
 
+## Initialize Submodules
+
+This project incorporates and compiles changes that are dependent on other
+subprojects. Once you've cloned this repository, the subprojects may be
+initailized as follows:
+
+    $ git submodule init
+
+
+## Configuration
+
 The following commands will configure the template project.
 
     $ ./configure
     $ make
 
 For a set of configuration options, use the help flag: `./configure -h`.
+
+
+## Install Tools
+
+All tools are included in docker containers. These tools are executed from
+within the docker container to compile sources.
+
+To install the tools, move into the `tools` directory and run the script.
+
+    $ cd tools/
+    $ ./install-tools
+
+
+## Compile Custom Theme
+
+Under the `application/` directory is a `Makefile` that compiles a custom
+bootstrap CSS from its source files and custom inputs. This file must be
+compiled so that the page formatting from CSS is working.
+
+    $ cd application/
+    $ make
 
 
 # Development With Docker

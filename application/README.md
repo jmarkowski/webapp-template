@@ -1,3 +1,21 @@
+# Compiling Bootstrap
+
+This directory contains a `Makefile` that compiles the `.scss` files in the `scss/`
+directory into `.css` files stored in the `webapp/static/css` directory.
+
+To perform the compilation, simply run `make`.
+
+    $ make
+
+## Custom Theming
+
+To customize the components that you would use for bootstrap, modify the
+`scss/custom-bootstrap.scss` file.
+
+See [Theming Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/theming/)
+for more details.
+
+
 # Database Migrations
 
 `alembic` is a tool that interfaces with SQLAlchemy to support database

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+BLUE='\033[1;34m'
+GREY='\033[0;37m'
+NONE='\033[0m'
+
+function include {
+  [[ -f "$1" ]] && source "$1"
+}
+
+function print_status {
+  echo -e ${1}${2}${NONE}
+}
+
+function docker_build {
+  dockerfile=$1
+  tag=$2
+
+  echo -en "Checking ${tag}: "
+
+  test -z "$(docker image ls -q $tag 2> /dev/null)"
+  image_exists=$?
+
+  if [[ "$image_exists" == 0 ]]; then
+    print_status $RED "missing"
+
+    echo -en ${GREY}
+    docker image build --network="host" -f $dockerfile -t $tag .
+    retcode=$?
+    echo -en ${NONE}
+
+    if [[ $retcode != 0 ]]; then
+      print_status $RED "Failed to build image (exit code = $retcode)"
+    fi
+  else
+    print_status $GREEN "found"
+  fi
+}
+
+include ../.env
+
+# Example format:
+# docker_build "foo-version.Dockerfile" "${COMPOSE_PROJECT_NAME}/foo:version"
+docker_build "css-tools.Dockerfile" "${COMPOSE_PROJECT_NAME}/css-tools:1.0"
