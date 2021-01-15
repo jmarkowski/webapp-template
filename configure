@@ -7,6 +7,7 @@ HELP=$(cat <<_HELP
 Usage: ./configure [OPTION] ...
 
 Options:
+  --project=<name>          Project name (valid chars: a-z, 0-9, '_')
   --verbose                 Enable verbose output
 
 _HELP
@@ -32,6 +33,10 @@ function die() {
 for arg in "$@"; do
     case "$arg" in
 
+    --project=*)
+      project=$(echo $arg | sed 's/--project=//')
+      ;;
+
     --verbose)
         verbose=true
         ;;
@@ -50,9 +55,15 @@ done
 #
 # Set default options
 #
-if [ -z ${verbose+x} ]; then
-    verbose=false
+if [ -z ${project+x} ]; then
+  project=myapp
 fi
+echo Set project=${project}
+
+if [ -z ${verbose+x} ]; then
+  verbose=false
+fi
+echo Set verbose=${verbose}
 
 #
 # Check conditions
@@ -71,6 +82,8 @@ output_file="Makefile"
 if [ -f $output_file ]; then
   rm -f $output_file
 fi
+
+echo 'PROJECT_NAME='${project} >> $output_file
 
 if $verbose; then
     echo 'VERBOSE=y' >> $output_file
