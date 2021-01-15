@@ -5,8 +5,6 @@ endif
 all:
 	$(SILENT)echo "Unstaging tracked secrets from repository cache...";
 	$(SILENT)git rm --cached .env &> /dev/null;
-	$(SILENT)git rm --cached secrets/postgres_user.txt &> /dev/null;
-	$(SILENT)git rm --cached secrets/postgres_password.txt &> /dev/null;
 	$(SILENT)git rm --cached application/secrets/settings.py &> /dev/null;
 	$(SILENT)echo "Removing unnecessary tracked files...";
 	$(SILENT)git rm LICENSE &> /dev/null;
