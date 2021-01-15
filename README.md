@@ -36,9 +36,10 @@ initailized as follows:
 
 ## Configuration
 
-The following commands will configure the template project.
+The following commands will configure the template project with a custom project
+name.
 
-    $ ./configure
+    $ ./configure --project=myproj
     $ make
 
 For a set of configuration options, use the help flag: `./configure -h`.

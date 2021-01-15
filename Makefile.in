@@ -3,16 +3,28 @@ SILENT = @
 endif
 
 all:
+	$(SILENT)echo "Creating environment file from template...";
+	$(SILENT)cp -p env_template .env;
+	$(SILENT)sed -i 's/webapp/$(PROJECT_NAME)/' .env;
+	$(SILENT)sed -i 's/server webapp/server $(PROJECT_NAME)/' reverse-proxy/nginx.conf;
 	$(SILENT)echo "Unstaging tracked secrets from repository cache...";
-	$(SILENT)git rm --cached .env &> /dev/null;
 	$(SILENT)git rm --cached application/secrets/settings.py &> /dev/null;
 	$(SILENT)echo "Removing unnecessary tracked files...";
 	$(SILENT)git rm LICENSE &> /dev/null;
 	$(SILENT)git rm Makefile.in &> /dev/null;
 	$(SILENT)git rm configure &> /dev/null;
+	$(SILENT)git rm env_template &> /dev/null;
 	$(SILENT)echo "Removing intermediate files...";
 	$(SILENT)rm -f Makefile;
 	$(SILENT)echo "";
-	$(SILENT)echo "You may now safely commit the staged changes :)";
-	$(SILENT)echo "For example:";
-	$(SILENT)echo "    git commit -a -m\"Initialize project\"";
+	$(SILENT)echo "You may now safely commit the staged changes as follows:";
+	$(SILENT)echo "";
+	$(SILENT)echo "  git commit -a -m\"Initialize project from template\"";
+	$(SILENT)echo "";
+	$(SILENT)echo "Also, don't forget to update your repo remote settings to point to your project :)";
+	$(SILENT)echo "";
+	$(SILENT)echo "At this stage, you should be able to launch the web application:";
+	$(SILENT)echo "";
+	$(SILENT)echo "  docker-compose up";
+	$(SILENT)echo "";
+	$(SILENT)echo "The access point is http://localhost:8000";
