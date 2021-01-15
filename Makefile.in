@@ -3,8 +3,9 @@ SILENT = @
 endif
 
 all:
+	$(SILENT)echo "Creating environment file from template...";
+	$(SILENT)cp -p env_template .env;
 	$(SILENT)echo "Unstaging tracked secrets from repository cache...";
-	$(SILENT)git rm --cached .env &> /dev/null;
 	$(SILENT)git rm --cached application/secrets/settings.py &> /dev/null;
 	$(SILENT)echo "Removing unnecessary tracked files...";
 	$(SILENT)git rm LICENSE &> /dev/null;
