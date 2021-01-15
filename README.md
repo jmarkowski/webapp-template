@@ -31,6 +31,7 @@ subprojects. Once you've cloned this repository, the subprojects may be
 initailized as follows:
 
     $ git submodule init
+    $ git submodule update
 
 
 ## Configuration
