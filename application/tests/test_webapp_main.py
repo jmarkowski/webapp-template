@@ -3,7 +3,7 @@ import unittest
 from http import HTTPStatus
 
 from flask import current_app
-from webapp import create_app
+from webui import create_app
 
 
 class TestCase(unittest.TestCase):

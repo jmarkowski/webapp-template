@@ -1,7 +1,7 @@
 # Compiling Bootstrap
 
 This directory contains a `Makefile` that compiles the `.scss` files in the `scss/`
-directory into `.css` files stored in the `webapp/static/css` directory.
+directory into `.css` files stored in the `webui/static/css` directory.
 
 To perform the compilation, simply run `make`.
 

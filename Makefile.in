@@ -6,7 +6,7 @@ all:
 	$(SILENT)echo "Creating environment file from template...";
 	$(SILENT)cp -p env_template .env;
 	$(SILENT)sed -i 's/webapp/$(PROJECT_NAME)/' .env;
-	$(SILENT)sed -i 's/server webapp/server $(PROJECT_NAME)/' reverse-proxy/nginx.conf;
+	$(SILENT)sed -i 's/webapp/$(PROJECT_NAME)/' reverse-proxy/nginx.conf;
 	$(SILENT)echo "Unstaging tracked secrets from repository cache...";
 	$(SILENT)git rm --cached application/secrets/settings.py &> /dev/null;
 	$(SILENT)echo "Removing unnecessary tracked files...";

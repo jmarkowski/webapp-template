@@ -2,7 +2,7 @@ import os
 
 from flask import current_app
 
-from webapp import create_app
+from webui import create_app
 
 
 app = create_app(os.getenv('CONFIG_STRATEGY'))

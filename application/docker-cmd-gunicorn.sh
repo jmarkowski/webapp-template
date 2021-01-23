@@ -3,7 +3,7 @@ FLASK_PORT=5000
 
 # Workers should be 2-4 per core in the server
 WORKERS=2
-MODULE_NAME=webapp
+MODULE_NAME=webui
 
 exec gunicorn \
     --bind :${FLASK_PORT} \
