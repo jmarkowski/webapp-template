@@ -1,0 +1,5 @@
+# Ignore various files that may be created from working within a container
+.bash_history
+.cache
+.pylint.d
+.python_history
