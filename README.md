@@ -81,15 +81,6 @@ sensitive settings.
 For more information on defining environment variables, see
 [https://docs.docker.com/compose/env-file/](https://docs.docker.com/compose/env-file/)
 
-### Changing the Container Prefixes
-
-To change the container prefixes (by default they are `webapp_*`), you will need
-to change the `webapp_*` references in the following two files prior to running
-th containeres:
-
-* `./.env`
-* `./reverse-proxy/nginx.conf`
-
 
 ## First Run
 
