@@ -34,8 +34,8 @@ $(CSS_DIR):
 
 clean:
 	rm -f $(CSS_FILES)
-	rm -f $(CSS_FILES).map
+	rm -f $(CSS_FILES:.css=.css.map)
 	rm -f $(CSS_FILES:.css=.min.css)
-	rm -f $(CSS_FILES:.css=.min.css).map
+	rm -f $(CSS_FILES:.css=.min.css.map)
 
 .PHONY: all clean
