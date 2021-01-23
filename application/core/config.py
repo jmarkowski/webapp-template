@@ -46,9 +46,12 @@ class Config(object):
     @classmethod
     def __update_from_pyfile(cls, pyfile_path):
         pyfile_config = dict()
-        with open(pyfile_path, mode='rb') as f:
-            exec(compile(f.read(), pyfile_path, 'exec'), pyfile_config)
+        try:
+            with open(pyfile_path, mode='rb') as f:
+                exec(compile(f.read(), pyfile_path, 'exec'), pyfile_config)
 
-            for k,v in pyfile_config.items():
-                if k.isupper():
-                    setattr(cls, k, v)
+                for k,v in pyfile_config.items():
+                    if k.isupper():
+                        setattr(cls, k, v)
+        except FileNotFoundError as e:
+            print(f'CONFIGURATION ERROR: {e}')
