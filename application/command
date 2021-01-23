@@ -2,7 +2,7 @@
 
 function cmd_lint() {
   cd /home/webapp
-  python3 -m pylint webapp
+  python3 -m pylint webui
 }
 
 function cmd_test() {

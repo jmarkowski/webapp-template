@@ -7,13 +7,13 @@ from flask import _app_ctx_stack
 from config import create_config
 from core.database import init_db_session
 from core.database import deinit_db_session
-from webapp.error import error_not_found
+from webui.error import error_not_found
 
 
 def init_blueprints(app):
     # Import the blueprints only as they are needed (this prevents circular
     # dependencies).
-    from webapp.main import main_bp
+    from webui.main import main_bp
     app.register_blueprint(main_bp)
 
 
