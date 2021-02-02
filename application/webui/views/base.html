@@ -29,6 +29,10 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 
+  <!-- Custom page styles -->
+  {% block style %}
+  {% endblock %}
+
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -88,7 +92,7 @@
   <script src="{{ url_for('static', filename='vendor/jquery/3.5.1/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-  <!-- Add custom javascript here -->
+  <!-- Custom page javascript -->
   {% block script %}
   {% endblock %}
 
