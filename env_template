@@ -20,6 +20,16 @@ HOST_SQL_ADMIN_PORT=8080
 #   testing
 CONFIG_STRATEGY=development
 
+# Set the log level for the running application.
+#
+# Options:
+#   debug
+#   info
+#   warning
+#   error
+#   critical
+LOG_LEVEL=debug
+
 # Database settings
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=mypassword

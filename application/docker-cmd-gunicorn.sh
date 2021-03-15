@@ -15,6 +15,7 @@ mkdir -p ${LOG_DIR}
 exec gunicorn \
     --bind :${FLASK_PORT} \
     --workers=${WORKERS} \
+    --log-level=${LOG_LEVEL} \
     --access-logfile ${ACCESS_LOG_FILE} \
     --error-logfile ${ERROR_LOG_FILE} \
     ${RELOAD_ARG} \
