@@ -19,4 +19,4 @@ exec gunicorn \
     --access-logfile ${ACCESS_LOG_FILE} \
     --error-logfile ${ERROR_LOG_FILE} \
     ${RELOAD_ARG} \
-    "${MODULE_NAME}:create_app(\"${CONFIG_STRATEGY}\")"
+    "${MODULE_NAME}:create_app(\"${CONFIG_STRATEGY}\", logger=\"gunicorn.error\")"
