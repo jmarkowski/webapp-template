@@ -8,6 +8,7 @@ from config import create_config
 from core.database import init_db_session
 from core.database import deinit_db_session
 from webui.error import error_not_found
+from util import abort
 
 
 def init_blueprints(app):
@@ -56,6 +57,9 @@ def create_app(config_strategy, override_settings=None):
     Create a Flask application using the factory pattern.
     """
     app = Flask(__name__, template_folder='views')
+
+    if config_strategy is None:
+        abort('Configuration strategy not specified.')
 
     cfg = create_config(config_strategy=config_strategy,
                         override_settings=override_settings)

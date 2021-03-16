@@ -203,24 +203,39 @@ below.
 
 However, note that this approach should only be used for development purposes
 only, and is not a robust solution for a hosting your application in a
-production environment!
+production environment as any database changes will *not* be persistent!
 
-1.  Create a virtual python environment and install the dependencies.
+1. Create a virtual python environment and install the dependencies.
 
         $ cd application
         $ python -m venv pyenv
         $ ./pyenv/bin/pip install -r requirements.txt
 
-2.  Initialize the environment.
+2. Initialize the environment.
 
         $ source pyenv/bin/activate
-        $ export FLASK_APP=main.py
-        $ export FLASK_DEBUG=1
 
-3.  Start the application with flask.
+3. Start the application with flask, specifying the various required
+   environment settings.
 
-        $ flask run
+   There are many supported ways of running the application.
 
-4.  Access the application from the browser.
+   a) Run it using the flask application.
 
-        http://localhost:5000
+        $ FLASK_APP=main.py FLASK_RUN_PORT=8000 FLASK_DEBUG=1 flask run
+
+   b) Run it using the python interpreter.
+
+        $ FLASK_RUN_PORT=8000 FLASK_DEBUG=1 python -m main
+
+   c) Run it using the application defaults.
+
+        $ python -m main
+
+   d) Run it by simply executing main.py.
+
+        $ ./main.py
+
+4. Access the application from the browser.
+
+        http://localhost:8000
