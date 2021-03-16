@@ -1,8 +1,10 @@
+import logging
 import os
 from time import sleep
 
 from flask import Flask
 from flask import _app_ctx_stack
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import create_config
 from core.database import init_db_session
@@ -52,7 +54,7 @@ def init_db(app):
             sleep(retry_interval_s)
 
 
-def create_app(config_strategy, override_settings=None):
+def create_app(config_strategy, override_settings=None, logger=None):
     """
     Create a Flask application using the factory pattern.
     """
@@ -60,6 +62,27 @@ def create_app(config_strategy, override_settings=None):
 
     if config_strategy is None:
         abort('Configuration strategy not specified.')
+
+    if logger:
+        logger_ = logging.getLogger(logger)
+        app.logger.handlers = logger_.handlers
+        app.logger.setLevel(logger_.level)
+
+        app.logger.info(f'Using logger: {logger}')
+    else:
+        logging_map = {
+            'debug': logging.DEBUG,
+            'info': logging.INFO,
+            'warning': logging.WARNING,
+            'error': logging.ERROR,
+            'critical': logging.CRITICAL,
+        }
+        logging_level = logging_map[os.getenv('LOG_LEVEL', 'debug')]
+        app.logger.setLevel(logging_level)
+
+        app.logger.info('No logger specified, streaming logs to output.')
+
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
 
     cfg = create_config(config_strategy=config_strategy,
                         override_settings=override_settings)

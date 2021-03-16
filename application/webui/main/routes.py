@@ -14,6 +14,12 @@ from util.email import parse_email
 main_bp = Blueprint('main', __name__)
 
 
+def get_invitation_interactor():
+    gateway = InvitationDataGateway(current_app.db)
+    logger = current_app.logger
+    return InvitationInteractor(gateway, logger)
+
+
 @main_bp.route('/', methods=['GET', 'POST'])
 def index():
     heading = 'Web Application Template'
@@ -27,7 +33,7 @@ def index():
     try:
         is_email_valid = True if parse_email(email) else False
 
-        interactor = InvitationInteractor(InvitationDataGateway(current_app.db))
+        interactor = get_invitation_interactor()
 
         if interactor.is_email_already_invited(email):
             already_invited = True
@@ -61,10 +67,12 @@ def config(config_var='TESTING'):
 
 @main_bp.route('/invites', methods=['GET'])
 def invites():
-    interactor = InvitationInteractor(InvitationDataGateway(current_app.db))
+    interactor = get_invitation_interactor()
     email_lst = interactor.get_invite_list()
 
     invite_dct = {'emails': email_lst}
+
+    current_app.logger.info(f'Fetched invite list: {email_lst}')
 
     return jsonify(invite_dct)
 

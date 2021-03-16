@@ -23,6 +23,7 @@ services:
     env_file:
       - .env
     environment:
+      - LOG_LEVEL
         # Do not set this variable if you do not want real-time changes to take
         # effect. Note: This expects the volume to be used as well!
       - RELOAD_ARG=--reload
