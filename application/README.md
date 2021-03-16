@@ -16,6 +16,14 @@ See [Theming Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/themin
 for more details.
 
 
+# Logs
+
+The application is configured to generate persistent logs using the gunicorn
+logger.
+
+The logs are made available under the `data/log` directory.
+
+
 # Database Migrations
 
 `alembic` is a tool that interfaces with SQLAlchemy to support database
