@@ -4,7 +4,6 @@ from time import sleep
 
 from flask import Flask
 from flask import _app_ctx_stack
-from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import create_config
 from core.database import init_db_session
@@ -81,8 +80,6 @@ def create_app(config_strategy, override_settings=None, logger=None):
         app.logger.setLevel(logging_level)
 
         app.logger.info('No logger specified, streaming logs to output.')
-
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
 
     cfg = create_config(config_strategy=config_strategy,
                         override_settings=override_settings)
