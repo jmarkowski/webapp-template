@@ -9,7 +9,7 @@ MODULE_NAME=webui
 LOG_DIR=data/log
 ACCESS_LOG_FILE=${LOG_DIR}/application_access.log
 ERROR_LOG_FILE=${LOG_DIR}/application_error.log
-ACCESS_LOG_FMT='%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
+ACCESS_LOG_FMT='%({x-forwarded-for}i)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 mkdir -p ${LOG_DIR}
 
