@@ -5,7 +5,7 @@ from flask import current_app
 from webui import create_app
 
 
-app = create_app(os.getenv('CONFIG_STRATEGY'))
+app = create_app(os.getenv('CONFIG_STRATEGY', 'testing'))
 
 
 @app.shell_context_processor
