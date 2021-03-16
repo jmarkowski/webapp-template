@@ -58,9 +58,12 @@ class AwareDateTime(TypeDecorator):
 
     There are two kinds of datetime objects: "naive" and "aware"
 
-    An aware object has sufficient knowledge of applicable algorithmic and political time adjustments, such as time zone and daylight saving time information, to locate itself relative to other aware objects.
+    An aware object has sufficient knowledge of applicable algorithmic and
+    political time adjustments, such as time zone and daylight saving time
+    information, to locate itself relative to other aware objects.
 
-    A naive object does not contain enough information to unambiguously locate itself relative to other date/time objects.
+    A naive object does not contain enough information to unambiguously locate
+    itself relative to other date/time objects.
 
     Original source:
       https://gist.github.com/inklesspen/90b554c864b99340747e
