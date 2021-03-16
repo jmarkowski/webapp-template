@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# This file is used to run the application with flask, not gunicorn, in a
+# standalone environment for development and debugging.
 import os
 
 from flask import current_app
@@ -16,3 +19,9 @@ def make_shell_context():
         'db': current_app.db
     }
     return context_dct
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',
+            port=os.getenv('FLASK_RUN_PORT', '8000'),
+            debug=os.getenv('FLASK_DEBUG', '1') == '1')
