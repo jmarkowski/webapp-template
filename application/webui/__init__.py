@@ -57,10 +57,15 @@ def create_app(config_strategy, override_settings=None, logger=None):
     """
     Create a Flask application using the factory pattern.
     """
-    app = Flask(__name__, template_folder='views')
-
     if config_strategy is None:
         abort('Configuration strategy not specified.')
+
+    cfg = create_config(config_strategy=config_strategy,
+                        override_settings=override_settings)
+
+    app = Flask(__name__,
+            static_folder=cfg.STATIC_DIR,
+            template_folder=cfg.TEMPLATE_DIR)
 
     if logger:
         logger_ = logging.getLogger(logger)
@@ -81,8 +86,6 @@ def create_app(config_strategy, override_settings=None, logger=None):
 
         app.logger.info('No logger specified, streaming logs to output.')
 
-    cfg = create_config(config_strategy=config_strategy,
-                        override_settings=override_settings)
     app.config.from_object(cfg)
 
     init_blueprints(app)

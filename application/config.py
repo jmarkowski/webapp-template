@@ -1,4 +1,4 @@
-from os import getenv
+import os
 
 from core.config import Config
 
@@ -7,6 +7,10 @@ class DefaultConfig(Config):
     SITE = {
         'brand': 'Web Application Brand'
     }
+
+    # Directories
+    STATIC_DIR = os.path.realpath('./static')
+    TEMPLATE_DIR = os.path.realpath('./template')
 
     # Connection URI format:
     #   postgresql://[user[:password]@][netloc][:port][/dbname]
@@ -45,10 +49,10 @@ class TestingConfig(DefaultConfig):
 
 class DevelopmentConfig(DefaultConfig):
     DB_URI = 'postgresql://{user}:{password}@{server}:5432/{database}' \
-             .format(user=getenv('POSTGRES_USER'),
-                     password=getenv('POSTGRES_PASSWORD'),
-                     database=getenv('POSTGRES_DB'),
-                     server=getenv('SQL_DATABASE_SERVER_NAME'))
+             .format(user=os.getenv('POSTGRES_USER'),
+                     password=os.getenv('POSTGRES_PASSWORD'),
+                     database=os.getenv('POSTGRES_DB'),
+                     server=os.getenv('SQL_DATABASE_SERVER_NAME'))
     DEBUG = True
 
 
@@ -59,7 +63,8 @@ config_map = {
 }
 
 
-def create_config(config_strategy=getenv('CONFIG_STRATEGY'), override_settings=None):
+def create_config(config_strategy=os.getenv('CONFIG_STRATEGY'),
+        override_settings=None):
     """Return an instance of the Config object."""
 
     cfg = config_map[config_strategy](override_settings=override_settings)

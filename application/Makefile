@@ -19,7 +19,7 @@ endif
 SCSS_FILES += custom-bootstrap.scss
 
 SCSS_DIR = scss
-CSS_DIR  = webui/static/css
+CSS_DIR  = static/css
 
 CSS_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.css))
 
