@@ -65,7 +65,7 @@ def create_app(config_strategy, override_settings=None, logger=None):
 
     app = Flask(__name__,
             static_folder=cfg.STATIC_DIR,
-            template_folder='views')
+            template_folder=cfg.TEMPLATE_DIR)
 
     if logger:
         logger_ = logging.getLogger(logger)
