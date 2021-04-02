@@ -31,9 +31,9 @@
 
   <!-- Custom page styles -->
   {% block style %}
-  {% endblock %}
+  {% endblock style %}
 
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
 
@@ -76,7 +76,7 @@
 
     <div class="main-content">
       {% block content %}
-      {% endblock %}
+      {% endblock content %}
     </div>
 
   </main>
@@ -94,7 +94,7 @@
 
   <!-- Custom page javascript -->
   {% block script %}
-  {% endblock %}
+  {% endblock script %}
 
 </body>
 </html>
