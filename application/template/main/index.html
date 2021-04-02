@@ -43,7 +43,56 @@
       </div>
     </div>
 
+    <div id="js-container" class="row my-3">
+    </div>
+
   </div>
 
 </div>
 {% endblock content %}
+
+{% block script %}
+<script>
+{#
+Define any constants that you would use in the javascript files here.
+#}
+{% import 'macros.html' as macro %}
+const URL = {
+  {{ macro.url_as_property('main.invites') }},
+}
+
+const HTML = {
+  contents: '<div class="col text-center">'
+    + '<button id="js-btn" class="btn btn-primary">'
+    + 'Click to load invite list on this page'
+    + '</button>'
+    + '</div>'
+}
+</script>
+
+<script>
+$(document).ready(function () {
+  $container = $('#js-container');
+
+  $container.html(HTML.contents);
+
+  $('#js-btn').on('click', function () {
+    $.ajax({
+      type: 'get',
+      url: URL.main_invites,
+      contentType: 'application/json',
+      }).done(function (data) {
+        if (data.emails) {
+          $container.find('div').html('<ul></ul>');
+          data.emails.forEach(email => {
+            $container.find('ul').append('<li>' + email + '</li>');
+          });
+        }
+      }).fail(function (data) {
+        $container.find('div').html('Sorry, '
+          + 'there is an issue communicating with our servers.');
+      });
+  });
+});
+</script>
+{% endblock %}
