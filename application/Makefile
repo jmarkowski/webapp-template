@@ -22,12 +22,15 @@ SCSS_DIR = scss
 CSS_DIR  = static/css
 
 CSS_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.css))
+CSS_MIN_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.min.css))
 
-all: $(CSS_FILES)
+all: $(CSS_FILES) $(CSS_MIN_FILES)
 
 $(CSS_DIR)/%.css: $(SCSS_DIR)/%.scss | $(CSS_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@"
-	$(TOOL_CMD) sh -c "sass $< $(@:.css=.min.css) --style compressed"
+
+$(CSS_DIR)/%.min.css: $(SCSS_DIR)/%.scss | $(CSS_DIR)
+	$(TOOL_CMD) sh -c "sass $< $@ --style compressed"
 
 $(CSS_DIR):
 	mkdir -p $@
