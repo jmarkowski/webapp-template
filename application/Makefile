@@ -26,10 +26,10 @@ CSS_MIN_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.min.css))
 
 all: $(CSS_FILES) $(CSS_MIN_FILES)
 
-$(CSS_DIR)/%.css: $(SCSS_DIR)/%.scss | $(CSS_DIR)
+$(CSS_DIR)/%.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@"
 
-$(CSS_DIR)/%.min.css: $(SCSS_DIR)/%.scss | $(CSS_DIR)
+$(CSS_DIR)/%.min.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@ --style compressed"
 
 $(CSS_DIR):
@@ -41,4 +41,6 @@ clean:
 	rm -f $(CSS_FILES:.css=.min.css)
 	rm -f $(CSS_FILES:.css=.min.css.map)
 
-.PHONY: all clean
+FORCE:
+
+.PHONY: all clean FORCE
