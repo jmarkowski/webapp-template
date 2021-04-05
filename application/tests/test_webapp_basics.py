@@ -7,7 +7,7 @@ from webui import create_app
 
 class TestCase(unittest.TestCase):
     def setUp(self):
-        self.app = create_app('testing')
+        self.app = create_app('testing', logger=__name__)
 
         # Propogate exceptions to the test client
         self.app.testing = True

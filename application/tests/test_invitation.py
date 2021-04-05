@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import logging
 import unittest
 
 from config import config_map
@@ -13,7 +14,10 @@ class InvitationInteractorTests(unittest.TestCase):
     def setUp(self):
         config = config_map['testing']
         self.db = init_db_session(config.DB_URI, echo_raw_sql=False)
-        self.interactor = InvitationInteractor(InvitationDataGateway(self.db))
+
+        logger = logging.getLogger(__name__)
+        gateway = InvitationDataGateway(self.db)
+        self.interactor = InvitationInteractor(gateway, logger)
 
     def tearDown(self):
         deinit_db_session(self.db)
