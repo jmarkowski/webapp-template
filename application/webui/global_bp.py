@@ -13,8 +13,10 @@ def util_processor():
     automatically.
     """
     site = current_app.config['SITE']
+    debug = current_app.config['DEBUG']
 
     return {
+        'debug': debug,
         'site': site,
         'time_now': now_str
     }
