@@ -26,7 +26,13 @@ CSS_MIN_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.min.css))
 
 RECIPE_GEN_MD5_OF_OUTPUT_FILE = MD5=$$(md5sum $@ | cut -c -7);
 
-all: $(CSS_FILES) $(CSS_MIN_FILES)
+ifeq ($(CONFIG_STRATEGY),production)
+TARGETS=$(CSS_MIN_FILES)
+else
+TARGETS=$(CSS_FILES) $(CSS_MIN_FILES)
+endif
+
+all: $(TARGETS)
 
 $(CSS_DIR)/%.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@"
