@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source sources
+
+echo Fetching SASS - ${SASS_VERSION}
+wget ${SASS_SRC}
+mv *.tar.gz download/dart-sass/
+
+echo Fetching Autoprefixer - ${AUTOPREFIXER_VERSION}
+wget ${AUTOPREFIXER_SRC}
+mv *.tar.gz download/autoprefixer/
