@@ -24,7 +24,7 @@
   </style>
 
   <!-- Bootstrap CSS (custom themed) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom-bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('css/custom-bootstrap*.min.css')[0]) }}">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
