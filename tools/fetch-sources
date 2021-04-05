@@ -1,11 +1,42 @@
 #!/bin/bash
 
-source sources
+function fetch {
+  what=$1
+  version=$2
+  dir=$3
+  file=$4
+  src=$5
 
-echo Fetching SASS - ${SASS_VERSION}
-wget ${SASS_SRC}
-mv *.tar.gz download/dart-sass/
+  echo Fetching ${what} - ${version}
+  if [ -f "${dir}/${file}" ]; then
+    echo ${file} already exists.
+  else
+    echo ${file} does not exist... downloading.
+    wget ${src}
+    mv *.tar.gz ${dir}/
+  fi
+}
 
-echo Fetching Autoprefixer - ${AUTOPREFIXER_VERSION}
-wget ${AUTOPREFIXER_SRC}
-mv *.tar.gz download/autoprefixer/
+# SASS
+SASS_VERSION=1.30.0
+SASS_DIR=download/dart-sass
+SASS_FILE=dart-sass-${SASS_VERSION}-linux-x64.tar.gz
+SASS_SRC=https://github.com/sass/dart-sass/releases/download/${SASS_VERSION}/${SASS_FILE}
+
+fetch "SASS" ${SASS_VERSION} ${SASS_DIR} ${SASS_FILE} ${SASS_SRC}
+
+# Autoprefixer
+AUTOPREFIXER_VERSION=10.1.0
+AUTOPREFIXER_DIR=download/autoprefixer
+AUTOPREFIXER_FILE=${AUTOPREFIXER_VERSION}.tar.gz
+AUTOPREFIXER_SRC=https://github.com/postcss/autoprefixer/archive/${AUTOPREFIXER_FILE}
+
+fetch "Autoprefixer" ${AUTOPREFIXER_VERSION} ${AUTOPREFIXER_DIR} ${AUTOPREFIXER_FILE} ${AUTOPREFIXER_SRC}
+
+# UglifyJS
+UGLIFYJS_VERSION=3.13.3
+UGLIFYJS_DIR=download/uglifyjs
+UGLIFYJS_FILE=v${UGLIFYJS_VERSION}.tar.gz
+UGLIFYJS_SRC=https://github.com/mishoo/UglifyJS/archive/refs/tags/${UGLIFYJS_FILE}
+
+fetch "UglifyJS" "${UGLIFYJS_VERSION}" "${UGLIFYJS_DIR}" "${UGLIFYJS_FILE}" "${UGLIFYJS_SRC}"

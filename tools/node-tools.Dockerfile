@@ -18,3 +18,9 @@ ARG AUTOPREFIXER_VERSION=10.1.0
 COPY download/autoprefixer/${AUTOPREFIXER_VERSION}.tar.gz .
 RUN tar xvf *.tar.gz && rm -f *.tar.gz
 ENV PATH=$PATH:${HOME}/autoprefixer-${AUTOPREFIXER_VERSION}/bin
+
+# UglifyJS
+ARG UGLIFYJS_VERSION=3.13.3
+COPY download/uglifyjs/v${UGLIFYJS_VERSION}.tar.gz .
+RUN tar xvf *.tar.gz && rm -f *.tar.gz
+ENV PATH=$PATH:${HOME}/UglifyJS-${UGLIFYJS_VERSION}/bin
