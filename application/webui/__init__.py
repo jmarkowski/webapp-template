@@ -15,6 +15,9 @@ from util import abort
 def init_blueprints(app):
     # Import the blueprints only as they are needed (this prevents circular
     # dependencies).
+    from webui.global_bp import global_bp
+    app.register_blueprint(global_bp)
+
     from webui.main import main_bp
     app.register_blueprint(main_bp)
 
