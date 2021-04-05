@@ -1,8 +1,10 @@
 import logging
 import os
+from glob import glob
 from time import sleep
 
 from flask import Flask
+from flask import current_app
 from flask import _app_ctx_stack
 
 from config import create_config
@@ -12,9 +14,20 @@ from webui.error import error_not_found
 from util import abort
 
 
+def init_jinja_env(app):
+    def glob_file_list(name_glob):
+        root = current_app.static_folder
+        return [f[len(root)+1:] for f in glob(os.path.join(root, name_glob))]
+
+    app.jinja_env.globals.update(glob_file_list=glob_file_list)
+
+
 def init_blueprints(app):
     # Import the blueprints only as they are needed (this prevents circular
     # dependencies).
+    from webui.global_bp import global_bp
+    app.register_blueprint(global_bp)
+
     from webui.main import main_bp
     app.register_blueprint(main_bp)
 
@@ -44,7 +57,6 @@ def init_db(app):
             # application context is popped.
             @app.teardown_appcontext
             def close_db_session(app):
-                from flask import current_app
                 deinit_db_session(current_app.db)
 
             db_ready = True
@@ -88,6 +100,7 @@ def create_app(config_strategy, override_settings=None, logger=None):
 
     app.config.from_object(cfg)
 
+    init_jinja_env(app)
     init_blueprints(app)
     init_extensions(app)
     init_error_handlers(app)

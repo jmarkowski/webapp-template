@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ site['brand'] }} - {{ heading }}{% endblock %}
+{% block title %}{{ site['brand'] }} - {{ heading }}{% endblock title %}
 
 {% block content %}
 <div class="text-center">
@@ -43,7 +43,37 @@
       </div>
     </div>
 
+    <div id="js-container" class="row my-3">
+    </div>
+
   </div>
 
 </div>
+{% endblock content %}
+
+{% block script %}
+<script>
+{#
+Define any constants that you would use in the javascript files here.
+#}
+{% import 'macros.html' as macro %}
+const URL = {
+  {{ macro.url_as_property('main.invites') }},
+}
+
+const HTML = {
+  contents: '<div class="col text-center">'
+    + '<button id="js-btn" class="btn btn-primary">'
+    + 'Click to load invite list on this page'
+    + '</button>'
+    + '</div>'
+}
+</script>
+
+{% if debug %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}">
+{% else %}
+<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('js/index.*.min.js')[0]) }}">
+{% endif %}
+</script>
 {% endblock %}

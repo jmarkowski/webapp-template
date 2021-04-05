@@ -6,7 +6,6 @@ from flask import request
 
 from core.gateway import InvitationDataGateway
 from core.interactor import InvitationInteractor
-from util.datetime import now_str
 from util.email import InvalidEmail
 from util.email import parse_email
 
@@ -75,18 +74,3 @@ def invites():
     current_app.logger.info(f'Fetched invite list: {email_lst}')
 
     return jsonify(invite_dct)
-
-
-# Note: We are using the `app_context_processor` to have these functions
-# available globally.
-@main_bp.app_context_processor
-def util_processor():
-    """Inject the following dictionary into all templates and render them
-    automatically.
-    """
-    site = current_app.config['SITE']
-
-    return {
-        'site': site,
-        'time_now': now_str
-    }

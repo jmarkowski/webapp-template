@@ -24,16 +24,16 @@
   </style>
 
   <!-- Bootstrap CSS (custom themed) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom-bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('css/custom-bootstrap*.min.css')[0]) }}">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 
   <!-- Custom page styles -->
   {% block style %}
-  {% endblock %}
+  {% endblock style %}
 
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
 
@@ -76,7 +76,7 @@
 
     <div class="main-content">
       {% block content %}
-      {% endblock %}
+      {% endblock content %}
     </div>
 
   </main>
@@ -94,7 +94,7 @@
 
   <!-- Custom page javascript -->
   {% block script %}
-  {% endblock %}
+  {% endblock script %}
 
 </body>
 </html>

@@ -20,22 +20,54 @@ SCSS_FILES += custom-bootstrap.scss
 
 SCSS_DIR = scss
 CSS_DIR  = static/css
+JS_DIR = static/js
 
 CSS_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.css))
+CSS_MIN_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.min.css))
 
-all: $(CSS_FILES)
+# JS Files (the source and output files are in the same directory)
+JS_ALL_FILES = $(wildcard $(JS_DIR)/*.js)
+JS_FILES = $(filter-out $(wildcard $(JS_DIR)/*.min.js),$(JS_ALL_FILES))
+JS_MIN_FILES = $(JS_FILES:.js=.min.js)
 
-$(CSS_DIR)/%.css: $(SCSS_DIR)/%.scss | $(CSS_DIR)
+RECIPE_GEN_MD5_OF_OUTPUT_FILE = MD5=$$(md5sum $@ | cut -c -7);
+
+ifeq ($(CONFIG_STRATEGY),production)
+TARGETS=$(CSS_MIN_FILES) $(JS_MIN_FILES)
+else
+TARGETS=$(CSS_FILES) $(CSS_MIN_FILES) $(JS_MIN_FILES)
+endif
+
+all: $(TARGETS)
+
+$(CSS_DIR)/%.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@"
-	$(TOOL_CMD) sh -c "sass $< $(@:.css=.min.css) --style compressed"
+	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
+	file="$@"; mv $@ $${file%.css}.$${MD5}.css
+
+$(CSS_DIR)/%.min.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
+	$(TOOL_CMD) sh -c "sass $< $@ --style compressed"
+	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
+	file="$@"; mv $@ $${file%.min.css}.$${MD5}.min.css
+
+$(JS_DIR)/%.min.js: $(JS_DIR)/%.js FORCE | $(JS_DIR)
+	$(TOOL_CMD) sh -c "uglifyjs $< --compress --mangle -o $@"
+	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
+	file="$@"; mv $@ $${file%.min.js}.$${MD5}.min.js
 
 $(CSS_DIR):
 	mkdir -p $@
 
 clean:
-	rm -f $(CSS_FILES)
-	rm -f $(CSS_FILES:.css=.css.map)
-	rm -f $(CSS_FILES:.css=.min.css)
-	rm -f $(CSS_FILES:.css=.min.css.map)
+	rm -f $(CSS_FILES:.css=*.css)
+	rm -f $(CSS_FILES:.css=*.css.map)
+	rm -f $(CSS_FILES:.css=*.min.css)
+	rm -f $(CSS_FILES:.css=*.min.css.map)
+	rm -f $(JS_MIN_FILES:.min.js=*.min.js)
 
-.PHONY: all clean
+FORCE:
+
+.PHONY: all clean FORCE
+
+print-%:
+	@echo '$*=$($*)'

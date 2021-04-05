@@ -12,7 +12,9 @@ class TestCase(unittest.TestCase):
             'CUSTOM_CONFIG': 99
         }
 
-        self.app = create_app('testing', override_settings=test_settings)
+        self.app = create_app('testing',
+                override_settings=test_settings,
+                logger=__name__)
 
         # Propogate exceptions to the test client
         self.app.testing = True
