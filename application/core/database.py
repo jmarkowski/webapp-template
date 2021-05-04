@@ -11,7 +11,10 @@ from sqlalchemy.types import TypeDecorator
 from util.datetime import now_tz_utc
 
 
-Model = declarative_base()
+# Construct a base class for the declarative table class definitions below.
+# This new base class will be given a metaclass that produces appropriate Table
+# objects used by SQLAlchemy.
+TableBase = declarative_base()
 
 
 def init_db_session(db_uri='sqlite:///sqlite3.db',
@@ -43,7 +46,7 @@ def init_db_session(db_uri='sqlite:///sqlite3.db',
                                    bind=engine)
 
     # Create all the necessary tables
-    Model.metadata.create_all(bind=engine)
+    TableBase.metadata.create_all(bind=engine)
 
     return scoped_session(session_factory, scopefunc=scopefunc)
 
@@ -113,7 +116,7 @@ class BaseDataMixin(object):
         return f'<{obj_addr} {self.__class__.__name__}({value_str})>'
 
 
-class InvitationData(BaseDataMixin, Model):
+class InvitationData(BaseDataMixin, TableBase):
     __tablename__ = "invitations"
 
     email = Column(
