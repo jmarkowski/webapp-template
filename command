@@ -95,7 +95,7 @@ function cmd_start() {
       docker-compose up -d sql_database
       docker-compose up -d sql_administration
       docker container run --rm -ti --env-file .env --network $NETWORK_NAME \
-        --volume $app_path:/home/webapp $COMPOSE_PROJECT_NAME/application bash
+        --volume $app_path:/home/webapp $COMPOSE_PROJECT_NAME/application:1.0 bash
       ;;
 
     *)
