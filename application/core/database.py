@@ -96,7 +96,7 @@ class TZDateTime(TypeDecorator):
         return 'TZDateTime()'
 
 
-class BaseDataMixin(object):
+class BaseDataMixin():
     """Base mixin for common columns and methods for all data models."""
 
     id = Column(

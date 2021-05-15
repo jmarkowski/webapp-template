@@ -30,7 +30,7 @@ def index():
     is_email_valid = False
 
     try:
-        is_email_valid = True if parse_email(email) else False
+        is_email_valid = bool(parse_email(email))
 
         interactor = get_invitation_interactor()
 

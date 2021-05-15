@@ -1,7 +1,7 @@
 from os import getenv
 
 
-class Config(object):
+class Config():
     def __init__(self, override_settings=None):
         """Upon initialization, optionally load settings based on the following
         order of precedence:
@@ -38,7 +38,7 @@ class Config(object):
     @classmethod
     def __update_from_dict(cls, dct):
         """Set class attributes from a given dictionary."""
-        assert(isinstance(dct, dict))
+        assert isinstance(dct, dict)
         for k,v in dct.items():
             if k.isupper():
                 setattr(cls, k, v)

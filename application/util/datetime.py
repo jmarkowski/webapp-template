@@ -2,8 +2,8 @@ from datetime import datetime
 from datetime import timezone
 
 
-def now_str(format='%Y-%m-%d, %H:%M:%S'):
-    return datetime.now().strftime(format)
+def now_str(fmt='%Y-%m-%d, %H:%M:%S'):
+    return datetime.now().strftime(fmt)
 
 
 def now_tz_utc():

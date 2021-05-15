@@ -20,7 +20,7 @@ class AbstractInvitationDataGateway(ABC):
         raise NotImplementedError
 
 
-class InvitationInteractor(object):
+class InvitationInteractor():
     """This class contains operations required for tracking a list of invited
     users.
     """
@@ -36,7 +36,7 @@ class InvitationInteractor(object):
         self.gateway.add_email(email)
 
     def is_email_already_invited(self, email):
-        return True if self.gateway.get_email(email) else False
+        return bool(self.gateway.get_email(email))
 
     def get_invite_list(self):
         email_lst = self.gateway.get_email_list()
