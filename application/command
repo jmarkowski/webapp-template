@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
+function pylint_module() {
+  echo -e "\n====== Running pylint on '$1' ======\n"
+  python3 -m pylint $1
+}
+
 function cmd_lint() {
   cd /home/webapp
-  python3 -m pylint webui
+  pylint_module core
+  pylint_module webui
+  pylint_module util
 }
 
 function cmd_test() {
