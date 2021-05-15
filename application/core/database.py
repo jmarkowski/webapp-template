@@ -1,6 +1,11 @@
 import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Integer,
+    String,
+)
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session
@@ -55,7 +60,7 @@ def deinit_db_session(session):
     session.close()
 
 
-class AwareDateTime(TypeDecorator):
+class TZDateTime(TypeDecorator):
     """
     A DateTime type which can only store timezone aware DateTimes.
 
@@ -68,18 +73,27 @@ class AwareDateTime(TypeDecorator):
     A naive object does not contain enough information to unambiguously locate
     itself relative to other date/time objects.
 
-    Original source:
-      https://gist.github.com/inklesspen/90b554c864b99340747e
+    Source:
+      https://docs.sqlalchemy.org/en/14/core/custom_types.html#store-timezone-aware-timestamps-as-timezone-naive-utc
     """
-    impl = DateTime(timezone=True)
+    impl = DateTime
 
     def process_bind_param(self, value, dialect):
-        if isinstance(value, datetime.datetime) and value.tzinfo is None:
-            raise ValueError('{!r} must be timezone aware'.format(value))
+        if value is not None:
+            if not value.tzinfo:
+                raise TypeError('tzinfo is required')
+            value = value.astimezone(datetime.timezone.utc).replace(
+                tzinfo=None
+            )
+        return value
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            value = value.replace(tzinfo=datetime.timezone.utc)
         return value
 
     def __repr__(self):
-        return 'AwareDateTime()'
+        return 'TZDateTime()'
 
 
 class BaseDataMixin(object):
@@ -92,12 +106,12 @@ class BaseDataMixin(object):
     )
 
     created_on = Column(
-        AwareDateTime,
+        TZDateTime,
         default=now_tz_utc
     )
 
     updated_on = Column(
-        AwareDateTime,
+        TZDateTime,
         default=now_tz_utc,
         onupdate=now_tz_utc
     )
