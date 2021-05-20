@@ -88,7 +88,7 @@ class BaseDataMixin():
         return f'<{obj_addr} {self.__class__.__name__}({value_str})>'
 
 
-class InvitationData(BaseDataMixin, TableBase):
+class InvitationData(BaseDataMixin, TableBase): # type: ignore
     __tablename__ = "invitations"
 
     email = Column(

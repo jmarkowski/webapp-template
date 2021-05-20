@@ -46,8 +46,8 @@ function cmd_app() {
       esac
       ;;
 
-    "lint")
-      exec_cmd docker-compose exec application ./command lint
+    "check")
+      docker-compose exec application ./command check ${@:2}
       ;;
 
     "test")
@@ -59,8 +59,8 @@ function cmd_app() {
       echo "  $script app [COMMAND]";
       echo -e "\nCommands:";
       echo "  bash      Start a bash session";
+      echo "  check     Run various checks against the code";
       echo "  flask     Execute subcommands for a running flask instance";
-      echo "  lint      Run the static code analysis (linter) against the code";
       echo "  test [m]  Run all the unit tests or just module 'm'";
       ;;
   esac
@@ -95,7 +95,7 @@ function cmd_start() {
       docker-compose up -d sql_database
       docker-compose up -d sql_administration
       docker container run --rm -ti --env-file .env --network $NETWORK_NAME \
-        --volume $app_path:/home/webapp $COMPOSE_PROJECT_NAME/application bash
+        --volume $app_path:/home/webapp $COMPOSE_PROJECT_NAME/application:1.1 bash
       ;;
 
     *)

@@ -1,4 +1,4 @@
-FROM python:3.7.3-stretch
+FROM python:3.9.5-buster
 
 # Gunicorn binds port 5000 as the output. Expose this port.
 EXPOSE 5000

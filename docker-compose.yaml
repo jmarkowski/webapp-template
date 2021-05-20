@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   reverse_proxy:
-    image: nginx:1.19.0
+    image: nginx:1.19.10
     container_name: ${REVERSE_PROXY_SERVER_NAME}
     restart: always
     volumes:
@@ -14,7 +14,7 @@ services:
       - application
 
   application:
-    image: ${COMPOSE_PROJECT_NAME}/application
+    image: ${COMPOSE_PROJECT_NAME}/application:1.1
     build: ./application
     container_name: ${APPLICATION_SERVER_NAME}
     restart: always
@@ -32,7 +32,7 @@ services:
       - sql_database
 
   sql_database:
-    image: postgres:12.3
+    image: postgres:12.7
     container_name: ${SQL_DATABASE_SERVER_NAME}
     restart: always
     volumes:
@@ -43,7 +43,7 @@ services:
       - POSTGRES_DB
 
   sql_administration:
-    image: adminer:4.7.7
+    image: adminer:4.8.0
     container_name: ${SQL_ADMINISTRATION_SERVER_NAME}
     restart: always
     ports:
