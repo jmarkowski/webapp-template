@@ -4,19 +4,12 @@ from flask import jsonify
 from flask import render_template
 from flask import request
 
-from core.gateway import InvitationDataGateway
-from core.interactor import InvitationInteractor
 from util.email import InvalidEmail
 from util.email import parse_email
+from webui import get_interactor
 
 
 main_bp = Blueprint('main', __name__)
-
-
-def get_invitation_interactor():
-    gateway = InvitationDataGateway(current_app.db)
-    logger = current_app.logger
-    return InvitationInteractor(gateway, logger)
 
 
 @main_bp.route('/', methods=['GET', 'POST'])
@@ -32,12 +25,12 @@ def index():
     try:
         is_email_valid = bool(parse_email(email))
 
-        interactor = get_invitation_interactor()
+        i = get_interactor()
 
-        if interactor.is_email_already_invited(email):
+        if i.invitation.is_email_already_invited(email):
             already_invited = True
         else:
-            interactor.add_email_to_invite_list(email)
+            i.invitation.add_email_to_invite_list(email)
     except InvalidEmail:
         pass
 
@@ -66,8 +59,8 @@ def config(config_var='TESTING'):
 
 @main_bp.route('/invites', methods=['GET'])
 def invites():
-    interactor = get_invitation_interactor()
-    email_lst = interactor.get_invite_list()
+    i = get_interactor()
+    email_lst = i.invitation.get_invite_list()
 
     invite_dct = {'emails': email_lst}
 

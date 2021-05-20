@@ -1,23 +1,7 @@
-from abc import ABC, abstractmethod
 import logging
 
-
-class AbstractInvitationDataGateway(ABC):
-    """This class specifies the data interface methods required by the
-    interactor to accomplish its tasks.
-    """
-
-    @abstractmethod
-    def add_email(self, email):
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_email(self, email):
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_email_list(self):
-        raise NotImplementedError
+from core.config import Config
+from core.dbgateway.interface import AbstractInvitationDbGateway
 
 
 class InvitationInteractor():
@@ -25,10 +9,12 @@ class InvitationInteractor():
     users.
     """
 
-    def __init__(self, gateway, logger):
-        assert isinstance(gateway, AbstractInvitationDataGateway)
+    def __init__(self, config, gateway, logger):
+        assert isinstance(config, Config)
+        assert isinstance(gateway, AbstractInvitationDbGateway)
         assert isinstance(logger, logging.Logger)
 
+        self.config = config
         self.gateway = gateway
         self.logger = logger
 

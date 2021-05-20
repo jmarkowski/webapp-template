@@ -1,8 +1,8 @@
 from .database import InvitationData
-from .interactor import AbstractInvitationDataGateway
+from .interface import AbstractInvitationDbGateway
 
 
-class InvitationDataGateway(AbstractInvitationDataGateway):
+class InvitationDbGateway(AbstractInvitationDbGateway):
 
     def __init__(self, db_session):
         assert db_session

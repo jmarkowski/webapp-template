@@ -3,9 +3,7 @@ import logging
 import unittest
 
 from config import config_map
-from core.database import deinit_db_session
-from core.database import init_db_session
-from core.gateway import InvitationDataGateway
+from core.dbgateway import DbGateway
 from core.interactor import InvitationInteractor
 
 
@@ -13,14 +11,14 @@ class InvitationInteractorTests(unittest.TestCase):
 
     def setUp(self):
         config = config_map['testing']
-        self.db = init_db_session(config.DB_URI, echo_raw_sql=False)
+        self.db = DbGateway.open_session(config.DB_URI, echo_raw_sql=False)
 
         logger = logging.getLogger(__name__)
-        gateway = InvitationDataGateway(self.db)
-        self.interactor = InvitationInteractor(gateway, logger)
+        gateway = DbGateway(self.db)
+        self.interactor = InvitationInteractor(gateway.invitation, logger)
 
     def tearDown(self):
-        deinit_db_session(self.db)
+        DbGateway.close_session(self.db)
 
     def test_adding_email(self):
         email = 'foo@bar.com'
