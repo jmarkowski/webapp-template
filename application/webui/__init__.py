@@ -8,10 +8,18 @@ from flask import current_app
 from flask import _app_ctx_stack
 
 from config import create_config
-from core.database import init_db_session
-from core.database import deinit_db_session
+from core.dbgateway import DbGateway
+from core.interactor import Interactor
 from webui.error import error_not_found
 from util import abort
+
+
+def get_interactor():
+    return Interactor(
+        config=current_app.config['CONFIG'],
+        db_gateway=DbGateway(current_app.db),
+        logger=current_app.logger,
+    )
 
 
 def init_jinja_env(app):
@@ -49,7 +57,7 @@ def init_db(app):
     # The database connection MUST be available for the service to run.
     while not db_ready:
         try:
-            app.db = init_db_session(db_uri, \
+            app.db = DbGateway.open_session(db_uri, \
                 scopefunc=_app_ctx_stack.__ident_func__,
                 echo_raw_sql=app.config.get('DEBUG'))
 
@@ -57,7 +65,7 @@ def init_db(app):
             # application context is popped.
             @app.teardown_appcontext
             def close_db_session(app):
-                deinit_db_session(current_app.db)
+                DbGateway.close_session(current_app.db)
 
             db_ready = True
         except Exception as e:

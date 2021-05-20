@@ -70,4 +70,13 @@ def create_config(config_strategy=os.getenv('CONFIG_STRATEGY'),
     cfg = config_map[config_strategy](override_settings=override_settings)
     setattr(cfg, 'CONFIG_STRATEGY', config_strategy)
 
+    # Config inception...
+    # The basic reason for this is because Flask unfortunately has its own
+    # required configuration setup, but I want to keep both the Flask
+    # configuration and the application configuration under one roof.
+    # So, we get around this issue by accessing a reference to the
+    # application configuration (if needed) with, for example,
+    # current_app.config['CONFIG'].
+    setattr(cfg, 'CONFIG', cfg)
+
     return cfg
