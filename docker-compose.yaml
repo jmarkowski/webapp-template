@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   reverse_proxy:
-    image: nginx:1.19.10
+    image: nginx:1.21.6
     container_name: ${REVERSE_PROXY_SERVER_NAME}
     restart: always
     volumes:
