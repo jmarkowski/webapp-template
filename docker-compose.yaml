@@ -32,7 +32,7 @@ services:
       - sql_database
 
   sql_database:
-    image: postgres:12.7
+    image: postgres:14.1
     container_name: ${SQL_DATABASE_SERVER_NAME}
     restart: always
     volumes:
