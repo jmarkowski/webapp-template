@@ -4,3 +4,6 @@
 .local
 .pylint.d
 .python_history
+
+# Ignore private data
+data/*
