@@ -14,6 +14,16 @@ from webui.error import error_not_found
 from util import abort
 
 
+# Scope the session to the current greenlet if greenlet is available, otherwise
+# fall back to the current thread.
+#
+# See https://github.com/pallets/werkzeug/pull/2036
+try:
+    from greenlet import getcurrent as _ident_func
+except ImportError:
+    from threading import get_ident as _ident_func
+
+
 def get_interactor():
     return Interactor(
         config=current_app.config['CONFIG'],
@@ -58,7 +68,7 @@ def init_db(app):
     while not db_ready:
         try:
             app.db = DbGateway.open_session(db_uri, \
-                scopefunc=_app_ctx_stack.__ident_func__,
+                scopefunc=_ident_func,
                 echo_raw_sql=app.config.get('DEBUG'))
 
             # Register a function to close the database session when the
