@@ -88,7 +88,17 @@ Run the following command as `docker-compose.yaml` to build the services:
 
     $ docker-compose build
 
-And now run the following to create and start the docker containers:
+Once the containers are built, it is recommended that the database be
+initialized using alembic as follows:
+
+    $ ./command start maint
+
+    webapp$ alembic upgrade head
+
+    $ ./command stop
+
+At this point, the database is initialized, so now you can run the following
+command to create and start the docker containers:
 
     $ docker-compose up
 
@@ -175,6 +185,28 @@ When you are finished working in this environment, type `exit` or hit `CTRL+D`
 to stop the running containers:
 
     $ ./command stop
+
+
+## Modifying the Application's Dockerfile
+
+1. Make the required changes to `application/Dockerfile`.
+
+2. Bump the `application` (and possibly the `email_notifier`) service version
+   tag using semantic versioning.
+
+   For example, if the changes could host previous versions of the
+   application, bump the minor version. This is an appropriate upgrade path if
+   the changes do not require changes to the application code.
+   i.e. `application:1.0` -> `application:1.1`
+
+   However, if the Dockerfile changes require changes to the application code,
+   then a major version bump is required.
+   i.e. `application:1.0` -> `appplication:2.0`
+
+3. Change any other references of the old image version to the new one
+   (e.g. `command`)
+
+4. Starting the application should create the new docker images.
 
 
 # Unit Testing the Application
