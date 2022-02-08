@@ -35,6 +35,7 @@ class TZDateTime(TypeDecorator):
       https://docs.sqlalchemy.org/en/14/core/custom_types.html#store-timezone-aware-timestamps-as-timezone-naive-utc
     """
     impl = DateTime
+    cache_ok = True
 
     def process_bind_param(self, value, dialect):
         if value is not None:
