@@ -1,23 +1,31 @@
-$(document).ready(function () {
-  $container = $('#js-container');
+'use strict';
 
-  $container.html(HTML.contents);
+document.addEventListener('DOMContentLoaded', function () {
+  const container = document.getElementById('list-container');
+  const button = document.getElementById('list-btn');
 
-  $('#js-btn').on('click', function () {
+  button.addEventListener('click', function () {
     $.ajax({
       type: 'get',
       url: URL.main_invites,
       contentType: 'application/json',
       }).done(function (data) {
         if (data.emails) {
-          $container.find('div').html('<ul></ul>');
+          const ul = document.createElement('ul');
+
           data.emails.forEach(email => {
-            $container.find('ul').append('<li>' + email + '</li>');
+            const li = document.createElement('li');
+            const liText = document.createTextNode(email);
+
+            li.appendChild(liText);
+            ul.appendChild(li);
           });
+
+          container.innerHTML = ul.outerHTML;
         }
       }).fail(function (data) {
-        $container.find('div').html('Sorry, '
-          + 'there is an issue communicating with our servers.');
+        container.innerHTML = 'Sorry, '
+          + 'there is an issue communicating with our servers.';
       });
   });
 });
