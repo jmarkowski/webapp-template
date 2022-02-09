@@ -4,10 +4,6 @@ from .interface import AbstractInvitationDbGateway
 
 class InvitationDbGateway(AbstractInvitationDbGateway):
 
-    def __init__(self, db_session):
-        assert db_session
-        self.db = db_session
-
     def add_email(self, email):
         assert isinstance(email, str)
 
