@@ -6,7 +6,7 @@ from flask import request
 
 from util.email import InvalidEmail
 from util.email import parse_email
-from webui import get_interactor
+from webui.helpers import get_interactor
 
 
 main_bp = Blueprint('main', __name__)

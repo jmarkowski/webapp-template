@@ -9,7 +9,6 @@ from flask import _app_ctx_stack
 
 from config import create_config
 from core.dbgateway import DbGateway
-from core.interactor import Interactor
 from webui.error import error_not_found
 from util import abort
 
@@ -22,14 +21,6 @@ try:
     from greenlet import getcurrent as _ident_func
 except ImportError:
     from threading import get_ident as _ident_func
-
-
-def get_interactor():
-    return Interactor(
-        config=current_app.config['CONFIG'],
-        db_gateway=DbGateway(current_app.db),
-        logger=current_app.logger,
-    )
 
 
 def init_jinja_env(app):
