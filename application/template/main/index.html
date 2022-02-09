@@ -43,7 +43,12 @@
       </div>
     </div>
 
-    <div id="js-container" class="row my-3">
+    <div class="row my-3">
+      <div id="list-container" class="col text-center">
+        <button id="list-btn" class="btn btn-primary">
+          Click to show the invite list
+        </button>
+      </div>
     </div>
 
   </div>
@@ -59,14 +64,6 @@ Define any constants that you would use in the javascript files here.
 {% import 'macros.html' as macro %}
 const URL = {
   {{ macro.url_as_property('main.invites') }},
-}
-
-const HTML = {
-  contents: '<div class="col text-center">'
-    + '<button id="js-btn" class="btn btn-primary">'
-    + 'Click to load invite list on this page'
-    + '</button>'
-    + '</div>'
 }
 </script>
 

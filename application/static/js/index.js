@@ -1,23 +1,38 @@
-$(document).ready(function () {
-  $container = $('#js-container');
+'use strict';
 
-  $container.html(HTML.contents);
+document.addEventListener('DOMContentLoaded', function () {
+  const container = document.getElementById('list-container');
+  const button = document.getElementById('list-btn');
 
-  $('#js-btn').on('click', function () {
-    $.ajax({
-      type: 'get',
-      url: URL.main_invites,
-      contentType: 'application/json',
-      }).done(function (data) {
-        if (data.emails) {
-          $container.find('div').html('<ul></ul>');
-          data.emails.forEach(email => {
-            $container.find('ul').append('<li>' + email + '</li>');
-          });
-        }
-      }).fail(function (data) {
-        $container.find('div').html('Sorry, '
-          + 'there is an issue communicating with our servers.');
-      });
+  button.addEventListener('click', function () {
+    fetch(URL.main_invites, {
+      method: 'GET',
+    }).then(function (response) {
+      if (response.status >= 200 && response.status <= 299) {
+        return response.json();
+      } else {
+        throw Error(response.statusText);
+      }
+    }).then(function (jsonResponse) {
+      if (jsonResponse.emails) {
+        const ul = document.createElement('ul');
+
+        jsonResponse.emails.forEach(email => {
+          const li = document.createElement('li');
+          const liText = document.createTextNode(email);
+
+          li.appendChild(liText);
+          ul.appendChild(li);
+        });
+
+        container.innerHTML = ul.outerHTML;
+      } else {
+        container.innerHTML = 'No invitations found!';
+      }
+    }).catch(function (error) {
+      console.log('Request failed: ', error);
+      container.innerHTML = 'Sorry, '
+        + 'there is an issue communicating with our servers.';
+    });
   });
 });
