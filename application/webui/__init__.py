@@ -8,9 +8,9 @@ from flask import current_app
 from flask import _app_ctx_stack
 
 from config import create_config
-from core.dbgateway import DbGateway
-from webui.error import error_not_found
+from core import DbGateway
 from util import abort
+from webui.error import error_not_found
 
 
 # Scope the session to the current greenlet if greenlet is available, otherwise

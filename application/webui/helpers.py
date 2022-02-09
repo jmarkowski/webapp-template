@@ -1,7 +1,7 @@
 from flask import current_app
 
-from core.dbgateway import DbGateway
-from core.interactor import Interactor
+from core import DbGateway
+from core import Interactor
 
 
 def get_interactor():
