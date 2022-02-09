@@ -1,27 +1,15 @@
 #!/usr/bin/env bash
 
-function info() {
-  echo -e "\n >>>>> $1\n"
-}
-
-function run_pylint() {
-  cd /home/webapp
+function pylint_module() {
+  echo -e "\n====== Running pylint on '$1' ======\n"
   python3 -m pylint $1
 }
 
 function cmd_lint() {
-  run_pylint core
-  run_pylint webui
-  run_pylint util
-}
-
-function run_mypy() {
   cd /home/webapp
-  python3 -m mypy $1
-}
-
-function cmd_type() {
-  run_mypy .
+  pylint_module core
+  pylint_module webui
+  pylint_module util
 }
 
 function cmd_test() {
@@ -45,26 +33,8 @@ function cmd_test() {
 }
 
 case "$1" in
-  "check")
-    case "$2" in
-      "lint")
-        info "Start lint checks ..."
-        cmd_lint
-        ;;
-
-      "type")
-        info "Start type checks ..."
-        cmd_type
-        ;;
-
-      *)
-        echo -e "\nUsage:";
-        echo "  $script app check [COMMAND]";
-        echo -e "\nCommands:";
-        echo "  lint      Run the python linter";
-        echo "  type      Run the python static type checker";
-        ;;
-    esac
+  "lint")
+    cmd_lint
     ;;
 
   "test")
@@ -75,7 +45,7 @@ case "$1" in
     echo -e "\nUsage:";
     echo "  $script [COMMAND]";
     echo -e "\nCommands:";
-    echo "  check     Run various checks against the code";
+    echo "  lint      Run the static code analysis (linter) against the code";
     echo "  test [m]  Run all the unit tests or just module 'm'";
     ;;
 esac
