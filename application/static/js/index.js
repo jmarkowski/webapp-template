@@ -5,27 +5,34 @@ document.addEventListener('DOMContentLoaded', function () {
   const button = document.getElementById('list-btn');
 
   button.addEventListener('click', function () {
-    $.ajax({
-      type: 'get',
-      url: URL.main_invites,
-      contentType: 'application/json',
-      }).done(function (data) {
-        if (data.emails) {
-          const ul = document.createElement('ul');
+    fetch(URL.main_invites, {
+      method: 'GET',
+    }).then(function (response) {
+      if (response.status >= 200 && response.status <= 299) {
+        return response.json();
+      } else {
+        throw Error(response.statusText);
+      }
+    }).then(function (jsonResponse) {
+      if (jsonResponse.emails) {
+        const ul = document.createElement('ul');
 
-          data.emails.forEach(email => {
-            const li = document.createElement('li');
-            const liText = document.createTextNode(email);
+        jsonResponse.emails.forEach(email => {
+          const li = document.createElement('li');
+          const liText = document.createTextNode(email);
 
-            li.appendChild(liText);
-            ul.appendChild(li);
-          });
+          li.appendChild(liText);
+          ul.appendChild(li);
+        });
 
-          container.innerHTML = ul.outerHTML;
-        }
-      }).fail(function (data) {
-        container.innerHTML = 'Sorry, '
-          + 'there is an issue communicating with our servers.';
-      });
+        container.innerHTML = ul.outerHTML;
+      } else {
+        container.innerHTML = 'No invitations found!';
+      }
+    }).catch(function (error) {
+      console.log('Request failed: ', error);
+      container.innerHTML = 'Sorry, '
+        + 'there is an issue communicating with our servers.';
+    });
   });
 });
