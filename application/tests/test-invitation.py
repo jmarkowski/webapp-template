@@ -2,7 +2,7 @@
 import logging
 import unittest
 
-from config import config_map
+from config import create_config
 from core.dbgateway import DbGateway
 from core.interactor import InvitationInteractor
 
@@ -10,12 +10,16 @@ from core.interactor import InvitationInteractor
 class InvitationInteractorTests(unittest.TestCase):
 
     def setUp(self):
-        config = config_map['testing']
-        self.db = DbGateway.open_session(config.DB_URI, echo_raw_sql=False)
+        self.config = create_config(config_strategy='testing')
+        self.db = DbGateway.open_session(self.config.DB_URI, echo_raw_sql=False)
 
         logger = logging.getLogger(__name__)
         gateway = DbGateway(self.db)
-        self.interactor = InvitationInteractor(gateway.invitation, logger)
+        self.interactor = InvitationInteractor(
+            self.config,
+            gateway.invitation,
+            logger,
+        )
 
     def tearDown(self):
         DbGateway.close_session(self.db)

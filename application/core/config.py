@@ -2,7 +2,7 @@ from os import getenv
 
 
 class Config():
-    def __init__(self, override_settings=None):
+    def __init__(self, override_settings: dict | None = None):
         """Upon initialization, optionally load settings based on the following
         order of precedence:
         1. Environment always wins.
@@ -16,7 +16,6 @@ class Config():
             self.__update_from_pyfile(pyfile_settings_path)
 
         if override_settings:
-            assert isinstance(override_settings, dict)
             self.__update_from_dict(override_settings)
 
         self.__update_from_env()
@@ -36,9 +35,8 @@ class Config():
                     setattr(cls, k, v)
 
     @classmethod
-    def __update_from_dict(cls, dct):
+    def __update_from_dict(cls, dct: dict):
         """Set class attributes from a given dictionary."""
-        assert isinstance(dct, dict)
         for k,v in dct.items():
             if k.isupper():
                 setattr(cls, k, v)

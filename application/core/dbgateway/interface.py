@@ -1,7 +1,12 @@
 from abc import ABC, abstractmethod
 
 
-class AbstractInvitationDbGateway(ABC):
+class BaseDbGateway():
+    def __init__(self, db_session):
+        self.db = db_session
+
+
+class AbstractInvitationDbGateway(BaseDbGateway, ABC):
     """This class specifies the data interface methods required by the
     interactor to accomplish its tasks.
     """

@@ -9,10 +9,11 @@ class InvitationInteractor():
     users.
     """
 
-    def __init__(self, config, gateway, logger):
-        assert isinstance(config, Config)
-        assert isinstance(gateway, AbstractInvitationDbGateway)
-        assert isinstance(logger, logging.Logger)
+    def __init__(self,
+            config: Config,
+            gateway: AbstractInvitationDbGateway,
+            logger: logging.Logger,
+        ):
 
         self.config = config
         self.gateway = gateway
