@@ -9,13 +9,10 @@ class Interactor():
     """Interface to the application use cases."""
 
     def __init__(self,
-            config,
-            db_gateway,
-            logger,
+            config: Config,
+            db_gateway: DbGateway,
+            logger: logging.Logger,
         ):
-        assert isinstance(config, Config)
-        assert isinstance(db_gateway, DbGateway)
-        assert isinstance(logger, logging.Logger)
 
         self.invitation = InvitationInteractor(
             config,
