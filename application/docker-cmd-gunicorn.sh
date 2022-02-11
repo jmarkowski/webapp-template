@@ -1,8 +1,5 @@
 #!/bin/bash
 FLASK_PORT=5000
-
-# Workers should be 2-4 per core in the server
-WORKERS=2
 MODULE_NAME=webui
 
 # Logs
@@ -15,7 +12,7 @@ mkdir -p ${LOG_DIR}
 
 exec gunicorn \
     --bind :${FLASK_PORT} \
-    --workers=${WORKERS} \
+    --workers=${WSGI_WORKERS} \
     --log-level=${LOG_LEVEL} \
     --access-logfile ${ACCESS_LOG_FILE} \
     --error-logfile ${ERROR_LOG_FILE} \

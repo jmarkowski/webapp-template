@@ -28,6 +28,7 @@ services:
         # effect. Note: This expects the volume to be used as well!
       - RELOAD_ARG=--reload
       - CONFIG_STRATEGY
+      - WSGI_WORKERS
     depends_on:
       - sql_database
 
