@@ -89,7 +89,9 @@ Run the following command as `docker-compose.yaml` to build the services:
     $ docker-compose build
 
 Once the containers are built, it is recommended that the database be
-initialized using alembic as follows:
+initialized using alembic. However, if there are no alembic migrations
+(i.e. no `application/alembic/versions` directory), then this step
+may be skipped.
 
     $ ./command start maint
 
