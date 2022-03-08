@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% block title %}{{ site['brand'] }} - {{ heading }}{% endblock title %}
-
 {% block content %}
 <div class="text-center">
   <h1>{{ heading }}</h1>
@@ -73,4 +71,4 @@ const URL = {
 <script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('js/index.*.min.js')[0]) }}">
 {% endif %}
 </script>
-{% endblock %}
+{% endblock script %}

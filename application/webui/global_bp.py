@@ -12,11 +12,11 @@ def util_processor():
     """Inject the following dictionary into all templates and render them
     automatically.
     """
-    site = current_app.config['SITE']
+    info = current_app.config['INFO']
     debug = current_app.config['DEBUG']
 
     return {
         'debug': debug,
-        'site': site,
+        'info': info,
         'time_now': now_str
     }
