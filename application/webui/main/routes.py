@@ -37,7 +37,7 @@ def index():
     # Templates are searched globally, first at the application level, and then
     # at the blueprint level. For this reason, we "namespace" our
     # blueprint-specific templates by prefixing them with the blueprint name.
-    return render_template('main/index.html',
+    return render_template('index.html',
                            heading=heading,
                            leading_text=leading_text,
                            email=email,
