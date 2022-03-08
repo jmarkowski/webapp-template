@@ -4,8 +4,8 @@ from core.config import Config
 
 
 class DefaultConfig(Config):
-    SITE = {
-        'brand': 'Web Application Brand'
+    INFO = {
+        'product': 'Web Application Template'
     }
 
     # Directories

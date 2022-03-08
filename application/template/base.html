@@ -33,7 +33,9 @@
   {% block style %}
   {% endblock style %}
 
-  <title>{% block title %}{% endblock title %}</title>
+  <title>
+    {% if title %}{{ title }} | {% endif %}{{ info['product'] }}
+  </title>
 </head>
 <body class="d-flex flex-column h-100">
 
@@ -88,7 +90,7 @@
 <!-- Footer -->
 <footer class="footer mt-auto py-3 bg-light">
   <div class="text-center container">
-    <span class="text-muted">&copy; {{ time_now('%Y') }} {{ site['brand'] }}</span>
+    <span class="text-muted">&copy; {{ time_now('%Y') }} {{ info['product'] }}</span>
   </div>
 </footer>
 
