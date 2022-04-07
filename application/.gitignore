@@ -7,3 +7,6 @@
 
 # Ignore private data
 data/*
+
+# Ignore node modules
+node_modules/
