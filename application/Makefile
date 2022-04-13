@@ -29,15 +29,15 @@ JS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(JS_FILES))
 
 DIST_DIR = static/dist
 
-all: $(CSS_OUT_FILES) $(SCSS_OUT_FILES) scripts
+all: css_styles scss_styles scripts
 
-$(DIST_DIR)/%.css: $(CSS_DIR)/%.css | $(DIST_DIR)
-	cp $< $@
-	./hashfile -r $@
+css_styles: | $(DIST_DIR)
+	$(TOOL_CMD) npx parcel build $(CSS_DIR)/*.css --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(CSS_OUT_FILES)
 
-$(DIST_DIR)/%.css: $(SCSS_DIR)/%.scss | $(DIST_DIR)
-	$(TOOL_CMD) sh -c "sass $< $@ --style compressed --no-source-map"
-	./hashfile -r $@
+scss_styles: | $(DIST_DIR)
+	$(TOOL_CMD) npx parcel build $(SCSS_DIR)/*.scss --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(SCSS_OUT_FILES)
 
 scripts: | $(DIST_DIR)
 	$(TOOL_CMD) npx parcel build $(JS_DIR)/*.js --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
