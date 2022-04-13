@@ -68,7 +68,7 @@ const URL = {
 {% if debug %}
 <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}">
 {% else %}
-<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('js/index.*.min.js')[0]) }}">
+<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('dist/index.*.js')[0]) }}">
 {% endif %}
 </script>
 {% endblock script %}

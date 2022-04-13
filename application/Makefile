@@ -16,44 +16,46 @@ TOOL_CMD = docker container run --rm \
    $(IMAGE_TAG)
 endif
 
-SCSS_FILES += custom-bootstrap.scss
+CSS_DIR  = static/css
+CSS_FILES = $(notdir $(wildcard $(CSS_DIR)/*.css))
+CSS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(CSS_FILES))
 
 SCSS_DIR = scss
-CSS_DIR  = static/css
+SCSS_FILES += custom-bootstrap.scss
+SCSS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(SCSS_FILES:.scss=.css))
+
 JS_DIR = static/js
+JS_FILES = $(notdir $(wildcard $(JS_DIR)/*.js))
+JS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(JS_FILES))
 
-CSS_MIN_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.min.css))
-
-# JS Files (the source and output files are in the same directory)
-JS_ALL_FILES = $(wildcard $(JS_DIR)/*.js)
-JS_FILES = $(filter-out $(wildcard $(JS_DIR)/*.min.js),$(JS_ALL_FILES))
-JS_MIN_FILES = $(JS_FILES:.js=.min.js)
+DIST_DIR = static/dist
 
 RECIPE_GEN_MD5_OF_OUTPUT_FILE = MD5=$$(md5sum $@ | cut -c -7);
 
-all: $(CSS_MIN_FILES) $(JS_MIN_FILES)
+all: $(CSS_OUT_FILES) $(SCSS_OUT_FILES) $(JS_OUT_FILES)
 
-$(CSS_DIR)/%.min.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
-	$(TOOL_CMD) sh -c "sass $< $@ --style compressed"
+$(DIST_DIR)/%.css: $(CSS_DIR)/%.css | $(DIST_DIR)
+	cp $< $@
 	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
-	file="$@"; mv $@ $${file%.min.css}.$${MD5}.min.css
+	file="$@"; mv $@ $${file%.css}.$${MD5}.css
 
-$(JS_DIR)/%.min.js: $(JS_DIR)/%.js FORCE | $(JS_DIR)
+$(DIST_DIR)/%.css: $(SCSS_DIR)/%.scss | $(DIST_DIR)
+	$(TOOL_CMD) sh -c "sass $< $@ --style compressed --no-source-map"
+	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
+	file="$@"; mv $@ $${file%.css}.$${MD5}.css
+
+$(DIST_DIR)/%.js: $(JS_DIR)/%.js | $(DIST_DIR)
 	$(TOOL_CMD) sh -c "uglifyjs $< --compress --mangle -o $@"
 	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
-	file="$@"; mv $@ $${file%.min.js}.$${MD5}.min.js
+	file="$@"; mv $@ $${file%.js}.$${MD5}.js
 
-$(CSS_DIR):
+$(DIST_DIR):
 	mkdir -p $@
 
 clean:
-	rm -f $(CSS_MIN_FILES:.min.css=*.min.css)
-	rm -f $(CSS_MIN_FILES:.min.css=*.min.css.map)
-	rm -f $(JS_MIN_FILES:.min.js=*.min.js)
+	rm -rf $(DIST_DIR)
 
-FORCE:
-
-.PHONY: all clean FORCE
+.PHONY: all clean
 
 print-%:
 	@echo '$*=$($*)'
