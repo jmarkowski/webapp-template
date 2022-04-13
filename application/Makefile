@@ -8,7 +8,6 @@ IMAGE_EXISTS = $(shell docker image ls -q $(IMAGE_TAG) 2> /dev/null)
 
 ifneq ($(IMAGE_EXISTS),)
 MNT_PATH = $(shell pwd)
-SRC_PATH = /home/node/scss
 TOOL_CMD = docker container run --rm \
    --volume=$(MNT_PATH):/mnt \
    --workdir=/mnt \
@@ -30,7 +29,7 @@ JS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(JS_FILES))
 
 DIST_DIR = static/dist
 
-all: $(CSS_OUT_FILES) $(SCSS_OUT_FILES) $(JS_OUT_FILES)
+all: $(CSS_OUT_FILES) $(SCSS_OUT_FILES) scripts
 
 $(DIST_DIR)/%.css: $(CSS_DIR)/%.css | $(DIST_DIR)
 	cp $< $@
@@ -40,9 +39,9 @@ $(DIST_DIR)/%.css: $(SCSS_DIR)/%.scss | $(DIST_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@ --style compressed --no-source-map"
 	./hashfile -r $@
 
-$(DIST_DIR)/%.js: $(JS_DIR)/%.js | $(DIST_DIR)
-	$(TOOL_CMD) sh -c "uglifyjs $< --compress --mangle -o $@"
-	./hashfile -r $@
+scripts: | $(DIST_DIR)
+	$(TOOL_CMD) npx parcel build $(JS_DIR)/*.js --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(JS_OUT_FILES)
 
 $(DIST_DIR):
 	mkdir -p $@
