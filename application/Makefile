@@ -22,7 +22,6 @@ SCSS_DIR = scss
 CSS_DIR  = static/css
 JS_DIR = static/js
 
-CSS_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.css))
 CSS_MIN_FILES = $(addprefix $(CSS_DIR)/,$(SCSS_FILES:.scss=.min.css))
 
 # JS Files (the source and output files are in the same directory)
@@ -32,18 +31,7 @@ JS_MIN_FILES = $(JS_FILES:.js=.min.js)
 
 RECIPE_GEN_MD5_OF_OUTPUT_FILE = MD5=$$(md5sum $@ | cut -c -7);
 
-ifeq ($(CONFIG_STRATEGY),production)
-TARGETS=$(CSS_MIN_FILES) $(JS_MIN_FILES)
-else
-TARGETS=$(CSS_FILES) $(CSS_MIN_FILES) $(JS_MIN_FILES)
-endif
-
-all: $(TARGETS)
-
-$(CSS_DIR)/%.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
-	$(TOOL_CMD) sh -c "sass $< $@"
-	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
-	file="$@"; mv $@ $${file%.css}.$${MD5}.css
+all: $(CSS_MIN_FILES) $(JS_MIN_FILES)
 
 $(CSS_DIR)/%.min.css: $(SCSS_DIR)/%.scss FORCE | $(CSS_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@ --style compressed"
@@ -59,10 +47,8 @@ $(CSS_DIR):
 	mkdir -p $@
 
 clean:
-	rm -f $(CSS_FILES:.css=*.css)
-	rm -f $(CSS_FILES:.css=*.css.map)
-	rm -f $(CSS_FILES:.css=*.min.css)
-	rm -f $(CSS_FILES:.css=*.min.css.map)
+	rm -f $(CSS_MIN_FILES:.min.css=*.min.css)
+	rm -f $(CSS_MIN_FILES:.min.css=*.min.css.map)
 	rm -f $(JS_MIN_FILES:.min.js=*.min.js)
 
 FORCE:
