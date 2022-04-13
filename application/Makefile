@@ -30,24 +30,17 @@ JS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(JS_FILES))
 
 DIST_DIR = static/dist
 
-RECIPE_GEN_MD5_OF_OUTPUT_FILE = MD5=$$(md5sum $@ | cut -c -7);
-
 all: $(CSS_OUT_FILES) $(SCSS_OUT_FILES) $(JS_OUT_FILES)
+	./hashfile -r $^
 
 $(DIST_DIR)/%.css: $(CSS_DIR)/%.css | $(DIST_DIR)
 	cp $< $@
-	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
-	file="$@"; mv $@ $${file%.css}.$${MD5}.css
 
 $(DIST_DIR)/%.css: $(SCSS_DIR)/%.scss | $(DIST_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@ --style compressed --no-source-map"
-	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
-	file="$@"; mv $@ $${file%.css}.$${MD5}.css
 
 $(DIST_DIR)/%.js: $(JS_DIR)/%.js | $(DIST_DIR)
 	$(TOOL_CMD) sh -c "uglifyjs $< --compress --mangle -o $@"
-	@$(RECIPE_GEN_MD5_OF_OUTPUT_FILE) \
-	file="$@"; mv $@ $${file%.js}.$${MD5}.js
 
 $(DIST_DIR):
 	mkdir -p $@
