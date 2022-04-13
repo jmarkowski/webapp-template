@@ -1,0 +1,64 @@
+#!/bin/bash
+# Creates hashed versions of any and all files provided as arguments.
+# The hash is added just before the extension. If no extension exists, then the
+# hash is added at the end of the filename.
+#
+# For example,
+#
+#   $ ./hashlib ext-file.txt no-ext-file
+#
+# creates "ext-file.<hash>.txt" and "no-ext-file.<hash>"
+
+r_flag='false'  # Replace
+
+print_usage() {
+  printf "Usage: $0 [-r] -f <file(s)>"
+}
+
+while getopts 'r' flag; do
+  case "${flag}" in
+    r)
+      # The '-r' flag has been set.
+      r_flag='true'
+      shift 1
+    ;;
+    *)
+      print_usage
+      exit 1
+    ;;
+  esac
+done
+
+# Get all of the arguments
+args="$@"
+
+for arg in $args; do
+  if [[ -d $arg ]]; then
+    # Directory; do nothing
+    :
+  elif [[ -f $arg ]]; then
+    # File
+    filename=$arg
+
+    md5=$(md5sum $filename | cut -c -7);
+
+    base=${filename%.*};
+    ext="";
+    if [[ $filename =~ (.*)?\.(.*) ]]; then
+      ext=.${filename##*.};
+    fi
+    newfilename=${base}.${md5}${ext};
+
+    if [ $r_flag == "true" ]; then
+      echo "Replacing $filename -> $newfilename";
+      mv $filename $newfilename;
+    else
+      echo "Copying $filename -> $newfilename";
+      cp $filename $newfilename;
+    fi
+
+  else
+    echo "$arg is not valid";
+    exit 1;
+  fi
+done
