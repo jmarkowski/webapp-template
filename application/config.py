@@ -15,7 +15,11 @@ class DefaultConfig(Config):
     # Connection URI format:
     #   postgresql://[user[:password]@][netloc][:port][/dbname]
     #   sqlite:///path/to/data.sqlite
-    DB_URI = 'sqlite:///:memory:' # Use RAM database as default.
+    DB_URI = 'postgresql://{user}:{password}@{server}:5432/{database}' \
+             .format(user=os.getenv('POSTGRES_USER'),
+                     password=os.getenv('POSTGRES_PASSWORD'),
+                     database=os.getenv('POSTGRES_DB'),
+                     server=os.getenv('SQL_DATABASE_SERVER_NAME'))
 
     # In a production setting, this key will be overwritten by what is in
     # 'secrets/settings.py'
@@ -43,16 +47,11 @@ class ProductionConfig(DefaultConfig):
 
 
 class TestingConfig(DefaultConfig):
-    DB_URI = 'sqlite:///:memory:'
+    DB_URI = 'sqlite:///:memory:' # Use RAM database
     TESTING = True
 
 
 class DevelopmentConfig(DefaultConfig):
-    DB_URI = 'postgresql://{user}:{password}@{server}:5432/{database}' \
-             .format(user=os.getenv('POSTGRES_USER'),
-                     password=os.getenv('POSTGRES_PASSWORD'),
-                     database=os.getenv('POSTGRES_DB'),
-                     server=os.getenv('SQL_DATABASE_SERVER_NAME'))
     DEBUG = True
 
 

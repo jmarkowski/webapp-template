@@ -1,11 +1,16 @@
-# Compiling Bootstrap
+# Compiling Frontend Sources
 
-This directory contains a `Makefile` that compiles the `.scss` files in the `scss/`
-directory into `.css` files stored in the `webui/static/css` directory.
+This directory contains a `Makefile` that transpiles and minifies the scripts
+and styles found under the `static` directory into the `static/dist` folder.
 
-To perform the compilation, simply run `make`.
+To process the scripts and styles, simply execute the following instruction:
 
     $ make
+
+NOTE: The node modules must be first install in order for this to successfully
+run:
+
+    $ make install
 
 ## Custom Theming
 

@@ -2,13 +2,12 @@
 include ../.env
 export $(shell sed 's/=.*//' ../.env)
 
-IMAGE_TAG = $(COMPOSE_PROJECT_NAME)/node-tools:1.0
+IMAGE_TAG = $(COMPOSE_PROJECT_NAME)/node-tools:2.0
 
 IMAGE_EXISTS = $(shell docker image ls -q $(IMAGE_TAG) 2> /dev/null)
 
 ifneq ($(IMAGE_EXISTS),)
 MNT_PATH = $(shell pwd)
-SRC_PATH = /home/node/scss
 TOOL_CMD = docker container run --rm \
    --volume=$(MNT_PATH):/mnt \
    --workdir=/mnt \
@@ -16,31 +15,28 @@ TOOL_CMD = docker container run --rm \
    $(IMAGE_TAG)
 endif
 
-CSS_DIR  = static/css
-CSS_FILES = $(notdir $(wildcard $(CSS_DIR)/*.css))
-CSS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(CSS_FILES))
+STYLES_DIR  = static/styles
+STYLES = $(notdir $(wildcard $(STYLES_DIR)/*.*))
+STYLES_CSS = $(addprefix $(DIST_DIR)/,$(addsuffix .css, $(basename $(STYLES))))
 
-SCSS_DIR = scss
-SCSS_FILES += custom-bootstrap.scss
-SCSS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(SCSS_FILES:.scss=.css))
-
-JS_DIR = static/js
-JS_FILES = $(notdir $(wildcard $(JS_DIR)/*.js))
-JS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(JS_FILES))
+SCRIPTS_DIR = static/scripts
+SCRIPTS = $(notdir $(wildcard $(SCRIPTS_DIR)/*.*))
+SCRIPTS_JS = $(addprefix $(DIST_DIR)/,$(addsuffix .js, $(basename $(SCRIPTS))))
 
 DIST_DIR = static/dist
 
-all: $(CSS_OUT_FILES) $(SCSS_OUT_FILES) $(JS_OUT_FILES)
-	./hashfile -r $^
+all: styles scripts
 
-$(DIST_DIR)/%.css: $(CSS_DIR)/%.css | $(DIST_DIR)
-	cp $< $@
+styles: | $(DIST_DIR)
+	$(TOOL_CMD) npx parcel build $(STYLES_DIR)/*.* --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(STYLES_CSS)
 
-$(DIST_DIR)/%.css: $(SCSS_DIR)/%.scss | $(DIST_DIR)
-	$(TOOL_CMD) sh -c "sass $< $@ --style compressed --no-source-map"
+scripts: | $(DIST_DIR)
+	$(TOOL_CMD) npx parcel build $(SCRIPTS_DIR)/*.* --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(SCRIPTS_JS)
 
-$(DIST_DIR)/%.js: $(JS_DIR)/%.js | $(DIST_DIR)
-	$(TOOL_CMD) sh -c "uglifyjs $< --compress --mangle -o $@"
+install:
+	$(TOOL_CMD) npm install
 
 $(DIST_DIR):
 	mkdir -p $@
