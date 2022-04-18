@@ -6,6 +6,8 @@ script=$0
 #
 GREY='\033[0;37m'
 NONE='\033[0m'
+CURDIR=$(dirname $(realpath $script))
+APP_PATH=$CURDIR/application
 
 APP_IS_NOT_RUNNING=$(cat <<_EOF
 The 'application' service is required and is not running.
@@ -86,18 +88,16 @@ function cmd_db() {
   esac
 }
 
-curdir=$(dirname $(realpath $script))
 function cmd_start() {
   case "$1" in
     "maint")
-      app_path=$curdir/application
       source .env
       docker-compose up -d sql_database
       docker-compose up -d sql_administration
       docker container run --rm -ti \
         --env-file .env \
         --network $NETWORK_NAME \
-        --volume $app_path:/home/webapp \
+        --volume $APP_PATH:/home/webapp \
         $COMPOSE_PROJECT_NAME/application:1.2 bash
       ;;
 
@@ -142,12 +142,22 @@ case "$1" in
     cmd_stop ${@:2}
     ;;
 
+  "npm")
+    source .env
+    docker container run --rm -ti \
+      --volume=$APP_PATH:/application \
+      --workdir=/application \
+      --user $(id -u):$(id -g) \
+      $COMPOSE_PROJECT_NAME/node-tools:2.0 bash
+    ;;
+
   *)
     echo -e "\nUsage:";
     echo "  $script [COMMAND]";
     echo -e "\nCommands:";
     echo "  app       Execute subcommands for a running application server";
     echo "  db        Execute subcommands for a running database server";
+    echo "  npm       Start an npm environment for managing node modules";
     echo "  start     Execute subcommands for starting the service";
     echo "  stop      Execute subcommands for stopping the service";
     ;;
