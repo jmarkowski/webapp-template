@@ -23,9 +23,9 @@ SCSS_DIR = scss
 SCSS_FILES += custom-bootstrap.scss
 SCSS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(SCSS_FILES:.scss=.css))
 
-JS_DIR = static/js
-JS_FILES = $(notdir $(wildcard $(JS_DIR)/*.js))
-JS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(JS_FILES))
+SCRIPTS_DIR = static/scripts
+SCRIPTS = $(notdir $(wildcard $(SCRIPTS_DIR)/*.*))
+SCRIPTS_JS = $(addprefix $(DIST_DIR)/,$(addsuffix .js, $(basename $(SCRIPTS))))
 
 DIST_DIR = static/dist
 
@@ -40,8 +40,8 @@ scss_styles: | $(DIST_DIR)
 	./hashfile -r $(SCSS_OUT_FILES)
 
 scripts: | $(DIST_DIR)
-	$(TOOL_CMD) npx parcel build $(JS_DIR)/*.js --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
-	./hashfile -r $(JS_OUT_FILES)
+	$(TOOL_CMD) npx parcel build $(SCRIPTS_DIR)/*.* --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(SCRIPTS_JS)
 
 $(DIST_DIR):
 	mkdir -p $@
