@@ -31,16 +31,18 @@ JS_OUT_FILES = $(addprefix $(DIST_DIR)/,$(JS_FILES))
 DIST_DIR = static/dist
 
 all: $(CSS_OUT_FILES) $(SCSS_OUT_FILES) $(JS_OUT_FILES)
-	./hashfile -r $^
 
 $(DIST_DIR)/%.css: $(CSS_DIR)/%.css | $(DIST_DIR)
 	cp $< $@
+	./hashfile -r $@
 
 $(DIST_DIR)/%.css: $(SCSS_DIR)/%.scss | $(DIST_DIR)
 	$(TOOL_CMD) sh -c "sass $< $@ --style compressed --no-source-map"
+	./hashfile -r $@
 
 $(DIST_DIR)/%.js: $(JS_DIR)/%.js | $(DIST_DIR)
 	$(TOOL_CMD) sh -c "uglifyjs $< --compress --mangle -o $@"
+	./hashfile -r $@
 
 $(DIST_DIR):
 	mkdir -p $@
