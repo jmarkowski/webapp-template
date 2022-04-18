@@ -1,14 +1,16 @@
 # Overview
 
-This repository contains a boilerplate setup for a scalable python-based web
-application using the Flask framework, an nginx reverse-proxy as the load
+This repository contains a boilerplate setup for a building scalable web
+application using the python-based Flask framework for serving pages, node
+modules and the npm package manager for front-end development support,
+Parcel for transpiling/minifying/bundling, an nginx reverse-proxy as the load
 balancer, and PostgreSQL as the database along with a web-based database
 administration portal.
 
 The setup uses the production-grade [gunicorn](https://gunicorn.org/) WSGI HTTP
 server to serve the Flask application, running in a python virtual environment.
 
-It also uses [nginx](https://www.nginx.com/) to serve as a reverse-proxy
+It uses [nginx](https://www.nginx.com/) to serve as a reverse-proxy
 to achieve [layer 7 load balancing](https://www.nginx.com/resources/glossary/layer-7-load-balancing/).
 
 Database interface support using an ORM is added using [SQLAlchemy](https://www.sqlalchemy.org).
@@ -20,6 +22,11 @@ for more details.
 
 Database migration support was added using the [Alembic](https://alembic.sqlalchemy.org),
 which is specifically intended for use in combination with SQLAlchemy.
+
+Transpiling, minification, and general bundling of front-end scripts and styles
+are done using [Parcel](https://parceljs.org/). The node tools and `npm`
+commands are available for install the necessary modules to create modern web
+application.
 
 
 # Project Initialization
