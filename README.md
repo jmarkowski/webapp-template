@@ -63,6 +63,7 @@ bootstrap CSS from its source files and custom inputs. This file must be
 compiled so that the page formatting from CSS is working.
 
     $ cd application/
+    $ make install
     $ make
 
 

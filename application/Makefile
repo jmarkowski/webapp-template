@@ -35,6 +35,9 @@ scripts: | $(DIST_DIR)
 	$(TOOL_CMD) npx parcel build $(SCRIPTS_DIR)/*.* --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
 	./hashfile -r $(SCRIPTS_JS)
 
+install:
+	$(TOOL_CMD) npm install
+
 $(DIST_DIR):
 	mkdir -p $@
 
