@@ -10,3 +10,6 @@ data/*
 
 # Ignore node modules
 node_modules/
+
+# Ignore parcel cache
+.parcel-cache/
