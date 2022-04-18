@@ -2,7 +2,7 @@
 include ../.env
 export $(shell sed 's/=.*//' ../.env)
 
-IMAGE_TAG = $(COMPOSE_PROJECT_NAME)/node-tools:1.0
+IMAGE_TAG = $(COMPOSE_PROJECT_NAME)/node-tools:2.0
 
 IMAGE_EXISTS = $(shell docker image ls -q $(IMAGE_TAG) 2> /dev/null)
 
