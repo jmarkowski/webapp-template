@@ -15,9 +15,9 @@ run:
 ## Custom Theming
 
 To customize the components that you would use for bootstrap, modify the
-`scss/custom-bootstrap.scss` file.
+`scss/bootstrap.scss` file.
 
-See [Theming Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/theming/)
+See [Customize SASS](https://getbootstrap.com/docs/5.1/customize/sass/)
 for more details.
 
 
