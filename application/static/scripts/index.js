@@ -1,4 +1,7 @@
-'use strict';
+import { Popover as Popover } from 'bootstrap';
+
+var popoverEl = document.getElementById('popover')
+var popover = new Popover(popoverEl)
 
 document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('list-container');
