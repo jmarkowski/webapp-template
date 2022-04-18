@@ -94,7 +94,8 @@
   </div>
 </footer>
 
-<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('dist/custom.*.js')[0]) }}">
+</script>
 
 <!-- Custom page javascript -->
 {% block script %}
