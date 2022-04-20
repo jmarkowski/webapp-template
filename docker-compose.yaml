@@ -8,6 +8,7 @@ services:
     restart: always
     volumes:
       - './reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - './application/static:/application/static:ro'
     ports:
       - ${HOST_HTTP_PORT}:80
     depends_on:

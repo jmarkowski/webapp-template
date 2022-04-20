@@ -24,10 +24,10 @@
   </style>
 
   <!-- Bootstrap CSS (custom themed) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('dist/custom-bootstrap.*.css')[0]) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('dist/bootstrap.*.css')[0]) }}">
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('dist/custom.*.css')[0]) }}">
+  <!-- Base CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('dist/base.*.css')[0]) }}">
 
   <!-- Custom page styles -->
   {% block style %}
@@ -94,7 +94,9 @@
   </div>
 </footer>
 
-<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Base JS -->
+<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('dist/base.*.js')[0]) }}">
+</script>
 
 <!-- Custom page javascript -->
 {% block script %}

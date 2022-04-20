@@ -49,8 +49,20 @@
       </div>
     </div>
 
-  </div>
+    <div class="row my-3">
+      <div class="col text-center">
+        <button id="popover"
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="popover"
+                title="Popover example"
+                data-bs-content="Some engaging popover content goes here ...">
+          Click to toggle popover
+        </button>
+      </div>
+    </div>
 
+  </div>
 </div>
 {% endblock content %}
 
@@ -65,10 +77,6 @@ const URL = {
 }
 </script>
 
-{% if debug %}
-<script type="text/javascript" src="{{ url_for('static', filename='scripts/index.js') }}">
-{% else %}
 <script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('dist/index.*.js')[0]) }}">
-{% endif %}
 </script>
 {% endblock script %}

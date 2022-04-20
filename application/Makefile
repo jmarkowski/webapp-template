@@ -9,8 +9,8 @@ IMAGE_EXISTS = $(shell docker image ls -q $(IMAGE_TAG) 2> /dev/null)
 ifneq ($(IMAGE_EXISTS),)
 MNT_PATH = $(shell pwd)
 TOOL_CMD = docker container run --rm \
-   --volume=$(MNT_PATH):/mnt \
-   --workdir=/mnt \
+   --volume=$(MNT_PATH):/application \
+   --workdir=/application \
    --user $(shell id -u):$(shell id -g) \
    $(IMAGE_TAG)
 endif
