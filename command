@@ -134,12 +134,12 @@ case "$1" in
     cmd_db ${@:2}
     ;;
 
-  "start")
-    cmd_start ${@:2}
-    ;;
-
-  "stop")
-    cmd_stop ${@:2}
+  "nginx")
+    source .env
+    docker container exec -ti \
+      --workdir=/etc/nginx \
+      --user nginx:nginx \
+      ${COMPOSE_PROJECT_NAME}_reverse_proxy bash
     ;;
 
   "npm")
@@ -151,12 +151,21 @@ case "$1" in
       $COMPOSE_PROJECT_NAME/node-tools:2.0 bash
     ;;
 
+  "start")
+    cmd_start ${@:2}
+    ;;
+
+  "stop")
+    cmd_stop ${@:2}
+    ;;
+
   *)
     echo -e "\nUsage:";
     echo "  $script [COMMAND]";
     echo -e "\nCommands:";
     echo "  app       Execute subcommands for a running application server";
     echo "  db        Execute subcommands for a running database server";
+    echo "  nginx     Start a bash shell in the reverse-proxy";
     echo "  npm       Start an npm environment for managing node modules";
     echo "  start     Execute subcommands for starting the service";
     echo "  stop      Execute subcommands for stopping the service";
