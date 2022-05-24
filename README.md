@@ -199,24 +199,28 @@ to stop the running containers:
 
 ## Modifying the Application's Dockerfile
 
-1. Make the required changes to `application/Dockerfile`.
+Follow these steps to bump the version of the application. The reason for doing
+so may be because you want to include or install additional python packages
+(thus requiring an update to the `application/requirements.txt` file), or
+perhaps you want to add or modify environment variables within the running
+application.
 
-2. Bump the `application` (and possibly the `email_notifier`) service version
-   tag using semantic versioning.
+Bump the `application` service version tag using semantic versioning.
 
-   For example, if the changes could host previous versions of the
-   application, bump the minor version. This is an appropriate upgrade path if
-   the changes do not require changes to the application code.
-   i.e. `application:1.0` -> `application:1.1`
+For example, if the changes could host previous versions of the
+application, bump the minor version. This is an appropriate upgrade path if
+the changes do not require changes to the application code.
+i.e. `application:1.0` -> `application:1.1`
 
-   However, if the Dockerfile changes require changes to the application code,
-   then a major version bump is required.
-   i.e. `application:1.0` -> `appplication:2.0`
+However, if the Dockerfile changes require changes to the application code,
+then a major version bump is required.
+i.e. `application:1.0` -> `appplication:2.0`
 
-3. Change any other references of the old image version to the new one
-   (e.g. `command`)
+1. Update the `application` reference `application/Dockerfile`.
 
-4. Starting the application should create the new docker images.
+2. Update the `application` references in the `command` script.
+
+3. Launch the application, which will automatically build the new image.
 
 
 # Unit Testing the Application
