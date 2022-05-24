@@ -25,7 +25,7 @@ SCRIPTS_JS = $(addprefix $(DIST_DIR)/,$(addsuffix .js, $(basename $(SCRIPTS))))
 
 DIST_DIR = static/dist
 
-all: styles scripts
+all: clean styles scripts
 
 styles: | $(DIST_DIR)
 	$(TOOL_CMD) npx parcel build $(STYLES_DIR)/*.* --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
@@ -44,7 +44,12 @@ $(DIST_DIR):
 clean:
 	rm -rf $(DIST_DIR)
 
-.PHONY: all clean
+.PHONY: \
+	all \
+	clean \
+	install \
+	scripts \
+	styles
 
 print-%:
 	@echo '$*=$($*)'
