@@ -44,7 +44,12 @@ $(DIST_DIR):
 clean:
 	rm -rf $(DIST_DIR)
 
-.PHONY: all clean
+.PHONY: \
+	all \
+	clean \
+	install \
+	scripts \
+	styles
 
 print-%:
 	@echo '$*=$($*)'
