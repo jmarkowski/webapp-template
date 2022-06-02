@@ -11,6 +11,7 @@ class DefaultConfig(Config):
     # Directories
     STATIC_DIR = os.path.realpath('./static')
     TEMPLATE_DIR = os.path.realpath('./template')
+    FILE_DIR = os.path.realpath('./file')
 
     # Connection URI format:
     #   postgresql://[user[:password]@][netloc][:port][/dbname]
