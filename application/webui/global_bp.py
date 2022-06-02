@@ -14,9 +14,11 @@ def util_processor():
     """
     info = current_app.config['INFO']
     debug = current_app.config['DEBUG']
+    plugin = current_app.config['PAGE_PLUGIN']
 
     return {
         'debug': debug,
         'info': info,
-        'time_now': now_str
+        'time_now': now_str,
+        'plugin': plugin,
     }

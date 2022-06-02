@@ -36,6 +36,8 @@
   <title>
     {% if title %}{{ title }} | {% endif %}{{ info['product'] }}
   </title>
+
+  {{ plugin['analytics'] | safe }}
 </head>
 <body class="d-flex flex-column h-100">
 

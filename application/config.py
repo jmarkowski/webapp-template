@@ -32,6 +32,10 @@ class DefaultConfig(Config):
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
 
+    PAGE_PLUGIN = {
+        'analytics': '<!-- No analytics plugin -->'
+    }
+
     @classmethod
     def check_config_conditions(cls):
         # Check the configuration for any possible show-stopping settings, and
