@@ -11,6 +11,7 @@ class DefaultConfig(Config):
     # Directories
     STATIC_DIR = os.path.realpath('./static')
     TEMPLATE_DIR = os.path.realpath('./template')
+    FILE_DIR = os.path.realpath('./file')
 
     # Connection URI format:
     #   postgresql://[user[:password]@][netloc][:port][/dbname]
@@ -25,12 +26,27 @@ class DefaultConfig(Config):
     # 'secrets/settings.py'
     SECRET_KEY = 'overwrite-this-key-for-production'
 
+    # Email settings
+    MAIL_USERNAME = 'username'
+    MAIL_PASSWORD = 'password'
+    MAIL_SERVER = 'smtp.example.com'
+    MAIL_PORT = 587
+    EMAIL = {
+        'mailer': 'sender@example.com',
+        'mailer_name': 'Web Application Team',
+        'target': 'receiver@example.com',
+    }
+
     # Flask settings
 
     # Browsers will not allow JavaScript access to cookies marked as “HTTP only”
     # for security.
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
+
+    PAGE_PLUGIN = {
+        'analytics': '<!-- No analytics plugin -->'
+    }
 
     @classmethod
     def check_config_conditions(cls):

@@ -37,7 +37,7 @@
 
     <div class="row my-3">
       <div class="col text-center">
-      Visit <a href="{{ url_for('main.invites') }}">{{ url_for('main.invites') }}</a> to see the current invite list.
+      Visit <a href="{{ url_for('api.invites') }}">{{ url_for('api.invites') }}</a> to see the current invite list.
       </div>
     </div>
 
@@ -73,7 +73,7 @@ Define any constants that you would use in the javascript files here.
 #}
 {% import 'macros.html' as macro %}
 const URL = {
-  {{ macro.url_as_property('main.invites') }},
+  {{ macro.url_as_property('api.invites') }},
 }
 </script>
 

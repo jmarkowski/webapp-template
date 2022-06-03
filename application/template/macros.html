@@ -1,7 +1,7 @@
 {#
 Given a URL endpoint, generate a workable property based on the name.
-For example, using an endpoint of 'main.invites', the output would become:
-  main_invites: '/invites'
+For example, using an endpoint of 'main.contact', the output would become:
+  main_contact: '/contact'
 #}
 {% macro url_as_property(endpoint) -%}
   {{ endpoint | replace('.', '_') }}: "{{ url_for(endpoint, **kwargs) }}"

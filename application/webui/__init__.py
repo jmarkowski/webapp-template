@@ -37,6 +37,9 @@ def init_blueprints(app):
     from webui.global_bp import global_bp
     app.register_blueprint(global_bp)
 
+    from webui.api import api_bp
+    app.register_blueprint(api_bp)
+
     from webui.main import main_bp
     app.register_blueprint(main_bp)
 
