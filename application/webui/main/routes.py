@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask import current_app
-from flask import jsonify
 from flask import render_template
 from flask import request
 
@@ -45,27 +44,3 @@ def index():
                            email=email,
                            is_email_valid=is_email_valid,
                            already_invited=already_invited)
-
-
-@main_bp.route('/config/<config_var>', methods=['GET'])
-def config(config_var='TESTING'):
-    config_var = config_var.upper()
-
-    if config_var in current_app.config:
-        config_dct = {config_var.lower(): current_app.config[config_var]}
-    else:
-        config_dct = {config_var.lower(): None}
-
-    return jsonify(config_dct)
-
-
-@main_bp.route('/invites', methods=['GET'])
-def invites():
-    i = get_interactor()
-    email_lst = i.invitation.get_invite_list()
-
-    invite_dct = {'emails': email_lst}
-
-    current_app.logger.info(f'Fetched invite list: {email_lst}')
-
-    return jsonify(invite_dct)

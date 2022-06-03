@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const button = document.getElementById('list-btn');
 
   button.addEventListener('click', function () {
-    fetch(URL.main_invites, {
+    fetch(URL.api_invites, {
       method: 'GET',
     }).then(function (response) {
       if (response.status >= 200 && response.status <= 299) {
