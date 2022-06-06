@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from .database import TableBase
-from .invitation import InvitationDbGateway
 
 
 class DbGateway():
@@ -13,8 +12,8 @@ class DbGateway():
     def __init__(self, db_session):
         assert db_session
 
-        # Connect all other database gateways here
-        self.invitation = InvitationDbGateway(db_session)
+        # Connect all database gateways here
+        pass
 
     @staticmethod
     def open_session(db_uri='sqlite:///sqlite3.db',
