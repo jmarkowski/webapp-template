@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="text-center">
-  <h1>{{ heading }}</h1>
+  <h1>
+    Error
+  </h1>
+  <p class="lead">
+    {{ http_status_code }} - {{ http_status_phrase }}
+  </p>
 </div>
 {% endblock content %}

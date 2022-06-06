@@ -1,10 +1,16 @@
 from flask import render_template
 
-def error_not_found(_e):
-    title = '404 - not found'
+
+def render_error(http_status_code, http_status_phrase):
+    title = f'{http_status_code} - {http_status_phrase}'
 
     return render_template(
         'error.html',
         title=title,
-        heading='Oops, page not found!',
-    ), 404
+        http_status_code=http_status_code,
+        http_status_phrase=http_status_phrase,
+    ), http_status_code
+
+
+def error_not_found(_e):
+    return render_error(404, 'Not Found')
