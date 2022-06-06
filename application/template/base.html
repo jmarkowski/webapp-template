@@ -28,8 +28,8 @@
   <!-- Bootstrap CSS (custom themed) -->
   <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('dist/bootstrap.*.css')[0]) }}">
 
-  <!-- Base CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('dist/base.*.css')[0]) }}">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename=glob_file_list('dist/main.*.css')[0]) }}">
 
   <!-- Custom page styles -->
   {% block style %}
@@ -52,8 +52,8 @@
   </div>
 </footer>
 
-<!-- Base JS -->
-<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('dist/base.*.js')[0]) }}">
+<!-- Main JS -->
+<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('dist/main.*.js')[0]) }}">
 </script>
 
 <!-- Custom page javascript -->
