@@ -87,3 +87,16 @@ class BaseDataMixin():
         value_str = ','.join(value_lst)
 
         return f'<{obj_addr} {self.__class__.__name__}({value_str})>'
+
+
+class InvitationData(BaseDataMixin, TableBase): # type: ignore
+    __tablename__ = "invitations"
+
+    email = Column(
+        String(80),
+        unique=True,
+        index=True,
+    )
+
+    def __repr__(self):
+        return '<Invitation {}>'.format(self.email)
