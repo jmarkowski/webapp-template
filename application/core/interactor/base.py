@@ -2,7 +2,6 @@ import logging
 
 from core.config import Config
 from core.dbgateway import DbGateway
-from .invitation import InvitationInteractor
 
 
 class Interactor():
@@ -14,8 +13,5 @@ class Interactor():
             logger: logging.Logger,
         ):
 
-        self.invitation = InvitationInteractor(
-            config,
-            db_gateway.invitation,
-            logger,
-        )
+        # Connect all interactors here
+        pass

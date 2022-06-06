@@ -1,82 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="text-center">
-  <h1>{{ heading }}</h1>
-  <p class="lead">{{ leading_text }}</p>
+  <h1>
+    {{ info['product'] }}
+  </h1>
+  <p class="lead">
+  Congratulations! The application is is running.
+  </p>
 
-  <div class="container">
-
-  {% set bad_email_submitted = email and not is_email_valid %}
-
-  {% if email and is_email_valid %}
-    {% if already_invited %}
-      We've already added <strong>{{ email }}</strong> to our invite list.<br>
-      Thank you again for your continued interest!
-    {% else %}
-      We've added <strong>{{ email }}</strong> to our invite list.<br>
-      Thank you for your interest!
-    {% endif %}
-  {% else %}
-
-    {% if bad_email_submitted %}
-      Oops, <strong>{{ email }}</strong> appears to be an invalid email.<br>
-    {% endif %}
-
-    <form action="{{ url_for('main.index') }}" method="post">
-      <div class="form-group row">
-        <div class="col-sm-3 offset-sm-3 my-3">
-          <input type="email" name="email" class="form-control" placeholder="you@example.com"{% if bad_email_submitted %} value="{{ email }}"{% endif %}>
-        </div>
-        <div class="col-sm-3 my-3">
-          <button type="submit" class="btn btn-primary">Request Invitation</button>
-        </div>
-      </div>
-    </form>
-
-  {% endif %}
-
-    <div class="row my-3">
-      <div class="col text-center">
-      Visit <a href="{{ url_for('api.invites') }}">{{ url_for('api.invites') }}</a> to see the current invite list.
-      </div>
+  <p>
+  Transpile the static sources to ensure the scripts and stylesheets are loaded.
+  </p>
+  <div class="row justify-content-center">
+    <div class="col-4 text-start border">
+      <code>
+        $ cd application<br>
+        $ make install<br>
+        $ make<br>
+      </code>
     </div>
-
-    <div class="row my-3">
-      <div id="list-container" class="col text-center">
-        <button id="list-btn" class="btn btn-primary">
-          Click to show the invite list
-        </button>
-      </div>
-    </div>
-
-    <div class="row my-3">
-      <div class="col text-center">
-        <button id="popover"
-                type="button"
-                class="btn btn-danger"
-                data-bs-toggle="popover"
-                title="Popover example"
-                data-bs-content="Some engaging popover content goes here ...">
-          Click to toggle popover
-        </button>
-      </div>
-    </div>
-
   </div>
 </div>
 {% endblock content %}
-
-{% block script %}
-<script>
-{#
-Define any constants that you would use in the javascript files here.
-#}
-{% import 'macros.html' as macro %}
-const URL = {
-  {{ macro.url_as_property('api.invites') }},
-}
-</script>
-
-<script type="text/javascript" src="{{ url_for('static', filename=glob_file_list('dist/index.*.js')[0]) }}">
-</script>
-{% endblock script %}
