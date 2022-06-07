@@ -15,25 +15,28 @@ TOOL_CMD = docker container run --rm \
    $(IMAGE_TAG)
 endif
 
-STYLES_DIR  = static/styles
-STYLES = $(notdir $(wildcard $(STYLES_DIR)/*.*))
-STYLES_CSS = $(addprefix $(DIST_DIR)/,$(addsuffix .css, $(basename $(STYLES))))
+STYLE_SRC_DIR  = static/styles
+SCSS_PARTIALS = $(wildcard $(STYLE_SRC_DIR)/_*.scss)
+# STYLE_SRCS excludes _*.scss files as these are partial files that are included
+# by the top-level scss files.
+STYLE_SRCS = $(filter-out $(SCSS_PARTIALS), $(wildcard $(STYLE_SRC_DIR)/*.*))
+STYLE_OBJS = $(addprefix $(DIST_DIR)/,$(addsuffix .css, $(basename $(notdir $(STYLE_SRCS)))))
 
-SCRIPTS_DIR = static/scripts
-SCRIPTS = $(notdir $(wildcard $(SCRIPTS_DIR)/*.*))
-SCRIPTS_JS = $(addprefix $(DIST_DIR)/,$(addsuffix .js, $(basename $(SCRIPTS))))
+SCRIPT_SRC_DIR = static/scripts
+SCRIPT_SRCS = $(wildcard $(SCRIPT_SRC_DIR)/*.*)
+SCRIPT_OBJS = $(addprefix $(DIST_DIR)/,$(addsuffix .js, $(basename $(notdir $(SCRIPT_SRCS)))))
 
 DIST_DIR = static/dist
 
 all: clean styles scripts
 
 styles: | $(DIST_DIR)
-	$(TOOL_CMD) npx parcel build $(STYLES_DIR)/*.* --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
-	./hashfile -r $(STYLES_CSS)
+	$(TOOL_CMD) npx parcel build $(STYLE_SRCS) --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(STYLE_OBJS)
 
 scripts: | $(DIST_DIR)
-	$(TOOL_CMD) npx parcel build $(SCRIPTS_DIR)/*.* --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
-	./hashfile -r $(SCRIPTS_JS)
+	$(TOOL_CMD) npx parcel build $(SCRIPT_SRCS) --dist-dir $(DIST_DIR) --public-url /$(DIST_DIR)
+	./hashfile -r $(SCRIPT_OBJS)
 
 install:
 	$(TOOL_CMD) npm install
