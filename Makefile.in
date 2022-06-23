@@ -4,16 +4,17 @@ endif
 
 all:
 	$(SILENT)echo "Creating environment file from template...";
-	$(SILENT)cp -p env_template .env;
+	$(SILENT)cp -p env-template .env;
 	$(SILENT)sed -i 's/webapp/$(PROJECT_NAME)/' .env;
 	$(SILENT)sed -i 's/webapp/$(PROJECT_NAME)/' reverse-proxy/nginx.conf;
 	$(SILENT)echo "Unstaging tracked secrets from repository cache...";
+	$(SILENT)git rm --cached secrets/*.txt &> /dev/null;
 	$(SILENT)git rm --cached application/secrets/settings.py &> /dev/null;
 	$(SILENT)echo "Removing unnecessary tracked files...";
 	$(SILENT)git rm LICENSE &> /dev/null;
 	$(SILENT)git rm Makefile.in &> /dev/null;
 	$(SILENT)git rm configure &> /dev/null;
-	$(SILENT)git rm env_template &> /dev/null;
+	$(SILENT)git rm env-template &> /dev/null;
 	$(SILENT)echo "Removing intermediate files...";
 	$(SILENT)rm -f Makefile;
 	$(SILENT)echo "";

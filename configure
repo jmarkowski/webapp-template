@@ -56,7 +56,7 @@ done
 # Set default options
 #
 if [ -z ${project+x} ]; then
-  project=myapp
+  project=webapp
 fi
 echo Set project=${project}
 
