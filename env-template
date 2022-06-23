@@ -33,7 +33,5 @@ CONFIG_STRATEGY=development
 #   critical
 LOG_LEVEL=debug
 
-# Database settings
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=mypassword
-POSTGRES_DB=webapp_db
+# Database
+DATABASE=webapp_db

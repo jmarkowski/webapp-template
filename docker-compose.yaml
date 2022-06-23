@@ -40,9 +40,9 @@ services:
     volumes:
       - './data/postgresql:/var/lib/postgresql/data'
     environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
+      - POSTGRES_DB=${DATABASE}
+      - POSTGRES_USER_FILE=/run/secrets/db_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
 
   sql_administration:
     image: adminer:4.8.1
@@ -60,3 +60,9 @@ networks:
   default:
     name: ${NETWORK_NAME}
     driver: bridge
+
+secrets:
+  db_user:
+    file: ./secrets/db-user.txt
+  db_password:
+    file: ./secrets/db-password.txt

@@ -8,6 +8,7 @@ all:
 	$(SILENT)sed -i 's/webapp/$(PROJECT_NAME)/' .env;
 	$(SILENT)sed -i 's/webapp/$(PROJECT_NAME)/' reverse-proxy/nginx.conf;
 	$(SILENT)echo "Unstaging tracked secrets from repository cache...";
+	$(SILENT)git rm --cached secrets/*.txt &> /dev/null;
 	$(SILENT)git rm --cached application/secrets/settings.py &> /dev/null;
 	$(SILENT)echo "Removing unnecessary tracked files...";
 	$(SILENT)git rm LICENSE &> /dev/null;
