@@ -32,6 +32,9 @@ services:
       - WSGI_WORKERS
     depends_on:
       - sql_database
+    secrets:
+      - db_user
+      - db_password
 
   sql_database:
     image: postgres:14.2-alpine
@@ -40,9 +43,12 @@ services:
     volumes:
       - './data/postgresql:/var/lib/postgresql/data'
     environment:
-      - POSTGRES_DB=${DATABASE}
+      - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER_FILE=/run/secrets/db_user
       - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_user
+      - db_password
 
   sql_administration:
     image: adminer:4.8.1

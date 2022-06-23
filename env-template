@@ -33,5 +33,5 @@ CONFIG_STRATEGY=development
 #   critical
 LOG_LEVEL=debug
 
-# Database
-DATABASE=webapp_db
+# Database settings
+DB_NAME=webapp_db
