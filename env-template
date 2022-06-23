@@ -2,7 +2,7 @@
 COMPOSE_PROJECT_NAME=webapp
 
 # Docker images
-APPLICATION_IMAGE=application:1.2
+APPLICATION_IMAGE=application:1.3
 NODE_TOOLS_IMAGE=node_tools:2.0
 
 # Docker names
