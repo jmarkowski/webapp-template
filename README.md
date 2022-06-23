@@ -199,28 +199,30 @@ to stop the running containers:
 
 ## Modifying the Application's Dockerfile
 
-Follow these steps to bump the version of the application. The reason for doing
-so may be because you want to include or install additional python packages
-(thus requiring an update to the `application/requirements.txt` file), or
-perhaps you want to add or modify environment variables within the running
-application.
+There will come a time when you'll want to make changes to the application's
+`Dockerfile`, or make changes to files that are referenced within it (e.g.
+`application/requirements.txt`). The reason for this will likely be because you
+want to install additional python packages in the application image, or perhaps
+you want to change the environment variables running within the application.
 
-Bump the `application` service version tag using semantic versioning.
+After changing the application image, you will need to update the semantic
+version of the `application` image tag.
 
-For example, if the changes could host previous versions of the
+For example, if the application changes could run previous versions of the
 application, bump the minor version. This is an appropriate upgrade path if
 the changes do not require changes to the application code.
-i.e. `application:1.0` -> `application:1.1`
+(e.g. `application:1.0` -> `application:1.1`). However, if the image
+changes will also require changes to the application code (because the
+application will fail to run otherwise) then a major version bump is required.
+(e.g. `application:1.0` -> `appplication:2.0`)
 
-However, if the Dockerfile changes require changes to the application code,
-then a major version bump is required.
-i.e. `application:1.0` -> `appplication:2.0`
+The process to update the application image is as follows:
 
-1. Update the `application` reference `application/Dockerfile`.
+1. Update the files impacting `application/Dockerfile`.
 
-2. Update the `application` references in the `command` script.
+1. Update the environment file (i.e. `.env`) with the new application version.
 
-3. Launch the application, which will automatically build the new image.
+3. Launch the application, which will automatically build the new version.
 
 
 # Unit Testing the Application

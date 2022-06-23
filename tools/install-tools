@@ -43,4 +43,4 @@ include ../.env
 
 # Example format:
 # docker_build "foo-version.Dockerfile" "${COMPOSE_PROJECT_NAME}/foo:version"
-docker_build "node-tools.Dockerfile" "${COMPOSE_PROJECT_NAME}/node-tools:2.0"
+docker_build "node-tools.Dockerfile" "${COMPOSE_PROJECT_NAME}/${NODE_TOOLS_IMAGE}"
