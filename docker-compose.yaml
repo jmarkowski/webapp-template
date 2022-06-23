@@ -15,7 +15,7 @@ services:
       - application
 
   application:
-    image: ${COMPOSE_PROJECT_NAME}/application:1.2
+    image: ${COMPOSE_PROJECT_NAME}/${APPLICATION_IMAGE}
     build: ./application
     container_name: ${APPLICATION_SERVER_NAME}
     restart: always

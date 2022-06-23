@@ -98,7 +98,7 @@ function cmd_start() {
         --env-file .env \
         --network $NETWORK_NAME \
         --volume $APP_PATH:/home/webapp \
-        $COMPOSE_PROJECT_NAME/application:1.2 bash
+        ${COMPOSE_PROJECT_NAME}/${APPLICATION_IMAGE} bash
       ;;
 
     *)
@@ -148,7 +148,7 @@ case "$1" in
       --volume=$APP_PATH:/application \
       --workdir=/application \
       --user $(id -u):$(id -g) \
-      $COMPOSE_PROJECT_NAME/node-tools:2.0 bash
+      ${COMPOSE_PROJECT_NAME}/${NODE_TOOLS_IMAGE} bash
     ;;
 
   "start")
